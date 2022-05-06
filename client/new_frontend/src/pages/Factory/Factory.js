@@ -2,6 +2,14 @@ import React, { useState } from 'react'
 import './cats.css'
 import { getColor } from './colors'
 import './colors.css'
+import './eyes.css'
+import './animations.css'
+import './decoration.css'
+import {
+  getAnimationClasses,
+  getDecorationClasses,
+  getEyesShapeClass,
+} from './helpers'
 
 function Factory() {
   const defaultKittyDNA = {
@@ -11,14 +19,16 @@ function Factory() {
     ears_pawClr: '10',
     eyesShape: '1',
     decoration: '1',
-    middleClr: '13',
-    sidesClr: '13',
+    middleDotClr: '13',
+    sideDotsClr: '13',
     animation: '1',
   }
+  const range9keys = ['eyesShape', 'decoration', 'animation']
+
   const [dna, setDna] = useState(defaultKittyDNA)
 
   const handleSetDNA = (field, value) => {
-    if (value.length < 2) {
+    if (!range9keys.includes(field) & (value.length < 2)) {
       value = '0' + value
     }
 
@@ -44,7 +54,7 @@ function Factory() {
 
   const getRandomKitty = () => {
     const randomDNA = dna
-    const range9keys = ['eyesShape', 'decoration', 'animation']
+
     Object.keys(randomDNA).forEach(key => {
       randomDNA[key] = Math.ceil(Math.random() * 99)
       if (range9keys.includes(key)) {
@@ -62,28 +72,58 @@ function Factory() {
       <h1>Factory</h1>
       <div className='colors'>
         <h2>Colors</h2>
-        <div>Head and body</div>
+        <div>
+          <span>Head and body</span>
+          <span> {dna.head_bodyClr}</span>
+        </div>
         {rangeInput('head_bodyClr', 0, 99)}
-        <div>Mouth | Belly | Tail</div>
+        <div>
+          <span>Mouth | Belly | Tail</span>
+          <span> {dna.mouth_belly_tailClr}</span>
+        </div>
         {rangeInput('mouth_belly_tailClr', 0, 99)}
-        <div>Eyes color</div>
+        <div>
+          <span>Eyes color</span>
+          <span> {dna.eyesClr}</span>
+        </div>
         {rangeInput('eyesClr', 0, 99)}
-        <div>Ears | Paw</div>
+        <div>
+          <span>Ears | Paw</span>
+          <span> {dna.ears_pawClr}</span>
+        </div>
         {rangeInput('ears_pawClr', 0, 99)}
       </div>
       <div className='cattributes'>
         <h2>Cattributes</h2>
-        <div>Eyes shape</div>
+        <div>
+          <span>Eyes shape</span>
+          <span> {dna.eyesShape}</span>
+        </div>
         {rangeInput('eyesShape', 0, 9)}
-        <div>Decoration pattern</div>
+        <div>
+          <span>Decoration pattern</span>
+          <span> {dna.decoration}</span>
+        </div>
         {rangeInput('decoration', 0, 9)}
 
         <div>Decoration color pattern</div>
-        <div>Middle color</div>
+
+        <div>
+          <span>Middle color</span>
+          <span> {dna.middleDotClr}</span>
+        </div>
         {rangeInput('middleClr', 0, 99)}
-        <div>Sides color</div>
+
+        <div>
+          <span>Sides color</span>
+          <span> {dna.middleDotClr}</span>
+        </div>
         {rangeInput('sidesClr', 0, 99)}
-        <div>Animation</div>
+
+        <div>
+          <span>Animation</span>
+          <span> {dna.animation}</span>
+        </div>
         {rangeInput('animation', 0, 9)}
       </div>
       <div>
@@ -109,65 +149,91 @@ function Kitty({ dna }) {
     <>
       <h1>Kitty</h1>
       <div className='cat'>
-        <KittyEars earsClr={getColor(dna.ears_pawClr)} />
+        <KittyEars
+          earsClr={getColor(dna.ears_pawClr)}
+          animationClasses={getAnimationClasses(dna.animation)}
+        />
 
         <KittyHead
           headClr={getColor(dna.head_bodyClr)}
           eyesClr={getColor(dna.eyesClr)}
           mouthClr={getColor(dna.mouth_belly_tailClr)}
-          eyesShape={dna.eyesShape}
+          middleDotClr={getColor(dna.middleDotClr)}
+          sideDotsClr={getColor(dna.sideDotsClr)}
+          eyesShapeClass={getEyesShapeClass(dna.eyesShape)}
+          animationClasses={getAnimationClasses(dna.animation)}
+          decorationClasses={getDecorationClasses(dna.decoration)}
         />
 
         <KittyBody
           bodyClr={getColor(dna.head_bodyClr)}
           pawClr={getColor(dna.ears_pawClr)}
           belly_tailClr={getColor(dna.mouth_belly_tailClr)}
+          animationClasses={getAnimationClasses(dna.animation)}
         />
-        {/* const defaultKittyDNA = {
-          head_bodyClr: '10',
-          mouth_belly_tailClr: '13',
-          eyesClr: '76',
-          ears_pawClr: '10',
-          eyesShape: '1',
-          decoration: '1',
-          middleClr: '13',
-          sidesClr: '13',
-          animation: '1',
-        } */}
       </div>
     </>
   )
 }
 
-function KittyEars({ earsClr }) {
+function KittyEars({ earsClr, animationClasses }) {
+  const { leftEarAnimation, rightEarAnimation } = animationClasses
   return (
     <div className='cat__ear'>
-      <div className='cat__ear--left' style={{ backgroundColor: earsClr }}>
+      <div
+        className={`cat__ear--left ${leftEarAnimation}`}
+        style={{ backgroundColor: earsClr }}>
         <div className='cat__ear--left-inside'></div>
       </div>
-      <div className='cat__ear--right' style={{ backgroundColor: earsClr }}>
+      <div
+        className={`cat__ear--right ${rightEarAnimation}`}
+        style={{ backgroundColor: earsClr }}>
         <div className='cat__ear--right-inside'></div>
       </div>
     </div>
   )
 }
 
-function KittyHead({ headClr, eyesClr, mouthClr, eyesShape }) {
+function KittyHead({
+  headClr,
+  eyesClr,
+  mouthClr,
+  middleDotClr,
+  sideDotsClr,
+  eyesShapeClass,
+  animationClasses,
+  decorationClasses,
+}) {
+  const { headAnimation } = animationClasses
+  const { midDotDecoration, leftDotDecoration, rightDotDecoration } =
+    decorationClasses
   return (
-    <div id='head' className='cat__head' style={{ backgroundColor: headClr }}>
-      <div id='midDot' className='cat__head-dots'>
-        <div id='leftDot' className='cat__head-dots_first'></div>
-        <div id='rightDot' className='cat__head-dots_second'></div>
+    <div
+      id='head'
+      className={`cat__head ${headAnimation}`}
+      style={{ backgroundColor: headClr }}>
+      <div
+        id='midDot'
+        className={`cat__head-dots ${midDotDecoration}`}
+        style={{ backgroundColor: middleDotClr }}>
+        <div
+          id='leftDot'
+          className={`cat__head-dots_first ${leftDotDecoration}`}
+          style={{ backgroundColor: sideDotsClr }}></div>
+        <div
+          id='rightDot'
+          className={`cat__head-dots_second ${rightDotDecoration}`}
+          style={{ backgroundColor: sideDotsClr }}></div>
       </div>
       <div className='cat__eye'>
-        <div className={`cat__eye--left eyesType${}`}>
+        <div className={`cat__eye--left`}>
           <span
-            className='pupil-left'
+            className={`pupil-left ${eyesShapeClass}`}
             style={{ backgroundColor: eyesClr }}></span>
         </div>
         <div className='cat__eye--right'>
           <span
-            className='pupil-right'
+            className={`pupil-right ${eyesShapeClass}`}
             style={{ backgroundColor: eyesClr }}></span>
         </div>
       </div>
@@ -185,7 +251,9 @@ function KittyHead({ headClr, eyesClr, mouthClr, eyesShape }) {
   )
 }
 
-function KittyBody({ bodyClr, pawClr, belly_tailClr }) {
+function KittyBody({ bodyClr, pawClr, belly_tailClr, animationClasses }) {
+  const { tailAnimation } = animationClasses
+
   return (
     <div className='cat__body'>
       <div className='cat__chest' style={{ backgroundColor: bodyClr }}></div>
@@ -206,7 +274,7 @@ function KittyBody({ bodyClr, pawClr, belly_tailClr }) {
 
       <div
         id='tail'
-        className='cat__tail'
+        className={`cat__tail ${tailAnimation}`}
         style={{ backgroundColor: belly_tailClr }}></div>
     </div>
   )

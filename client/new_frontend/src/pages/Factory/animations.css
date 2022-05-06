@@ -1,0 +1,228 @@
+/* Without animation */
+.headAnimation0,
+.leftEarAnimation0,
+.rightEarAnimation0,
+.tailAnimation0 {
+  animation: none;
+}
+
+/* Moving head with ears together */
+.headAnimation1 {
+  animation: moveHead 6s infinite;
+}
+.leftEarAnimation1 {
+  animation: moveEarsLeft 6s infinite;
+}
+.rightEarAnimation1 {
+  animation: moveEarsRight 6s infinite;
+}
+.tailAnimation1 {
+  animation: none;
+}
+
+/* Tail movement */
+.headAnimation2,
+.leftEarAnimation2,
+.rightEarAnimation2 {
+  animation: none;
+}
+.tailAnimation2 {
+  animation: moveTail 2.5s infinite;
+}
+
+/* Both ears move */
+.headAnimation3,
+.tailAnimation3 {
+  animation: none;
+}
+.leftEarAnimation3 {
+  animation: moveEarsLeft 6s infinite;
+}
+.rightEarAnimation3 {
+  animation: moveEarsRight 6s infinite;
+}
+
+/* Left ear move */
+.headAnimation4,
+.rightEarAnimation4,
+.tailAnimation4 {
+  animation: none;
+}
+.leftEarAnimation4 {
+  animation: earLeft 3s infinite;
+}
+
+/* Right ear move */
+.headAnimation5,
+.leftEarAnimation5,
+.tailAnimation5 {
+  animation: none;
+}
+.rightEarAnimation5 {
+  animation: earRight 3s infinite;
+}
+
+/* Attentive cat animation */
+.headAnimation6,
+.tailAnimation6 {
+  animation: none;
+}
+.leftEarAnimation6 {
+  animation: earUpLeft 6s infinite;
+}
+.rightEarAnimation6 {
+  animation: earUpRight 6s infinite;
+}
+
+@keyframes moveTail {
+  0% {
+    transform: rotate(-45deg);
+  }
+  50% {
+    transform: rotate(-30deg);
+  }
+  100% {
+    transform: rotate(-45deg);
+  }
+}
+
+/* KeyFrames */
+@keyframes moveHead {
+  0%,
+  50%,
+  100%,
+  56%,
+  89% {
+    transform: rotate(0deg);
+  }
+
+  51%,
+  55% {
+    transform: rotate(5deg);
+  }
+
+  90%,
+  98% {
+    transform: rotate(-5deg);
+  }
+}
+
+@keyframes moveEarsRight {
+  0%,
+  50% {
+    transform: rotate(170deg);
+  }
+
+  51%,
+  55% {
+    transform: rotate(175deg);
+  }
+
+  56%,
+  89% {
+    transform: rotate(170deg);
+  }
+
+  90%,
+  98% {
+    transform: rotate(165deg);
+  }
+
+  100% {
+    transform: rotate(170deg);
+  }
+}
+
+@keyframes earRight {
+  0%,
+  50% {
+    transform: rotate(170deg);
+  }
+
+  51%,
+  55% {
+    transform: rotate(175deg);
+  }
+
+  56%,
+  100% {
+    transform: rotate(170deg);
+  }
+}
+
+@keyframes earLeft {
+  0%,
+  50% {
+    transform: scale(-1, 1) rotate(170deg);
+  }
+
+  51%,
+  55% {
+    transform: scale(-1, 1) rotate(175deg);
+  }
+
+  56%,
+  100% {
+    transform: scale(-1, 1) rotate(170deg);
+  }
+}
+
+@keyframes earUpRight {
+  0%,
+  30% {
+    transform: rotate(170deg);
+  }
+
+  31%,
+  89% {
+    transform: rotate(160deg);
+  }
+
+  90%,
+  100% {
+    transform: rotate(170deg);
+  }
+}
+
+@keyframes earUpLeft {
+  0%,
+  30% {
+    transform: scale(-1, 1) rotate(170deg);
+  }
+
+  31%,
+  89% {
+    transform: scale(-1, 1) rotate(160deg);
+  }
+
+  90%,
+  100% {
+    transform: scale(-1, 1) rotate(170deg);
+  }
+}
+
+@keyframes moveEarsLeft {
+  0%,
+  50% {
+    transform: scale(-1, 1) rotate(170deg);
+  }
+
+  51%,
+  55% {
+    transform: scale(-1, 1) rotate(165deg);
+  }
+
+  56%,
+  89% {
+    transform: scale(-1, 1) rotate(170deg);
+  }
+
+  90%,
+  98% {
+    transform: scale(-1, 1) rotate(180deg);
+  }
+
+  100% {
+    transform: scale(-1, 1) rotate(170deg);
+  }
+}
