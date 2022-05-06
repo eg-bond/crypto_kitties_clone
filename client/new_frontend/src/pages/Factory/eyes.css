@@ -1,0 +1,37 @@
+.eyesType0 {
+  border: none;
+}
+/* top */
+.eyesType1 {
+  border-top: 15px solid;
+}
+/* bottom */
+.eyesType2 {
+  border-bottom: 15px solid;
+}
+/* top and bottom */
+.eyesType3 {
+  border-top: 15px solid;
+  border-bottom: 15px solid;
+}
+/* Right and left */
+.eyesType4 {
+  border-right: 15px solid;
+  border-left: 15px solid;
+}
+/* Right left top */
+.eyesType5 {
+  border-top: 15px solid;
+  border-right: 15px solid;
+  border-left: 15px solid;
+}
+/* Right left bottom */
+.eyesType6 {
+  border-bottom: 15px solid;
+  border-right: 15px solid;
+  border-left: 15px solid;
+}
+/* Full shape */
+.eyesType7 {
+  border: 15px solid;
+}
