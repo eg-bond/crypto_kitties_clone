@@ -37,6 +37,20 @@
   }
 }
 
+/* main */
+.mainContainer {
+  max-width: 1400px;
+  width: 100%;
+  margin-left: auto;
+  box-sizing: border-box;
+  margin-right: auto;
+  display: block;
+  padding-left: 16px;
+  padding-right: 16px;
+  background-color: #cfcfcf;
+  height: 100%;
+}
+
 /* navigation */
 .navigation {
   display: flex;

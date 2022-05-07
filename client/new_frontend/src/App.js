@@ -3,6 +3,8 @@ import { Link, NavLink, Route, Routes } from 'react-router-dom'
 import IndexPage from './pages/Index/IndexPage'
 import Breed from './pages/Breed/Breed'
 import Factory from './pages/Factory/Factory'
+import Catalogue from './pages/Catalogue/Catalogue'
+import CatalogueContainer from './pages/Catalogue/CatalogueContainer'
 
 const NavItem = ({ url, title }) => (
   <li>
@@ -17,7 +19,7 @@ const NavItem = ({ url, title }) => (
 function App() {
   return (
     <div className='App'>
-      <div className='container'>
+      <div className='mainContainer'>
         <nav role='navigation' className={'navigation'}>
           <div className={'navigation__logo'}>
             <NavItem url='/' title='CryptoKittiesClone' />
@@ -31,12 +33,12 @@ function App() {
             </ul>
           </div>
         </nav>
+        <Routes>
+          <Route path='/' element={<IndexPage />} />
+          <Route path='factory' element={<Factory />} />
+          <Route path='catalogue' element={<CatalogueContainer />} />
+        </Routes>
       </div>
-
-      <Routes>
-        <Route path='/' element={<IndexPage />} />
-        <Route path='factory' element={<Factory />} />
-      </Routes>
     </div>
   )
 }

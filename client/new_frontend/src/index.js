@@ -4,13 +4,16 @@ import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { BrowserRouter } from 'react-router-dom'
+import Web3Provider from './OtherComponents/Web3/Web3Provider'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Web3Provider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Web3Provider>
   </React.StrictMode>
 )
 

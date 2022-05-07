@@ -1,0 +1,60 @@
+.catalogue * {
+  transition: ease 400ms;
+}
+
+.kitties {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  row-gap: 2.5rem;
+  column-gap: 1.5rem;
+  justify-content: space-evenly;
+}
+
+.kitties::after {
+  content: '';
+  justify-content: flex-start;
+}
+
+.kittyGrid {
+  /* background-color: red; */
+  width: 100%;
+  height: 430px;
+  /* border: 3px solid black; */
+
+  padding: 25px;
+}
+
+.kittyContainer {
+  /* filter: brightness(200%); */
+  width: 290px;
+  height: 450px;
+  padding: 15px;
+  border-radius: 1rem;
+}
+
+.kittyContainer:hover {
+  transform: scale(1.04, 1.04);
+}
+
+.kittyContainerContent {
+  /* filter: brightness(100%) !important; */
+  padding-top: 20px;
+  width: 100%;
+  height: 100%;
+}
+.kittyContainer:hover .kittyContainerContent {
+  transform: scale(0.96, 0.96);
+}
+
+.kitty {
+  display: flex;
+  justify-content: center;
+  height: 75%;
+  /* background-color: antiquewhite; */
+}
+
+.info {
+  height: 25%;
+  /* background-color: rgb(126, 106, 81); */
+  text-align: left;
+}
