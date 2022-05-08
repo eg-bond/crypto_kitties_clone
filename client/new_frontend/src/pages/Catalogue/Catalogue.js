@@ -26,9 +26,10 @@ function KittieItem({ dnaString }) {
   const dna = parseGenes(dnaString)
 
   return (
-    <div
-      className='kittyContainer'
-      style={{ backgroundColor: getColor(dna.eyesClr) }}>
+    <div className='kittyContainer'>
+      <div
+        className='containerBackground'
+        style={{ backgroundColor: getColor(dna.eyesClr) }}></div>
       <div className='kittyContainerContent'>
         <div className='kitty'>
           <Kitty dna={dna} />
