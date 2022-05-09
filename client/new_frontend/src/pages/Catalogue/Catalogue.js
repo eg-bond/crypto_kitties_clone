@@ -1,6 +1,7 @@
 import React from 'react'
 import { getColor } from '../Factory/colors'
 import { defaultKittyDNA } from '../Factory/Factory'
+import { Link } from 'react-router-dom'
 import {
   getAnimationName,
   getDecorationName,
@@ -10,9 +11,10 @@ import { Kitty } from '../Factory/Kitty'
 
 import './catalogue.css'
 
-function Catalogue({ arr, kitties }) {
+export function Catalogue({ arr, kitties }) {
   return (
     <div className='catalogue'>
+      <Link to='/breed'>Breed</Link>
       <div className='kitties'>
         {kitties.map(dnaString => (
           <KittieItem key={Math.random() * 10} dnaString={dnaString} />
@@ -22,7 +24,7 @@ function Catalogue({ arr, kitties }) {
   )
 }
 
-function KittieItem({ dnaString }) {
+export function KittieItem({ dnaString, onClickHandler }) {
   const dna = parseGenes(dnaString)
 
   return (
@@ -30,7 +32,7 @@ function KittieItem({ dnaString }) {
       <div
         className='containerBackground'
         style={{ backgroundColor: getColor(dna.eyesClr) }}></div>
-      <div className='kittyContainerContent'>
+      <div onClick={onClickHandler} className='kittyContainerContent'>
         <div className='kitty'>
           <Kitty dna={dna} />
         </div>

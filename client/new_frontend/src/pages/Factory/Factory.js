@@ -1,13 +1,7 @@
 import React, { useContext, useState } from 'react'
-
-import { getColor } from './colors'
-
 import {
-  getAnimationClasses,
   getAnimationName,
-  getDecorationClasses,
   getDecorationName,
-  getEyesShapeClass,
   getEyesShapeName,
 } from './helpers'
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
@@ -23,12 +17,13 @@ export const defaultKittyDNA = {
   middleDotClr: '13',
   sideDotsClr: '13',
   animation: '1',
+  someProp: '1',
 }
 
 function Factory() {
-  const { web3, kittyContract, selectedAccount } = useContext(Web3Context)
+  const { kittyContract, selectedAccount } = useContext(Web3Context)
 
-  const range9keys = ['eyesShape', 'decoration', 'animation']
+  const range9keys = ['eyesShape', 'decoration', 'animation', 'someProp']
 
   const [dna, setDna] = useState(defaultKittyDNA)
 
@@ -58,7 +53,7 @@ function Factory() {
   }
 
   const getRandomKitty = () => {
-    const randomDNA = dna
+    const randomDNA = { ...dna }
 
     Object.keys(randomDNA).forEach(key => {
       randomDNA[key] = Math.ceil(Math.random() * 99)
@@ -137,6 +132,12 @@ function Factory() {
           <span> {getAnimationName(dna.animation)}</span>
         </div>
         {rangeInput('animation', 0, 9)}
+
+        <div>
+          <span>SomeProp</span>
+          <span> {dna.someProp}</span>
+        </div>
+        {rangeInput('someProp', 0, 9)}
       </div>
       <div>
         <h2>finalDNA</h2>

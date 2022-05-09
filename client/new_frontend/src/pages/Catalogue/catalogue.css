@@ -27,6 +27,10 @@
   height: 450px;
 }
 
+.kittyContainer:hover {
+  cursor: pointer;
+}
+
 .containerBackground {
   position: absolute;
   width: 100%;
