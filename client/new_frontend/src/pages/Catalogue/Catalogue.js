@@ -59,7 +59,7 @@ export function KittieItem({ dnaString, onClickHandler, generation }) {
   )
 }
 
-function parseGenes(dnaString) {
+export function parseGenes(dnaString) {
   const lengths = Object.values(defaultKittyDNA).map(num => num.length)
   const dnaObj = {}
   // temporary measure for 0 dna

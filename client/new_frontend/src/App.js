@@ -34,6 +34,8 @@ const reducer = (state = initialState, action) => {
         return { ...state, breed: { ...initialState.breed, [role]: id } }
       }
       return { ...state, breed: { ...state.breed, [role]: id } }
+    case 'ERASE_BREEDING':
+      return { ...state, breed: { ...initialState.breed } }
 
     default:
       return state

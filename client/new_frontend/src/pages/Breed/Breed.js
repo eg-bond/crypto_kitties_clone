@@ -1,15 +1,60 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import './breed.css'
 import { Modal } from 'web3uikit'
-import { KittieItem } from '../Catalogue/Catalogue'
+import { Kitty } from '../Factory/Kitty'
+import { KittieItem, parseGenes } from '../Catalogue/Catalogue'
+import { getColor } from '../Factory/colors'
+import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
+
+function BreedItem({ role, myKitties, breed, openModal }) {
+  const selectedKitty = myKitties[breed[role]]
+
+  let dna = null
+  if (selectedKitty) {
+    dna = parseGenes(selectedKitty.genes)
+  }
+
+  return (
+    <div className={role}>
+      <h2>{role}</h2>
+      <p>This kitty will be the {role}</p>
+
+      {breed[role] === null ? (
+        <div onClick={() => openModal(role)} className='breedContainer empty'>
+          Select a cat as a Dame
+        </div>
+      ) : (
+        <>
+          <div onClick={() => openModal(role)} className='breedContainer'>
+            <div
+              className='containerBackground'
+              style={{ backgroundColor: getColor(dna.eyesClr) }}></div>
+            <Kitty dna={dna} />
+          </div>
+          <div className='info'>
+            <p>Genes: {selectedKitty.genes}</p>
+            <p>Generation: {selectedKitty.generation}</p>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
 
 function Breed({ myKitties, dispatch, breed }) {
   const [visible, setVisible] = useState(false)
   const breedRole = useRef()
-  console.log(breed)
+  const { kittyContract, selectedAccount } = useContext(Web3Context)
+
   const openModal = role => {
     breedRole.current = role
     setVisible(true)
+  }
+
+  const breedCats = () => {
+    kittyContract.methods
+      .breed(breed.dame, breed.sire)
+      .send({ from: selectedAccount })
   }
 
   const choseKittyForBreed = id => {
@@ -20,24 +65,30 @@ function Breed({ myKitties, dispatch, breed }) {
     setVisible(false)
   }
 
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: 'ERASE_BREEDING',
+      })
+    }
+  }, [])
+
   return (
     <div className='breed'>
       <h1>Cats breeding</h1>
       <div className='breedGrid'>
-        <div className='dame'>
-          <h2>Dame</h2>
-          <p>This kitty will be preggers</p>
-          <div onClick={() => openModal('dame')} className='breedContainer'>
-            Select a cat as a Dame DameId: {breed.dame}
-          </div>
-        </div>
-        <div className='sire'>
-          <h2>Sire</h2>
-          <p>This kitty will be the sire</p>
-          <div onClick={() => openModal('sire')} className='breedContainer'>
-            Select a cat as a Sire SireId: {breed.sire}
-          </div>
-        </div>
+        <BreedItem
+          role={'dame'}
+          myKitties={myKitties}
+          breed={breed}
+          openModal={openModal}
+        />
+        <BreedItem
+          role={'sire'}
+          myKitties={myKitties}
+          breed={breed}
+          openModal={openModal}
+        />
       </div>
       {visible && (
         <Modal
@@ -57,6 +108,7 @@ function Breed({ myKitties, dispatch, breed }) {
           </div>
         </Modal>
       )}
+      <button onClick={breedCats}>Ok, give them some privacy</button>
     </div>
   )
 }
