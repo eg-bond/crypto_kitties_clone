@@ -12,7 +12,6 @@ export const Web3Provider = ({ children }) => {
     Kittycontract.abi,
     Kittycontract.networks[5777].address
   )
-  console.log(kittyContract)
 
   return (
     <Web3Context.Provider value={{ web3, selectedAccount, kittyContract }}>

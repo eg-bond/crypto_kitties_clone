@@ -1,7 +1,7 @@
 import React from 'react'
 import { getColor } from '../Factory/colors'
 import { defaultKittyDNA } from '../Factory/Factory'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   getAnimationName,
   getDecorationName,
@@ -12,19 +12,30 @@ import { Kitty } from '../Factory/Kitty'
 import './catalogue.css'
 
 export function Catalogue({ arr, kitties }) {
+  let navigate = useNavigate()
+
+  const selectKitty = () => {
+    navigate('selectedKitty')
+  }
+
   return (
     <div className='catalogue'>
       <Link to='/breed'>Breed</Link>
       <div className='kitties'>
-        {kitties.map(dnaString => (
-          <KittieItem key={Math.random() * 10} dnaString={dnaString} />
+        {Object.keys(kitties).map(id => (
+          <KittieItem
+            key={Math.random() * 10}
+            dnaString={kitties[id].genes}
+            generation={kitties[id].generation}
+            onClickHandler={selectKitty}
+          />
         ))}
       </div>
     </div>
   )
 }
 
-export function KittieItem({ dnaString, onClickHandler }) {
+export function KittieItem({ dnaString, onClickHandler, generation }) {
   const dna = parseGenes(dnaString)
 
   return (
@@ -38,6 +49,7 @@ export function KittieItem({ dnaString, onClickHandler }) {
         </div>
         <div className='info'>
           <p>• Genes: {dnaString}</p>
+          <p>• Generation: {generation}</p>
           <p>• {getEyesShapeName(dna.eyesShape)} eyes</p>
           <p>• {getAnimationName(dna.animation)} animation</p>
           <p>• {getDecorationName(dna.decoration)} decoration</p>

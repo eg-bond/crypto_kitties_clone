@@ -104,12 +104,3 @@ export const colors = {
 export const getColor = clrNumber => {
   return colors[clrNumber]
 }
-
-// const clr = () => {
-//   Object.keys(colors).forEach(key => {
-//     colors[key] = '#' + colors[key]
-//   })
-//   console.log(colors)
-// }
-
-// clr()

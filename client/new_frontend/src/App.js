@@ -16,10 +16,24 @@ const NavItem = ({ url, title }) => (
     </NavLink>
   </li>
 )
-const reducer = (state = [], action) => {
+
+const initialState = {
+  myKitties: {},
+  kittiesForSale: {},
+  breed: { dame: null, sire: null },
+}
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_KITTIES':
-      return [...action.payload]
+      return { ...state, myKitties: { ...action.payload } }
+    case 'CHOSE_KITTY_FOR_BREED':
+      const { id, role } = action.payload
+
+      // if kitty is already chosen for breed as other parent
+      if (Object.values(state.breed).includes(id)) {
+        return { ...state, breed: { ...initialState.breed, [role]: id } }
+      }
+      return { ...state, breed: { ...state.breed, [role]: id } }
 
     default:
       return state
@@ -27,7 +41,7 @@ const reducer = (state = [], action) => {
 }
 
 function App() {
-  const [kittiesState, dispatch] = useReducer(reducer, [])
+  const [kittiesState, dispatch] = useReducer(reducer, initialState)
 
   const { web3, kittyContract, selectedAccount } = useContext(Web3Context)
 
@@ -42,11 +56,17 @@ function App() {
           kittyContract.methods
             .getKitty(id)
             .call({ from: selectedAccount })
-            .then(kittyObj => kittyObj.genes)
+            .then(kittyObj => {
+              return { [id]: kittyObj }
+            })
         )
       )
-      Promise.all(promises).then(genesArray => {
-        dispatch({ type: 'SET_KITTIES', payload: genesArray })
+      Promise.all(promises).then(kittiesArray => {
+        let payload = {}
+        kittiesArray.forEach(
+          indexedKittyObj => (payload = { ...payload, ...indexedKittyObj })
+        )
+        dispatch({ type: 'SET_KITTIES', payload })
       })
     }
   }
@@ -55,6 +75,7 @@ function App() {
     getKitties()
   }, [selectedAccount])
 
+  // console.log(kittiesState)
   return (
     <div className='App'>
       <div className='mainContainer'>
@@ -78,12 +99,21 @@ function App() {
             path='catalogue'
             element={
               <CatalogueContainer
-                kittiesState={kittiesState}
+                kittiesState={kittiesState.myKitties}
                 dispatch={dispatch}
               />
             }
           />
-          <Route path='breed' element={<Breed kittiesState={kittiesState} />} />
+          <Route
+            path='breed'
+            element={
+              <Breed
+                myKitties={kittiesState.myKitties}
+                dispatch={dispatch}
+                breed={kittiesState.breed}
+              />
+            }
+          />
         </Routes>
       </div>
     </div>
