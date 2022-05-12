@@ -1,6 +1,7 @@
 import React, { createContext } from 'react'
 import { createContract, useCurrentAccount, useWeb3 } from './web3Cliend'
 import Kittycontract from 'truffleBuild/contracts/Kittycontract.json'
+import MarketplaceContract from 'truffleBuild/contracts/KittyMarketPlace.json'
 
 export const Web3Context = createContext()
 
@@ -12,9 +13,15 @@ export const Web3Provider = ({ children }) => {
     Kittycontract.abi,
     Kittycontract.networks[5777].address
   )
+  const marketplaceContract = createContract(
+    web3,
+    MarketplaceContract.abi,
+    MarketplaceContract.networks[5777].address
+  )
 
   return (
-    <Web3Context.Provider value={{ web3, selectedAccount, kittyContract }}>
+    <Web3Context.Provider
+      value={{ web3, selectedAccount, kittyContract, marketplaceContract }}>
       {children}
     </Web3Context.Provider>
   )

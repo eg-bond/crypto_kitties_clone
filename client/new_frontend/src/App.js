@@ -6,6 +6,7 @@ import Factory from './pages/Factory/Factory'
 import CatalogueContainer from './pages/Catalogue/CatalogueContainer'
 import { useContext, useEffect, useReducer } from 'react'
 import { Web3Context } from './OtherComponents/Web3/Web3Provider'
+import SelectedKitty from './pages/SelectedKitty/SelectedKitty'
 
 const NavItem = ({ url, title }) => (
   <li>
@@ -19,7 +20,7 @@ const NavItem = ({ url, title }) => (
 
 const initialState = {
   myKitties: {},
-  kittiesForSale: {},
+  kittiesOnSale: [],
   breed: { dame: null, sire: null },
 }
 const reducer = (state = initialState, action) => {
@@ -36,9 +37,37 @@ const reducer = (state = initialState, action) => {
       return { ...state, breed: { ...state.breed, [role]: id } }
     case 'ERASE_BREEDING':
       return { ...state, breed: { ...initialState.breed } }
+    case 'SET_ALL_TOKENS_ON_SALE':
+      return { ...state, kittiesOnSale: [...action.payload] }
 
     default:
       return state
+  }
+}
+
+export const getKitties = async (kittyContract, selectedAccount, dispatch) => {
+  if (selectedAccount) {
+    const kittyIds = await kittyContract.methods
+      .getKittyByOwner(selectedAccount)
+      .call({ from: selectedAccount })
+    const promises = []
+    kittyIds.forEach(id =>
+      promises.push(
+        kittyContract.methods
+          .getKitty(id)
+          .call({ from: selectedAccount })
+          .then(kittyObj => {
+            return { [id]: kittyObj }
+          })
+      )
+    )
+    Promise.all(promises).then(kittiesArray => {
+      let payload = {}
+      kittiesArray.forEach(
+        indexedKittyObj => (payload = { ...payload, ...indexedKittyObj })
+      )
+      dispatch({ type: 'SET_KITTIES', payload })
+    })
   }
 }
 
@@ -46,38 +75,15 @@ function App() {
   const [kittiesState, dispatch] = useReducer(reducer, initialState)
 
   const { web3, kittyContract, selectedAccount } = useContext(Web3Context)
-
-  const getKitties = async () => {
-    if (selectedAccount) {
-      const kittyIds = await kittyContract.methods
-        .getKittyByOwner(selectedAccount)
-        .call({ from: selectedAccount })
-      const promises = []
-      kittyIds.forEach(id =>
-        promises.push(
-          kittyContract.methods
-            .getKitty(id)
-            .call({ from: selectedAccount })
-            .then(kittyObj => {
-              return { [id]: kittyObj }
-            })
-        )
-      )
-      Promise.all(promises).then(kittiesArray => {
-        let payload = {}
-        kittiesArray.forEach(
-          indexedKittyObj => (payload = { ...payload, ...indexedKittyObj })
-        )
-        dispatch({ type: 'SET_KITTIES', payload })
-      })
-    }
-  }
-
+  // console.log(kittiesState)
   useEffect(() => {
-    getKitties()
+    getKitties(kittyContract, selectedAccount, dispatch)
   }, [selectedAccount])
 
-  // console.log(kittiesState)
+  if (!selectedAccount) {
+    return null
+  }
+
   return (
     <div className='App'>
       <div className='mainContainer'>
@@ -113,6 +119,16 @@ function App() {
                 myKitties={kittiesState.myKitties}
                 dispatch={dispatch}
                 breed={kittiesState.breed}
+              />
+            }
+          />
+          <Route
+            path='selected_kitty/:id'
+            element={
+              <SelectedKitty
+                myKitties={kittiesState.myKitties}
+                kittiesOnSale={kittiesState.kittiesOnSale}
+                dispatch={dispatch}
               />
             }
           />

@@ -14,8 +14,8 @@ import './catalogue.css'
 export function Catalogue({ arr, kitties }) {
   let navigate = useNavigate()
 
-  const selectKitty = () => {
-    navigate('selectedKitty')
+  const selectKitty = id => {
+    navigate(`/selected_kitty/${id}`)
   }
 
   return (
@@ -28,6 +28,7 @@ export function Catalogue({ arr, kitties }) {
             dnaString={kitties[id].genes}
             generation={kitties[id].generation}
             onClickHandler={selectKitty}
+            id={id}
           />
         ))}
       </div>
@@ -35,7 +36,7 @@ export function Catalogue({ arr, kitties }) {
   )
 }
 
-export function KittieItem({ dnaString, onClickHandler, generation }) {
+export function KittieItem({ dnaString, onClickHandler, generation, id }) {
   const dna = parseGenes(dnaString)
 
   return (
@@ -43,7 +44,7 @@ export function KittieItem({ dnaString, onClickHandler, generation }) {
       <div
         className='containerBackground'
         style={{ backgroundColor: getColor(dna.eyesClr) }}></div>
-      <div onClick={onClickHandler} className='kittyContainerContent'>
+      <div onClick={() => onClickHandler(id)} className='kittyContainerContent'>
         <div className='kitty'>
           <Kitty dna={dna} />
         </div>
