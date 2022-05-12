@@ -7,6 +7,8 @@ import CatalogueContainer from './pages/Catalogue/CatalogueContainer'
 import { useContext, useEffect, useReducer } from 'react'
 import { Web3Context } from './OtherComponents/Web3/Web3Provider'
 import SelectedKitty from './pages/SelectedKitty/SelectedKitty'
+import Marketplace from './pages/Marketplace/Marketplace'
+import { getOwnedKitties } from './helpers'
 
 const NavItem = ({ url, title }) => (
   <li>
@@ -20,7 +22,8 @@ const NavItem = ({ url, title }) => (
 
 const initialState = {
   myKitties: {},
-  kittiesOnSale: [],
+  kittieIdsOnSale: [],
+  kittiesOnSale: {},
   breed: { dame: null, sire: null },
 }
 const reducer = (state = initialState, action) => {
@@ -37,37 +40,13 @@ const reducer = (state = initialState, action) => {
       return { ...state, breed: { ...state.breed, [role]: id } }
     case 'ERASE_BREEDING':
       return { ...state, breed: { ...initialState.breed } }
-    case 'SET_ALL_TOKENS_ON_SALE':
-      return { ...state, kittiesOnSale: [...action.payload] }
+    case 'SET_ALL_TOKEN_IDS_ON_SALE':
+      return { ...state, kittieIdsOnSale: [...action.payload] }
+    case 'SET_ALL_KITTIES_ON_SALE':
+      return { ...state, kittiesOnSale: { ...action.payload } }
 
     default:
       return state
-  }
-}
-
-export const getKitties = async (kittyContract, selectedAccount, dispatch) => {
-  if (selectedAccount) {
-    const kittyIds = await kittyContract.methods
-      .getKittyByOwner(selectedAccount)
-      .call({ from: selectedAccount })
-    const promises = []
-    kittyIds.forEach(id =>
-      promises.push(
-        kittyContract.methods
-          .getKitty(id)
-          .call({ from: selectedAccount })
-          .then(kittyObj => {
-            return { [id]: kittyObj }
-          })
-      )
-    )
-    Promise.all(promises).then(kittiesArray => {
-      let payload = {}
-      kittiesArray.forEach(
-        indexedKittyObj => (payload = { ...payload, ...indexedKittyObj })
-      )
-      dispatch({ type: 'SET_KITTIES', payload })
-    })
   }
 }
 
@@ -75,9 +54,9 @@ function App() {
   const [kittiesState, dispatch] = useReducer(reducer, initialState)
 
   const { web3, kittyContract, selectedAccount } = useContext(Web3Context)
-  // console.log(kittiesState)
+
   useEffect(() => {
-    getKitties(kittyContract, selectedAccount, dispatch)
+    getOwnedKitties(kittyContract, selectedAccount, dispatch)
   }, [selectedAccount])
 
   if (!selectedAccount) {
@@ -95,7 +74,7 @@ function App() {
             <ul>
               <NavItem url='/' title='Home' />
               <NavItem url='marketplace' title='Marketplace' />
-              <NavItem url='catalogue' title='Catalogue' />
+              <NavItem url='catalogue' title='Your kitties' />
               <NavItem url='factory' title='K-Factory' />
             </ul>
           </div>
@@ -107,7 +86,17 @@ function App() {
             path='catalogue'
             element={
               <CatalogueContainer
-                kittiesState={kittiesState.myKitties}
+                myKitties={kittiesState.myKitties}
+                dispatch={dispatch}
+              />
+            }
+          />
+          <Route
+            path='marketplace'
+            element={
+              <Marketplace
+                kittiesOnSale={kittiesState.kittiesOnSale}
+                kittieIdsOnSale={kittiesState.kittieIdsOnSale}
                 dispatch={dispatch}
               />
             }
@@ -127,7 +116,7 @@ function App() {
             element={
               <SelectedKitty
                 myKitties={kittiesState.myKitties}
-                kittiesOnSale={kittiesState.kittiesOnSale}
+                kittieIdsOnSale={kittiesState.kittieIdsOnSale}
                 dispatch={dispatch}
               />
             }

@@ -36,8 +36,7 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
     price = offer.price;
     index = offer.index;
     tokenId = offer.tokenId;
-    active = offer.active;
-    
+    active = offer.active;    
   }
 
   function getAllTokenOnSale() external view returns(uint[] memory listOfOffers) {

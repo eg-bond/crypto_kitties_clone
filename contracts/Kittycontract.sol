@@ -13,6 +13,14 @@ contract Kittycontract is ERC721("CryptoKittiesClone", "CKC"), Ownable {
   }
   
   Kitty[] kitties;
+  mapping (address => bool) gotFreeKitty;
+
+  function alreadyGotFreeKitty(address user) view public returns (bool) {
+    if (gotFreeKitty[user] == true) {
+        return true;
+    }    
+    return false;    
+  } 
 
   function totalSupply() view public returns (uint) {
     return kitties.length;
@@ -34,8 +42,9 @@ contract Kittycontract is ERC721("CryptoKittiesClone", "CKC"), Ownable {
     return result;
   }
 
-  uint public constant CREATION_LIMIT_GEN0 = 10;
+  uint public constant CREATION_LIMIT_GEN0 = 20;
   uint public gen0Counter;
+  
 
   event Birth(
     uint256 _mumId,
@@ -45,17 +54,22 @@ contract Kittycontract is ERC721("CryptoKittiesClone", "CKC"), Ownable {
     address _owner
   );
 
-  // prefents the error with marketplace getAllTokenOnSale()
+  // prevents the error with marketplace getAllTokenOnSale()
   constructor () {
     _createKitty(0, 0, 0, 0, msg.sender);
   }
 
-  function createKittyGen0(uint256 _genes) public onlyOwner {
-    require(gen0Counter < CREATION_LIMIT_GEN0, 'Amount of first generation kitties is exceeded');
-    gen0Counter++;
-    // Gen0 have to be owned by the contract
-    _createKitty(0, 0, 0, _genes, msg.sender);
-  }
+  function createKittyGen0(uint256 _genes) public returns (string memory) {
+      if (msg.sender == owner()) {          
+          require(gen0Counter < CREATION_LIMIT_GEN0, 'Amount of first generation kitties is exceeded');
+          gen0Counter++;
+          _createKitty(0, 0, 0, _genes, msg.sender);
+      } else {
+          require(alreadyGotFreeKitty(msg.sender) == false, "You have already created the free kitty");
+          gotFreeKitty[msg.sender] = true; 
+          _createKitty(0, 0, 0, _genes, msg.sender);
+      }
+  }  
 
   function _createKitty(
     uint256 _mumId,

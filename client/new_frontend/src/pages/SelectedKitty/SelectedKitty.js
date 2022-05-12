@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getKitties } from '../../App'
+import { fetchTokenIdsOnSale, getOwnedKitties } from '../../helpers'
+
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
 import { parseGenes } from '../Catalogue/Catalogue'
 import { Kitty } from '../Factory/Kitty'
 
-function SelectedKitty({ myKitties, kittiesOnSale, dispatch }) {
+function SelectedKitty({ myKitties, kittieIdsOnSale, dispatch }) {
   const { web3, kittyContract, marketplaceContract, selectedAccount } =
     useContext(Web3Context)
   const [ownThisKitty, setOwnership] = useState(false)
   const [fetched, setFetched] = useState(false)
   const [selectedKitty, setSelectedKitty] = useState(null)
-  // const [price, setPrice] = useState('')
+  const [price, setPrice] = useState('')
   const [approved, setApproved] = useState(false)
   const [onSale, setOnSale] = useState(false)
 
@@ -20,7 +21,7 @@ function SelectedKitty({ myKitties, kittiesOnSale, dispatch }) {
   // if we didnt fetch for kitties
   if (!fetched) {
     console.log('fetch')
-    getKitties(kittyContract, selectedAccount, dispatch).then(() =>
+    getOwnedKitties(kittyContract, selectedAccount, dispatch).then(() =>
       setFetched(true)
     )
   }
@@ -33,17 +34,15 @@ function SelectedKitty({ myKitties, kittiesOnSale, dispatch }) {
     }
   }
 
-  const fetchTokensOnSale = () => {
-    marketplaceContract.methods
-      .getAllTokenOnSale()
-      .call()
-      .then(idsArray =>
-        dispatch({ type: 'SET_ALL_TOKENS_ON_SALE', payload: idsArray })
-      )
-  }
-
   const getKitty = async () => {
     kittyContract.methods.getKitty(id).call().then(setSelectedKitty)
+  }
+
+  const getKittyPrice = () => {
+    marketplaceContract.methods
+      .getOffer(id)
+      .call()
+      .then(offer => setPrice(web3.utils.fromWei(offer.price, 'ether')))
   }
 
   const sellKitty = price => {
@@ -52,14 +51,21 @@ function SelectedKitty({ myKitties, kittiesOnSale, dispatch }) {
     marketplaceContract.methods
       .setOffer(weiPrice, id)
       .send({ from: selectedAccount })
-      .then(() => fetchTokensOnSale())
+      .then(() => fetchTokenIdsOnSale(marketplaceContract, dispatch))
+  }
+
+  const buyKitty = () => {
+    marketplaceContract.methods
+      .buyKitty(id)
+      .send({ from: selectedAccount, value: web3.utils.toWei(price, 'ether') })
+      .then(() => fetchTokenIdsOnSale(marketplaceContract, dispatch))
   }
 
   const removeOffer = () => {
     marketplaceContract.methods
       .removeOffer(id)
       .send({ from: selectedAccount })
-      .then(() => fetchTokensOnSale())
+      .then(() => fetchTokenIdsOnSale(marketplaceContract, dispatch))
   }
 
   const approve = () => {
@@ -79,16 +85,16 @@ function SelectedKitty({ myKitties, kittiesOnSale, dispatch }) {
       .call()
       .then(setApproved)
 
-    fetchTokensOnSale()
+    fetchTokenIdsOnSale(marketplaceContract, dispatch)
   }, [])
 
   useEffect(() => {
-    if (kittiesOnSale.includes(id)) {
+    if (kittieIdsOnSale.includes(id)) {
       setOnSale(true)
     } else {
       setOnSale(false)
     }
-  }, [kittiesOnSale])
+  }, [kittieIdsOnSale])
 
   if (!selectedKitty) {
     getKitty()
@@ -107,6 +113,9 @@ function SelectedKitty({ myKitties, kittiesOnSale, dispatch }) {
         sellKitty={sellKitty}
         onSale={onSale}
         removeOffer={removeOffer}
+        getKittyPrice={getKittyPrice}
+        price={price}
+        buyKitty={buyKitty}
       />
     </div>
   )
@@ -119,18 +128,21 @@ function SaleInput({
   sellKitty,
   onSale,
   removeOffer,
+  getKittyPrice,
+  price,
+  buyKitty,
 }) {
-  const [price, setPrice] = useState('')
+  const [inputVal, setInputVal] = useState('')
 
-  if (!ownThisKitty) {
-    return null
+  if (onSale) {
+    getKittyPrice()
   }
 
   function input() {
     if (onSale) {
       return (
         <>
-          <span>On sale</span>
+          <span>On sale for {price} ETH</span>
           <button onClick={removeOffer}>Remove offer</button>
         </>
       )
@@ -140,14 +152,27 @@ function SaleInput({
       <>
         <input
           type='textarea'
-          value={price}
-          onChange={e => setPrice(e.target.value)}
+          value={inputVal}
+          onChange={e => setInputVal(e.target.value)}
         />
 
         <span>ETH</span>
-        <button onClick={() => sellKitty(price)}>Sell me</button>
+        <button onClick={() => sellKitty(inputVal)}>Sell me</button>
       </>
     )
+  }
+
+  if (!ownThisKitty) {
+    if (onSale) {
+      return (
+        <div>
+          <span>Buy this kitty for {price} ETH</span>
+          <button onClick={buyKitty}>Buy</button>
+        </div>
+      )
+    }
+
+    return null
   }
 
   return (
@@ -156,7 +181,7 @@ function SaleInput({
         input()
       ) : (
         <>
-          <div>U need to approve first</div>
+          <div>If U want to sell this kitty U need to approve first</div>
           <button onClick={() => approve()}>Approve</button>
         </>
       )}
