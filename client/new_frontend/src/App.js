@@ -9,84 +9,54 @@ import { Web3Context } from './OtherComponents/Web3/Web3Provider'
 import SelectedKitty from './pages/SelectedKitty/SelectedKitty'
 import Marketplace from './pages/Marketplace/Marketplace'
 import { getOwnedKitties } from './helpers'
+import { initialState, reducer } from './storage/mainReduser'
+import Navigation from './OtherComponents/Navigation/Navigation'
 
-const NavItem = ({ url, title }) => (
-  <li>
-    <NavLink
-      to={url}
-      className={({ isActive }) => 'fill_button' + (isActive ? ' active' : '')}>
-      {title}
-    </NavLink>
-  </li>
-)
-
-const initialState = {
-  myKitties: {},
-  kittieIdsOnSale: [],
-  kittiesOnSale: {},
-  breed: { dame: null, sire: null },
-}
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'SET_KITTIES':
-      return { ...state, myKitties: { ...action.payload } }
-    case 'CHOSE_KITTY_FOR_BREED':
-      const { id, role } = action.payload
-
-      // if kitty is already chosen for breed as other parent
-      if (Object.values(state.breed).includes(id)) {
-        return { ...state, breed: { ...initialState.breed, [role]: id } }
-      }
-      return { ...state, breed: { ...state.breed, [role]: id } }
-    case 'ERASE_BREEDING':
-      return { ...state, breed: { ...initialState.breed } }
-    case 'SET_ALL_TOKEN_IDS_ON_SALE':
-      return { ...state, kittieIdsOnSale: [...action.payload] }
-    case 'SET_ALL_KITTIES_ON_SALE':
-      return { ...state, kittiesOnSale: { ...action.payload } }
-
-    default:
-      return state
-  }
-}
-
-function App() {
-  const [kittiesState, dispatch] = useReducer(reducer, initialState)
-
+function AppInit() {
   const { web3, kittyContract, selectedAccount } = useContext(Web3Context)
-
-  useEffect(() => {
-    getOwnedKitties(kittyContract, selectedAccount, dispatch)
-  }, [selectedAccount])
 
   if (!selectedAccount) {
     return null
   }
 
   return (
+    <App
+      web3={web3}
+      kittyContract={kittyContract}
+      selectedAccount={selectedAccount}
+    />
+  )
+}
+
+function App({ web3, kittyContract, selectedAccount }) {
+  const [kittiesState, dispatch] = useReducer(reducer, initialState)
+
+  useEffect(() => {
+    getOwnedKitties(kittyContract, selectedAccount, dispatch)
+    //checks, if user got his free kitty or not
+    kittyContract.methods
+      .alreadyGotFreeKitty(selectedAccount)
+      .call()
+      .then(payload => dispatch({ type: 'SET_HAVE_FREE_KITTY', payload }))
+  }, [selectedAccount])
+
+  return (
     <div className='App'>
+      <Navigation />
       <div className='mainContainer'>
-        <nav role='navigation' className={'navigation'}>
-          <div className={'navigation__logo'}>
-            <NavItem url='/' title='CryptoKittiesClone' />
-          </div>
-          <div className={'navigation__menu'}>
-            <ul>
-              <NavItem url='/' title='Home' />
-              <NavItem url='marketplace' title='Marketplace' />
-              <NavItem url='catalogue' title='Your kitties' />
-              <NavItem url='factory' title='K-Factory' />
-            </ul>
-          </div>
-        </nav>
+        <div className='separator'></div>
         <Routes>
           <Route path='/' element={<IndexPage />} />
-          <Route path='factory' element={<Factory />} />
+          <Route
+            path='factory'
+            element={<Factory haveFreeKitty={kittiesState.haveFreeKitty} />}
+          />
           <Route
             path='catalogue'
             element={
               <CatalogueContainer
                 myKitties={kittiesState.myKitties}
+                haveFreeKitty={kittiesState.haveFreeKitty}
                 dispatch={dispatch}
               />
             }
@@ -127,4 +97,4 @@ function App() {
   )
 }
 
-export default App
+export default AppInit

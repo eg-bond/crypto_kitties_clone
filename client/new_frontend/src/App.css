@@ -1,3 +1,26 @@
+/* General styles */
+@font-face {
+  font-family: 'Jost';
+  src: local('Jost'), url('./fonts/Jost-Bold.woff2');
+}
+@font-face {
+  font-family: 'JostVar';
+  src: local('JostVar'), url('./fonts/Jost-VariableFont_wght.ttf');
+}
+
+* {
+  font-family: 'JostVar', sans-serif;
+  /* font-family: 'Jost', sans-serif; */
+}
+
+.separator {
+  position: absolute;
+  left: 0;
+  height: 3px;
+  background-color: rgb(104, 103, 103);
+  width: 100vw;
+}
+
 .App {
   text-align: center;
 }
@@ -49,58 +72,4 @@
   padding-right: 16px;
   background-color: #cfcfcf;
   height: 100%;
-}
-
-/* navigation */
-.navigation {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: var(--mainClr);
-}
-.navigation a.active {
-  color: var(--mainClr) !important;
-  background-color: var(--secondaryClr) !important;
-}
-
-.navigation__logo {
-  text-decoration: none;
-  flex: 1;
-  align-self: center;
-  margin-left: 2%;
-}
-.navigation__logo img {
-  width: 70%;
-}
-
-.navigation__logo a:hover {
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
-
-.navigation__menu {
-  flex: 3.5;
-  margin: 1% 0;
-}
-.navigation__menu ul {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  list-style: none;
-}
-.navigation__menu li {
-  margin: 1.5% 0.5%;
-}
-.navigation__menu a {
-  border-radius: 30px;
-  padding: 9px 11px;
-  text-decoration: none;
-  font-size: 1.2rem;
-  /* @media ($mediaQuery1200) {
-    font-size: 1.05rem;
-  } */
-  /* @media ($mediaQuery992) {
-    font-size: 0.86rem;
-    padding: 8px 6px;
-  } */
 }

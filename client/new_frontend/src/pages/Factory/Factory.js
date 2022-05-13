@@ -20,7 +20,7 @@ export const defaultKittyDNA = {
   someProp: '1',
 }
 
-function Factory() {
+function Factory({ haveFreeKitty }) {
   const { kittyContract, selectedAccount } = useContext(Web3Context)
 
   const range9keys = ['eyesShape', 'decoration', 'animation', 'someProp']
@@ -147,9 +147,12 @@ function Factory() {
           ))}
         </div>
       </div>
-      <button onClick={getRandomKitty}>GetRandomKitty</button>
+      <button onClick={getRandomKitty}>RandomKitty</button>
       <button onClick={() => setDna(defaultKittyDNA)}>Default kitty</button>
-      <button onClick={createKitty}>Create Kitty</button>
+      <button disabled={haveFreeKitty} onClick={createKitty}>
+        Create Kitty
+      </button>
+      {haveFreeKitty && <div>U are already got your free kitty</div>}
 
       {/* kitty itself */}
       <Kitty dna={dna} />

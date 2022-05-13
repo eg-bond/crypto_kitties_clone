@@ -3,8 +3,8 @@ import Catalogue from './Catalogue'
 
 import './catalogue.css'
 
-function CatalogueContainer({ myKitties }) {
-  return <Catalogue kitties={myKitties} />
+function CatalogueContainer({ myKitties, haveFreeKitty }) {
+  return <Catalogue kitties={myKitties} haveFreeKitty={haveFreeKitty} />
 }
 
 export default CatalogueContainer

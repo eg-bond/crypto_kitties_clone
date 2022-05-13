@@ -1,0 +1,40 @@
+/* navigation */
+.navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: var(--mainClr);
+  padding: 2rem;
+  font-weight: 700;
+}
+
+.navigation a {
+  color: black;
+  transition: ease 300ms;
+}
+.navigation a:hover {
+  color: #f64e16;
+}
+.navigation a.active {
+  color: #f64e16;
+}
+
+.navigation__homeLink {
+  align-self: center;
+}
+.navigation__homeLink a {
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.navigation__menu {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: nowrap;
+}
+
+.navigation__menu a {
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 1.2rem;
+}

@@ -1,7 +1,13 @@
 import React from 'react'
 import { getColor } from '../Factory/colors'
 import { defaultKittyDNA } from '../Factory/Factory'
-import { Link, useNavigate } from 'react-router-dom'
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useParams,
+  useResolvedPath,
+} from 'react-router-dom'
 import {
   getAnimationName,
   getDecorationName,
@@ -11,8 +17,9 @@ import { Kitty } from '../Factory/Kitty'
 
 import './catalogue.css'
 
-export function Catalogue({ arr, kitties }) {
+export function Catalogue({ haveFreeKitty, kitties }) {
   let navigate = useNavigate()
+  let { pathname } = useLocation()
 
   const selectKitty = id => {
     navigate(`/selected_kitty/${id}`)
@@ -31,9 +38,21 @@ export function Catalogue({ arr, kitties }) {
             id={id}
           />
         ))}
+        {pathname === '/catalogue' && (
+          <AdditionalItem haveFreeKitty={haveFreeKitty} kitties={kitties} />
+        )}
       </div>
     </div>
   )
+}
+
+function AdditionalItem({ haveFreeKitty, kitties }) {
+  if (!haveFreeKitty) {
+    return <Link to={'/factory'}>Get Your free kitty</Link>
+  }
+  if (Object.keys(kitties).length === 0) {
+    return <Link to={'/marketplace'}>Get kitty</Link>
+  }
 }
 
 export function KittieItem({ dnaString, onClickHandler, generation, id }) {
