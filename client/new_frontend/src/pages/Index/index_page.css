@@ -1,0 +1,40 @@
+.landing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 60vh;
+  width: 100vw;
+  left: 0;
+  background: url('../../images/banner.png') no-repeat;
+  background-size: cover;
+  background-position: bottom;
+}
+
+.landing img {
+  margin: 1rem 0;
+}
+.landing__header h1 {
+  font-size: 4.2rem !important;
+}
+.landing__header h3 {
+  font-size: 1.9rem;
+  color: #2f2930;
+}
+
+.landing__btn {
+  cursor: pointer;
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+  width: 350px;
+  background-color: #fff;
+  color: #f64e16;
+  border-radius: 1.5rem;
+  transition: ease 400ms;
+}
+
+.landing__btn:hover {
+  color: black;
+}

@@ -9,8 +9,7 @@
 }
 
 .navigation a {
-  color: black;
-  transition: ease 300ms;
+  transition: ease 400ms;
 }
 .navigation a:hover {
   color: #f64e16;
