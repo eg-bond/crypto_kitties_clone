@@ -1,3 +1,11 @@
+.cataloguePage {
+  padding-top: 1rem;
+}
+
+.catalogue {
+  padding-top: 1.5rem;
+}
+
 .catalogue * {
   transition: ease 400ms;
 }
@@ -15,16 +23,10 @@
   justify-content: flex-start;
 }
 
-.kittyGrid {
-  width: 100%;
-  height: 430px;
-  padding: 25px;
-}
-
 .kittyContainer {
   position: relative;
   width: 300px;
-  height: 450px;
+  height: 430px;
 }
 
 .kittyContainer:hover {
@@ -34,7 +36,7 @@
 .containerBackground {
   position: absolute;
   width: 100%;
-  height: 75%;
+  height: 85%;
   border-radius: 1rem;
   opacity: 0.3;
 }
@@ -45,7 +47,7 @@
 
 .kittyContainerContent {
   position: absolute;
-  padding-top: 35px;
+  padding-top: 55px;
   width: 100%;
   height: 100%;
 }
@@ -53,10 +55,72 @@
 .kitty {
   display: flex;
   justify-content: center;
-  height: 75%;
+  height: 85%;
 }
 
-.info {
-  height: 25%;
+.kitty__info {
+  height: 15%;
   text-align: left;
+  padding: 0 0.5rem;
+}
+
+.kitty__info__head {
+  font-weight: bold;
+}
+
+.kitty__info__details {
+  display: flex;
+  gap: 1rem;
+  /* justify-content: space-between; */
+}
+
+.catalogue__additional {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border: dashed 2px #f64e16;
+  border-radius: 1rem;
+}
+
+.catalogue__additional {
+  text-decoration: none;
+  color: #f64e16;
+}
+
+.catalogue__additional:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.catalogue__additional:hover .catalogue__additional__sign {
+  transform: scale(1.06, 1.06);
+}
+
+.catalogue__additional__sign {
+  z-index: 1;
+  position: relative;
+  width: 170px;
+  height: 170px;
+  border: dashed 2px #f64e16;
+  border-radius: 50%;
+}
+
+.plus__horizontal {
+  z-index: 2;
+  position: absolute;
+  left: 15%;
+  top: 49%;
+  width: 70%;
+  height: 2%;
+  border: dashed 2px #f64e16;
+}
+.plus__vertical {
+  z-index: 2;
+  position: absolute;
+  top: 15%;
+  left: 49%;
+  height: 70%;
+  width: 2%;
+  border: dashed 2px #f64e16;
 }

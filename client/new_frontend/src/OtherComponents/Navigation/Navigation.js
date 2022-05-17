@@ -19,6 +19,7 @@ const Navigation = () => {
       <div className={'navigation__menu'}>
         <NavItem url='marketplace' title='Marketplace' />
         <NavItem url='catalogue' title='Your kitties' />
+        <NavItem url='breed' title='Breed' />
         <NavItem url='factory' title='Factory' />
         <button>Connect wallet</button>
       </div>

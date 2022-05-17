@@ -44,8 +44,8 @@ function App({ web3, kittyContract, selectedAccount }) {
   return (
     <div className='App'>
       <Navigation />
-      <div className='mainContainer'>
-        <div className='separator'></div>
+      <div className='mainContainer flex-wrapper'>
+        {/* <div className='separator'></div> */}
         <Routes>
           <Route
             path='/'
@@ -105,7 +105,6 @@ function App({ web3, kittyContract, selectedAccount }) {
           />
         </Routes>
       </div>
-      <div className='separator'></div>
       <Footer />
     </div>
   )

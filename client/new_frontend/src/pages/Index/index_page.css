@@ -49,23 +49,10 @@
   color: black;
 }
 
-.marketplacePreview__header {
-  display: flex;
-  justify-content: space-between;
-  margin: 1.5rem 0 2rem 0;
-  padding: 0.8rem 0px 0.8rem 60px;
-  border-radius: 5px;
-  /* font-weight: 900; */
-  box-shadow: rgb(231 230 228) 3px 5px;
-  color: rgb(68, 68, 68);
-
-  /* width: 100%; */
-  /* max-width: 1480px; */
-  background: url('../../images/pattern-tile.svg') center top / 44rem repeat
-    rgb(243, 241, 238);
-  position: relative;
+.marketplacePreview {
+  padding-top: 1rem;
 }
 
-.marketplacePreview__header h1 {
+/* .marketplacePreview__header h1 {
   font-size: 2.8rem;
-}
+} */

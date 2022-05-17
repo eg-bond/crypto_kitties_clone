@@ -23,9 +23,9 @@ function IndexPage({
         <GetYourKittyLink haveFreeKitty={haveFreeKitty} kitties={kitties} />
       </div>
       <div className='marketplacePreview'>
-        <div className='marketplacePreview__header'>
+        <div className='headerContainer marketplacePreview__header'>
           <h1>Kitties for sale</h1>
-          <Link className='landing__link' to={'/factory'}>
+          <Link className='landing__link' to={'/marketplace'}>
             See all available kitties
           </Link>
         </div>

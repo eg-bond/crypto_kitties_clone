@@ -27,7 +27,11 @@ export function Catalogue({ haveFreeKitty, kitties }) {
 
   return (
     <div className='catalogue'>
-      {pathname === '/catalogue' && <Link to='/breed'>Breed</Link>}
+      {/* {pathname === '/catalogue' && (
+        <div className='headerContainer'>
+          <h1>Your kitties</h1>
+        </div>
+      )} */}
       <div className='kitties'>
         {Object.keys(kitties).map(id => (
           <KittieItem
@@ -48,10 +52,32 @@ export function Catalogue({ haveFreeKitty, kitties }) {
 
 function AdditionalItem({ haveFreeKitty, kitties }) {
   if (!haveFreeKitty) {
-    return <Link to={'/factory'}>Get Your free kitty</Link>
+    return (
+      <Link to={'/factory'} className='kittyContainer catalogue__additional'>
+        <div className='catalogue__additional__sign'>
+          <div className='plus'>
+            <span className='plus__horizontal'></span>
+            <span className='plus__vertical'></span>
+          </div>
+        </div>
+        Get Your free kitty
+      </Link>
+    )
   }
   if (Object.keys(kitties).length === 0) {
-    return <Link to={'/marketplace'}>Get kitty</Link>
+    return (
+      <Link
+        to={'/marketplace'}
+        className='kittyContainer catalogue__additional'>
+        <div className='catalogue__additional__sign'>
+          <div className='plus'>
+            <span className='plus__horizontal'></span>
+            <span className='plus__vertical'></span>
+          </div>
+        </div>
+        Buy kitty
+      </Link>
+    )
   }
 }
 
@@ -67,12 +93,16 @@ export function KittieItem({ dnaString, onClickHandler, generation, id }) {
         <div className='kitty'>
           <Kitty dna={dna} />
         </div>
-        <div className='info'>
-          <p>• Genes: {dnaString}</p>
-          <p>• Generation: {generation}</p>
-          <p>• {getEyesShapeName(dna.eyesShape)} eyes</p>
-          <p>• {getAnimationName(dna.animation)} animation</p>
-          <p>• {getDecorationName(dna.decoration)} decoration</p>
+        <div className='kitty__info'>
+          <div className='kitty__info__head'># {id}</div>
+          <div className='kitty__info__details'>
+            <span>DNA: {dnaString}</span>
+            <span>Gen: {generation}</span>
+          </div>
+
+          {/* <p>{getEyesShapeName(dna.eyesShape)} eyes</p>
+          <p>{getAnimationName(dna.animation)} animation</p>
+          <p>{getDecorationName(dna.decoration)} decoration</p> */}
         </div>
       </div>
     </div>
