@@ -4,13 +4,14 @@ import IndexPage from './pages/Index/IndexPage'
 import Breed from './pages/Breed/Breed'
 import Factory from './pages/Factory/Factory'
 import CatalogueContainer from './pages/Catalogue/CatalogueContainer'
-import { useContext, useEffect, useReducer } from 'react'
+import React, { useContext, useEffect, useReducer } from 'react'
 import { Web3Context } from './OtherComponents/Web3/Web3Provider'
 import SelectedKitty from './pages/SelectedKitty/SelectedKitty'
 import Marketplace from './pages/Marketplace/Marketplace'
 import { getOwnedKitties } from './helpers'
 import { initialState, reducer } from './storage/mainReduser'
 import Navigation from './OtherComponents/Navigation/Navigation'
+import Footer from './OtherComponents/Footer/Footer'
 
 function AppInit() {
   const { web3, kittyContract, selectedAccount } = useContext(Web3Context)
@@ -46,7 +47,18 @@ function App({ web3, kittyContract, selectedAccount }) {
       <div className='mainContainer'>
         <div className='separator'></div>
         <Routes>
-          <Route path='/' element={<IndexPage />} />
+          <Route
+            path='/'
+            element={
+              <IndexPage
+                haveFreeKitty={kittiesState.haveFreeKitty}
+                kitties={kittiesState.myKitties}
+                kittiesOnSale={kittiesState.kittiesOnSale}
+                kittieIdsOnSale={kittiesState.kittieIdsOnSale}
+                dispatch={dispatch}
+              />
+            }
+          />
           <Route
             path='factory'
             element={<Factory haveFreeKitty={kittiesState.haveFreeKitty} />}
@@ -93,6 +105,8 @@ function App({ web3, kittyContract, selectedAccount }) {
           />
         </Routes>
       </div>
+      <div className='separator'></div>
+      <Footer />
     </div>
   )
 }

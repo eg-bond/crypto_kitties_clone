@@ -27,7 +27,7 @@ export function Catalogue({ haveFreeKitty, kitties }) {
 
   return (
     <div className='catalogue'>
-      <Link to='/breed'>Breed</Link>
+      {pathname === '/catalogue' && <Link to='/breed'>Breed</Link>}
       <div className='kitties'>
         {Object.keys(kitties).map(id => (
           <KittieItem
