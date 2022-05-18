@@ -18,6 +18,10 @@
   margin-left: 1rem;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 .separator {
   position: absolute;
   left: 0;

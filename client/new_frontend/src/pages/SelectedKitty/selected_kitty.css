@@ -7,7 +7,6 @@
 
 .selectedKitty__background {
   position: absolute;
-  /* left: 0; */
   opacity: 0.3;
   width: 98vw;
   height: 100%;
@@ -21,12 +20,12 @@
   margin: 0 auto;
 }
 
-.selectedKitty__info {
+.selectedKitty__section {
   display: flex;
   flex-direction: column;
   position: relative;
   text-align: left;
-  padding-top: 1rem;
+  margin: 1rem 0;
 }
 
 .selectedKitty__info__details {
@@ -36,7 +35,30 @@
 }
 
 .selectedKitty__saleInput {
-  padding-top: 1rem;
   display: flex;
+  gap: 2rem;
+}
+
+.saleInput__price {
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
+}
+
+.saleInput__button {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: solid 2px #f64e16;
+  transition: ease 300ms;
+}
+
+.saleInput__button:hover {
+  cursor: pointer;
+  background-color: #f64e16;
+}
+
+.selectedKitty__cattributes {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 2rem;
 }

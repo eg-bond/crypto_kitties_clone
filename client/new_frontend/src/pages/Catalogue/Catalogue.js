@@ -99,10 +99,6 @@ export function KittieItem({ dnaString, onClickHandler, generation, id }) {
             <span>DNA: {dnaString}</span>
             <span>Gen: {generation}</span>
           </div>
-
-          {/* <p>{getEyesShapeName(dna.eyesShape)} eyes</p>
-          <p>{getAnimationName(dna.animation)} animation</p>
-          <p>{getDecorationName(dna.decoration)} decoration</p> */}
         </div>
       </div>
     </div>

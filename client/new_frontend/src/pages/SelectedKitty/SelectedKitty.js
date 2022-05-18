@@ -5,6 +5,11 @@ import { fetchTokenIdsOnSale, getOwnedKitties } from '../../helpers'
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
 import { parseGenes } from '../Catalogue/Catalogue'
 import { getColor } from '../Factory/colors'
+import {
+  getAnimationName,
+  getDecorationName,
+  getEyesShapeName,
+} from '../Factory/helpers'
 import { Kitty } from '../Factory/Kitty'
 import './selected_kitty.css'
 
@@ -116,7 +121,7 @@ function SelectedKitty({ myKitties, kittieIdsOnSale, dispatch }) {
         </div>
       </div>
       <div className='selectedKitty__infoContainer'>
-        <div className='selectedKitty__info'>
+        <div className='selectedKitty__section'>
           <h1>Kitty #{id}</h1>
           <div className='selectedKitty__info__details'>
             <div>
@@ -126,20 +131,41 @@ function SelectedKitty({ myKitties, kittieIdsOnSale, dispatch }) {
             <span>Owner: 0x3E51fFbde3da5d74fb568f21c9F9E96032cccE08</span>
           </div>
         </div>
-        <div className='selectedKitty__saleInput'>
-          <SaleInput
-            ownThisKitty={ownThisKitty}
-            approved={approved}
-            approve={approve}
-            sellKitty={sellKitty}
-            onSale={onSale}
-            removeOffer={removeOffer}
-            getKittyPrice={getKittyPrice}
-            price={price}
-            buyKitty={buyKitty}
-          />
+
+        <div className='selectedKitty__section'>
+          <h1>Trading</h1>
+          <div className='selectedKitty__saleInput'>
+            <SaleInput
+              ownThisKitty={ownThisKitty}
+              approved={approved}
+              approve={approve}
+              sellKitty={sellKitty}
+              onSale={onSale}
+              removeOffer={removeOffer}
+              getKittyPrice={getKittyPrice}
+              price={price}
+              buyKitty={buyKitty}
+            />
+          </div>
         </div>
-        <div className='selectedKitty__cattributes'></div>
+
+        <div className='selectedKitty__section'>
+          <h1>Cattributes</h1>
+          <div className='selectedKitty__cattributes'>
+            <div>
+              <span className='bold'>Eyes: </span>
+              {getEyesShapeName(dna.eyesShape)}
+            </div>
+            <div>
+              <span className='bold'>Animation: </span>
+              {getAnimationName(dna.animation)}
+            </div>
+            <div>
+              <span className='bold'>Decoration: </span>
+              {getDecorationName(dna.decoration)}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -166,24 +192,36 @@ function SaleInput({
     if (onSale) {
       return (
         <>
-          <span>On sale for {price} ETH</span>
-          <button onClick={removeOffer}>Remove offer</button>
+          <div className='saleInput__price'>
+            <div>On sale for</div>
+            <div style={{ fontWeight: 'bold' }}>{price} ETH</div>
+          </div>
+          <button className='saleInput__button' onClick={removeOffer}>
+            Remove offer
+          </button>
         </>
       )
     }
 
     return (
       <>
-        <div>
-          <input
-            type='textarea'
-            value={inputVal}
-            onChange={e => setInputVal(e.target.value)}
-          />
-          <span>ETH</span>
+        <div className='saleInput__price'>
+          <div>Sell this kitty for </div>
+          <div>
+            <input
+              type='textarea'
+              value={inputVal}
+              onChange={e => setInputVal(e.target.value)}
+            />
+            <span> ETH</span>
+          </div>
         </div>
 
-        <button onClick={() => sellKitty(inputVal)}>Sell me</button>
+        <button
+          className='saleInput__button'
+          onClick={() => sellKitty(inputVal)}>
+          Sell me
+        </button>
       </>
     )
   }
@@ -192,13 +230,18 @@ function SaleInput({
     if (onSale) {
       return (
         <>
-          <span>Buy this kitty for {price} ETH</span>
-          <button onClick={buyKitty}>Buy</button>
+          <span>
+            Buy this kitty for{' '}
+            <span style={{ fontWeight: 'bold' }}>{price} ETH</span>{' '}
+          </span>
+          <button className='saleInput__button' onClick={buyKitty}>
+            Buy
+          </button>
         </>
       )
     }
 
-    return null
+    return <div>This kitty is not for sale</div>
   }
 
   return (
@@ -208,7 +251,9 @@ function SaleInput({
       ) : (
         <>
           <div>If U want to sell this kitty U need to approve first</div>
-          <button onClick={() => approve()}>Approve</button>
+          <button className='saleInput__button' onClick={() => approve()}>
+            Approve
+          </button>
         </>
       )}
     </>
