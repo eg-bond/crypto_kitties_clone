@@ -5,13 +5,13 @@
   align-items: center;
   position: relative;
   height: 600px;
-  left: 0;
+  /* left: 0; */
 }
 
 .landing__cover {
   position: absolute;
   height: 600px;
-  width: 100vw;
+  width: 98vw;
   background-color: #f64e16;
 }
 

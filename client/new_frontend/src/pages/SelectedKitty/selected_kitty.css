@@ -1,0 +1,42 @@
+.selectedKitty__kittyContainer {
+  position: relative;
+  height: 360px;
+  display: flex;
+  justify-content: center;
+}
+
+.selectedKitty__background {
+  position: absolute;
+  /* left: 0; */
+  opacity: 0.3;
+  width: 98vw;
+  height: 100%;
+}
+.selected_kitty__kitty {
+  padding-top: 50px;
+}
+
+.selectedKitty__infoContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.selectedKitty__info {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  text-align: left;
+  padding-top: 1rem;
+}
+
+.selectedKitty__info__details {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.selectedKitty__saleInput {
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}

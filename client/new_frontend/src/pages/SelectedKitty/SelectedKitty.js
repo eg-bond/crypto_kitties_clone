@@ -4,7 +4,9 @@ import { fetchTokenIdsOnSale, getOwnedKitties } from '../../helpers'
 
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
 import { parseGenes } from '../Catalogue/Catalogue'
+import { getColor } from '../Factory/colors'
 import { Kitty } from '../Factory/Kitty'
+import './selected_kitty.css'
 
 function SelectedKitty({ myKitties, kittieIdsOnSale, dispatch }) {
   const { web3, kittyContract, marketplaceContract, selectedAccount } =
@@ -105,18 +107,40 @@ function SelectedKitty({ myKitties, kittieIdsOnSale, dispatch }) {
 
   return (
     <div className='selectedKitty'>
-      <Kitty dna={dna} />
-      <SaleInput
-        ownThisKitty={ownThisKitty}
-        approved={approved}
-        approve={approve}
-        sellKitty={sellKitty}
-        onSale={onSale}
-        removeOffer={removeOffer}
-        getKittyPrice={getKittyPrice}
-        price={price}
-        buyKitty={buyKitty}
-      />
+      <div className='selectedKitty__kittyContainer'>
+        <div
+          style={{ backgroundColor: getColor(dna.eyesClr) }}
+          className='selectedKitty__background'></div>
+        <div className='selected_kitty__kitty'>
+          <Kitty dna={dna} />
+        </div>
+      </div>
+      <div className='selectedKitty__infoContainer'>
+        <div className='selectedKitty__info'>
+          <h1>Kitty #{id}</h1>
+          <div className='selectedKitty__info__details'>
+            <div>
+              <span>DNA: {selectedKitty.genes}</span>
+              <span className='ml_1rem'>Gen: {selectedKitty.generation}</span>
+            </div>
+            <span>Owner: 0x3E51fFbde3da5d74fb568f21c9F9E96032cccE08</span>
+          </div>
+        </div>
+        <div className='selectedKitty__saleInput'>
+          <SaleInput
+            ownThisKitty={ownThisKitty}
+            approved={approved}
+            approve={approve}
+            sellKitty={sellKitty}
+            onSale={onSale}
+            removeOffer={removeOffer}
+            getKittyPrice={getKittyPrice}
+            price={price}
+            buyKitty={buyKitty}
+          />
+        </div>
+        <div className='selectedKitty__cattributes'></div>
+      </div>
     </div>
   )
 }
@@ -150,13 +174,15 @@ function SaleInput({
 
     return (
       <>
-        <input
-          type='textarea'
-          value={inputVal}
-          onChange={e => setInputVal(e.target.value)}
-        />
+        <div>
+          <input
+            type='textarea'
+            value={inputVal}
+            onChange={e => setInputVal(e.target.value)}
+          />
+          <span>ETH</span>
+        </div>
 
-        <span>ETH</span>
         <button onClick={() => sellKitty(inputVal)}>Sell me</button>
       </>
     )
@@ -165,10 +191,10 @@ function SaleInput({
   if (!ownThisKitty) {
     if (onSale) {
       return (
-        <div>
+        <>
           <span>Buy this kitty for {price} ETH</span>
           <button onClick={buyKitty}>Buy</button>
-        </div>
+        </>
       )
     }
 
@@ -176,7 +202,7 @@ function SaleInput({
   }
 
   return (
-    <div>
+    <>
       {approved ? (
         input()
       ) : (
@@ -185,7 +211,7 @@ function SaleInput({
           <button onClick={() => approve()}>Approve</button>
         </>
       )}
-    </div>
+    </>
   )
 }
 

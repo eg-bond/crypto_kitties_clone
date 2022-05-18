@@ -14,11 +14,15 @@
   /* font-family: 'Jost', sans-serif; */
 }
 
+.ml_1rem {
+  margin-left: 1rem;
+}
+
 .separator {
   position: absolute;
   left: 0;
   height: 3px;
-  background-color: rgb(104, 103, 103);
+  background-color: #f64e16;
   width: 100vw;
 }
 
@@ -88,5 +92,5 @@
   padding-left: 16px;
   padding-right: 16px;
   background-color: #cfcfcf;
-  height: 100vh;
+  min-height: 100vh;
 }

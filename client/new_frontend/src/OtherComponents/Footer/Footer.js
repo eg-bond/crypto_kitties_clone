@@ -4,7 +4,7 @@ import './footer.css'
 function Footer() {
   return (
     <div className='footer'>
-      <div className='separator'></div>
+      {/* <div className='separator'></div> */}
       Footer
     </div>
   )
