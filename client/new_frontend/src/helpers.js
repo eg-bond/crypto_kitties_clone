@@ -57,3 +57,7 @@ export const getKitties = async (kittyContract, idsArray, dispatch) => {
     dispatch({ type: 'SET_ALL_KITTIES_ON_SALE', payload })
   })
 }
+
+export function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}

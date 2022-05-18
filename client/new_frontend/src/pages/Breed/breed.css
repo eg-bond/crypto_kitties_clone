@@ -1,4 +1,9 @@
+.breed {
+  padding-top: 1rem;
+}
+
 .breedGrid {
+  padding: 1rem 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, 49%);
   justify-content: space-between;
@@ -17,10 +22,37 @@
   border-radius: 2rem;
 }
 
+.containerBackground--breed {
+  height: 100%;
+}
+
+.breedContainer,
+.breedContainer * {
+  transition: ease 400ms;
+}
+
 .empty {
-  background-color: aquamarine;
+  border: solid 2px black;
+  /* background-color: aquamarine; */
 }
 
 .breedContainer:hover {
   cursor: pointer;
+  border-color: #f64e16;
+}
+
+.breedContainer:hover img {
+  transform: scale(1.05, 1.05);
+  cursor: pointer;
+}
+.breedContainer:hover div {
+  color: #f64e16;
+}
+
+.breed__info {
+  margin: 0 auto;
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }

@@ -25,7 +25,7 @@ function IndexPage({
       <div className='marketplacePreview'>
         <div className='headerContainer marketplacePreview__header'>
           <h1>Kitties for sale</h1>
-          <Link className='landing__link' to={'/marketplace'}>
+          <Link className='button--white' to={'/marketplace'}>
             See all available kitties
           </Link>
         </div>
@@ -43,14 +43,14 @@ function IndexPage({
 function GetYourKittyLink({ haveFreeKitty, kitties }) {
   if (!haveFreeKitty) {
     return (
-      <Link className='landing__link' to={'/factory'}>
+      <Link className='button--white' to={'/factory'}>
         Get your own kitty
       </Link>
     )
   }
   if (Object.keys(kitties).length === 0) {
     return (
-      <Link className='landing__link' to={'/marketplace'}>
+      <Link className='button--white' to={'/marketplace'}>
         Get your own kitty
       </Link>
     )

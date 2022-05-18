@@ -5,6 +5,12 @@ import { Kitty } from '../Factory/Kitty'
 import { KittieItem, parseGenes } from '../Catalogue/Catalogue'
 import { getColor } from '../Factory/colors'
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
+import { capitalizeFirstLetter } from '../../helpers'
+import {
+  getAnimationName,
+  getDecorationName,
+  getEyesShapeName,
+} from '../Factory/helpers'
 
 function BreedItem({ role, myKitties, breed, openModal }) {
   const selectedKitty = myKitties[breed[role]]
@@ -16,24 +22,45 @@ function BreedItem({ role, myKitties, breed, openModal }) {
 
   return (
     <div className={role}>
-      <h2>{role}</h2>
+      <h2>{capitalizeFirstLetter(role)}</h2>
       <p>This kitty will be the {role}</p>
 
       {breed[role] === null ? (
         <div onClick={() => openModal(role)} className='breedContainer empty'>
-          Select a cat as a Dame
+          <img src='../images/egg.png' alt='egg' />
+          <div className='bold'>
+            Select a cat as a {capitalizeFirstLetter(role)}
+          </div>
         </div>
       ) : (
         <>
           <div onClick={() => openModal(role)} className='breedContainer'>
             <div
-              className='containerBackground'
+              className='containerBackground containerBackground--breed'
               style={{ backgroundColor: getColor(dna.eyesClr) }}></div>
             <Kitty dna={dna} />
           </div>
-          <div className='info'>
-            <p>Genes: {selectedKitty.genes}</p>
-            <p>Generation: {selectedKitty.generation}</p>
+          <div className='breed__info'>
+            <div>
+              <span className='bold'>Genes: </span>
+              {selectedKitty.genes}
+            </div>
+            <div>
+              <span className='bold'>Gen: </span>
+              {selectedKitty.generation}
+            </div>
+            <div>
+              <span className='bold'>Eyes: </span>
+              {getEyesShapeName(dna.eyesShape)}
+            </div>
+            <div>
+              <span className='bold'>Animation: </span>
+              {getAnimationName(dna.animation)}
+            </div>
+            <div>
+              <span className='bold'>Decoration: </span>
+              {getDecorationName(dna.decoration)}
+            </div>
           </div>
         </>
       )}
@@ -45,6 +72,13 @@ function Breed({ myKitties, dispatch, breed }) {
   const [visible, setVisible] = useState(false)
   const breedRole = useRef()
   const { kittyContract, selectedAccount } = useContext(Web3Context)
+
+  const bothKittiesIsSet = () => {
+    if ((breed.dame !== null) & (breed.sire !== null)) {
+      return true
+    }
+    return false
+  }
 
   const openModal = role => {
     breedRole.current = role
@@ -75,7 +109,9 @@ function Breed({ myKitties, dispatch, breed }) {
 
   return (
     <div className='breed'>
-      <h1>Cats breeding</h1>
+      <div className='headerContainer'>
+        <h1>Cats breeding</h1>
+      </div>
       <div className='breedGrid'>
         <BreedItem
           role={'dame'}
@@ -108,7 +144,11 @@ function Breed({ myKitties, dispatch, breed }) {
           </div>
         </Modal>
       )}
-      <button onClick={breedCats}>Ok, give them some privacy</button>
+      {bothKittiesIsSet() && (
+        <button className='button--white' onClick={breedCats}>
+          Ok, give them some privacy
+        </button>
+      )}
     </div>
   )
 }

@@ -22,6 +22,27 @@
   font-weight: bold;
 }
 
+/* buttons */
+
+.button--white {
+  cursor: pointer;
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+  width: 350px;
+  background-color: #fff;
+  color: #f64e16;
+  border-radius: 1.5rem;
+  transition: ease 400ms;
+  text-decoration: none;
+  border: solid 2px black;
+  z-index: 2;
+}
+
+.button--white:hover {
+  color: black;
+}
+
 .separator {
   position: absolute;
   left: 0;
