@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
+
+import { Web3Context } from '../Web3/Web3Provider'
 import './navigation.css'
 
 const NavItem = ({ url, title }) => (
@@ -11,6 +13,8 @@ const NavItem = ({ url, title }) => (
 )
 
 const Navigation = () => {
+  const { connectedAccount } = useContext(Web3Context)
+
   return (
     <nav role='navigation' className='navigation'>
       <div className={'navigation__homeLink'}>
@@ -18,12 +22,38 @@ const Navigation = () => {
       </div>
       <div className={'navigation__menu'}>
         <NavItem url='marketplace' title='Marketplace' />
-        <NavItem url='catalogue' title='Your kitties' />
-        <NavItem url='breed' title='Breed' />
+        {connectedAccount !== 0 && (
+          <>
+            <NavItem url='catalogue' title='Your kitties' />
+            <NavItem url='breed' title='Breed' />
+          </>
+        )}
         <NavItem url='factory' title='Factory' />
-        <button>Connect wallet</button>
+        <ConnectButton />
       </div>
     </nav>
+  )
+}
+
+function ConnectButton() {
+  const { connectedAccount, login, logout } = useContext(Web3Context)
+  // const { selectedAccount } = useContext(Web3Context)
+  // console.log(connectedAccount)
+  const shortAccount = () => {
+    if (connectedAccount) {
+      return connectedAccount.slice(0, 2) + '...' + connectedAccount.slice(-4)
+    }
+  }
+
+  return (
+    <>
+      <div>{shortAccount()}</div>
+      {connectedAccount ? (
+        <button onClick={logout}>logout</button>
+      ) : (
+        <button onClick={login}>login</button>
+      )}
+    </>
   )
 }
 

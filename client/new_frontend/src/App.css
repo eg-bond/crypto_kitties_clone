@@ -22,6 +22,11 @@
   font-weight: bold;
 }
 
+/* modal fix */
+.sc-kjEcyX {
+  z-index: 20 !important;
+}
+
 /* buttons */
 
 .button--white {
@@ -39,8 +44,28 @@
   z-index: 2;
 }
 
+.button--white:disabled {
+  cursor: default;
+  background-color: rgb(180, 177, 177);
+  color: black;
+}
+
 .button--white:hover {
   color: black;
+}
+
+.button--blue {
+  background-color: #78a8ff;
+  padding: 0.5rem;
+  border: solid 2px black;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  border-bottom: 4px solid;
+}
+
+.button--blue:hover {
+  transform: translateY(2px);
+  border-bottom: 2px solid;
 }
 
 .separator {

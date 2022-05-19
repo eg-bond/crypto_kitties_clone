@@ -1,26 +1,17 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { getColor } from '../Factory/colors'
 import { defaultKittyDNA } from '../Factory/Factory'
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useParams,
-  useResolvedPath,
-} from 'react-router-dom'
-import {
-  getAnimationName,
-  getDecorationName,
-  getEyesShapeName,
-} from '../Factory/helpers'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+
 import { Kitty } from '../Factory/Kitty'
 
 import './catalogue.css'
+import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
 
 export function Catalogue({ haveFreeKitty, kitties }) {
   let navigate = useNavigate()
   let { pathname } = useLocation()
-
+  // console.log(connectedAccount)
   const selectKitty = id => {
     navigate(`/selected_kitty/${id}`)
   }

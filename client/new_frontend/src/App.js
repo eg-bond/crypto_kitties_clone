@@ -1,5 +1,5 @@
 import './App.css'
-import { NavLink, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import IndexPage from './pages/Index/IndexPage'
 import Breed from './pages/Breed/Breed'
 import Factory from './pages/Factory/Factory'
@@ -7,39 +7,46 @@ import CatalogueContainer from './pages/Catalogue/CatalogueContainer'
 import React, { useContext, useEffect, useReducer } from 'react'
 import { Web3Context } from './OtherComponents/Web3/Web3Provider'
 import SelectedKitty from './pages/SelectedKitty/SelectedKitty'
-import Marketplace from './pages/Marketplace/Marketplace'
 import { getOwnedKitties } from './helpers'
 import { initialState, reducer } from './storage/mainReduser'
 import Navigation from './OtherComponents/Navigation/Navigation'
 import Footer from './OtherComponents/Footer/Footer'
+import MarketplacePage from './pages/Marketplace/MarketplacePage'
+import SelectedKittyContainer from './pages/SelectedKitty/SelectedKittyContainer'
 
 function AppInit() {
-  const { web3, kittyContract, selectedAccount } = useContext(Web3Context)
-
-  if (!selectedAccount) {
-    return null
-  }
+  const { web3, kittyContract, connectedAccount, currentChainName } =
+    useContext(Web3Context)
 
   return (
     <App
       web3={web3}
       kittyContract={kittyContract}
-      selectedAccount={selectedAccount}
+      connectedAccount={connectedAccount}
+      currentChainName={currentChainName}
     />
   )
 }
 
-function App({ web3, kittyContract, selectedAccount }) {
+function App({ web3, kittyContract, connectedAccount, currentChainName }) {
   const [kittiesState, dispatch] = useReducer(reducer, initialState)
 
+  // useEffect(() => {
+  //   if (currentChainName !== 'ganache') {
+  //     handleNetworkSwitch('ganache')
+  //   }
+  // }, [currentChainName])
+
   useEffect(() => {
-    getOwnedKitties(kittyContract, selectedAccount, dispatch)
-    //checks, if user got his free kitty or not
-    kittyContract.methods
-      .alreadyGotFreeKitty(selectedAccount)
-      .call()
-      .then(payload => dispatch({ type: 'SET_HAVE_FREE_KITTY', payload }))
-  }, [selectedAccount])
+    if (connectedAccount && currentChainName === 'ganache') {
+      getOwnedKitties(kittyContract, connectedAccount, dispatch)
+      //checks, if user got his free kitty or not
+      kittyContract.methods
+        .alreadyGotFreeKitty(connectedAccount)
+        .call()
+        .then(payload => dispatch({ type: 'SET_HAVE_FREE_KITTY', payload }))
+    }
+  }, [connectedAccount, currentChainName])
 
   return (
     <div className='App'>
@@ -76,7 +83,7 @@ function App({ web3, kittyContract, selectedAccount }) {
           <Route
             path='marketplace'
             element={
-              <Marketplace
+              <MarketplacePage
                 kittiesOnSale={kittiesState.kittiesOnSale}
                 kittieIdsOnSale={kittiesState.kittieIdsOnSale}
                 dispatch={dispatch}
@@ -96,7 +103,7 @@ function App({ web3, kittyContract, selectedAccount }) {
           <Route
             path='selected_kitty/:id'
             element={
-              <SelectedKitty
+              <SelectedKittyContainer
                 myKitties={kittiesState.myKitties}
                 kittieIdsOnSale={kittiesState.kittieIdsOnSale}
                 dispatch={dispatch}

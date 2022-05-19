@@ -57,6 +57,39 @@ export const useCurrentAccount = () => {
   return currentAccount
 }
 
+export const useAuth = () => {
+  let [connectedAccount, setAccount] = useState(0)
+
+  const login = () => {
+    window.ethereum
+      .request({ method: 'eth_requestAccounts' })
+      .then(accounts => {
+        setAccount(accounts[0] || 0)
+      })
+      .catch(err => {
+        console.log(err)
+        return
+      })
+
+    // subscribe to the MM account changing
+    window.ethereum.on('accountsChanged', function (accounts) {
+      setAccount(accounts[0] || 0)
+    })
+  }
+
+  const logout = () => {
+    setAccount(0)
+    // unsubscribe from accountChanged event
+    window.ethereum._events.accountsChanged = []
+  }
+
+  useEffect(() => {
+    login()
+  }, [])
+  console.log(connectedAccount)
+  return { connectedAccount, login, logout }
+}
+
 export const createContract = (web3, abi, contractAddress) => {
   return new web3.eth.Contract(abi, contractAddress)
 }

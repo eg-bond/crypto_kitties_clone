@@ -11,6 +11,7 @@ import {
   getDecorationName,
   getEyesShapeName,
 } from '../Factory/helpers'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function BreedItem({ role, myKitties, breed, openModal }) {
   const selectedKitty = myKitties[breed[role]]
@@ -69,9 +70,10 @@ function BreedItem({ role, myKitties, breed, openModal }) {
 }
 
 function Breed({ myKitties, dispatch, breed }) {
+  const navigate = useNavigate()
   const [visible, setVisible] = useState(false)
   const breedRole = useRef()
-  const { kittyContract, selectedAccount } = useContext(Web3Context)
+  const { kittyContract, connectedAccount, login } = useContext(Web3Context)
 
   const bothKittiesIsSet = () => {
     if ((breed.dame !== null) & (breed.sire !== null)) {
@@ -88,7 +90,7 @@ function Breed({ myKitties, dispatch, breed }) {
   const breedCats = () => {
     kittyContract.methods
       .breed(breed.dame, breed.sire)
-      .send({ from: selectedAccount })
+      .send({ from: connectedAccount })
   }
 
   const choseKittyForBreed = id => {
@@ -106,6 +108,22 @@ function Breed({ myKitties, dispatch, breed }) {
       })
     }
   }, [])
+
+  if (connectedAccount === 0) {
+    return (
+      <div className='breed'>
+        <div className='headerContainer'>
+          <h1>Cats breeding</h1>
+        </div>
+        <button
+          onClick={login}
+          style={{ marginTop: '1rem' }}
+          className='button--white'>
+          Connect wallet
+        </button>
+      </div>
+    )
+  }
 
   return (
     <div className='breed'>
