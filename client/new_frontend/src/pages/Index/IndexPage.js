@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Marketplace from '../Marketplace/Marketplace'
+import Header from '../../OtherComponents/Header/Header'
+import MarketplaceContainer from '../Marketplace/Marketplace'
 import './index_page.css'
 
 function IndexPage({
@@ -23,13 +24,12 @@ function IndexPage({
         <GetYourKittyLink haveFreeKitty={haveFreeKitty} kitties={kitties} />
       </div>
       <div className='marketplacePreview'>
-        <div className='headerContainer marketplacePreview__header'>
-          <h1>Kitties for sale</h1>
-          <Link className='button--white' to={'/marketplace'}>
-            See all available kitties
-          </Link>
-        </div>
-        <Marketplace
+        <Header
+          title={'Kitties for sale'}
+          linkTitle={'See all available kitties'}
+          goTo={'/marketplace'}
+        />
+        <MarketplaceContainer
           kittiesOnSale={kittiesOnSale}
           kittieIdsOnSale={kittieIdsOnSale}
           dispatch={dispatch}

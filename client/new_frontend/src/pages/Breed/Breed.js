@@ -12,6 +12,7 @@ import {
   getEyesShapeName,
 } from '../Factory/helpers'
 import { useLocation, useNavigate } from 'react-router-dom'
+import Header from '../../OtherComponents/Header/Header'
 
 function BreedItem({ role, myKitties, breed, openModal }) {
   const selectedKitty = myKitties[breed[role]]
@@ -112,9 +113,8 @@ function Breed({ myKitties, dispatch, breed }) {
   if (connectedAccount === 0) {
     return (
       <div className='breed'>
-        <div className='headerContainer'>
-          <h1>Cats breeding</h1>
-        </div>
+        <Header title={'Cats breeding'} />
+
         <button
           onClick={login}
           style={{ marginTop: '1rem' }}
@@ -127,9 +127,7 @@ function Breed({ myKitties, dispatch, breed }) {
 
   return (
     <div className='breed'>
-      <div className='headerContainer'>
-        <h1>Cats breeding</h1>
-      </div>
+      <Header title={'Cats breeding'} />
       <div className='breedGrid'>
         <BreedItem
           role={'dame'}

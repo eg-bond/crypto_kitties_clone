@@ -1,14 +1,13 @@
 import React from 'react'
-import Marketplace from './Marketplace'
+import Header from '../../OtherComponents/Header/Header'
+import MarketplaceContainer from './Marketplace'
 import './marketplace.css'
 
 function MarketplacePage({ kittiesOnSale, kittieIdsOnSale, dispatch }) {
   return (
     <div className='marketplacePage'>
-      <div className='headerContainer'>
-        <h1>Marketplace</h1>
-      </div>
-      <Marketplace
+      <Header title={'Marketplace'} />
+      <MarketplaceContainer
         kittiesOnSale={kittiesOnSale}
         kittieIdsOnSale={kittieIdsOnSale}
         dispatch={dispatch}
