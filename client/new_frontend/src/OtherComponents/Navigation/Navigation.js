@@ -37,8 +37,7 @@ const Navigation = () => {
 
 function ConnectButton() {
   const { connectedAccount, login, logout } = useContext(Web3Context)
-  // const { selectedAccount } = useContext(Web3Context)
-  // console.log(connectedAccount)
+
   const shortAccount = () => {
     if (connectedAccount) {
       return connectedAccount.slice(0, 2) + '...' + connectedAccount.slice(-4)
@@ -47,11 +46,17 @@ function ConnectButton() {
 
   return (
     <>
-      <div>{shortAccount()}</div>
       {connectedAccount ? (
-        <button onClick={logout}>logout</button>
+        <div className='connectButton connectButton--logout'>
+          <div onClick={logout} class='connectButton__content'>
+            <span>{shortAccount()}</span>
+            <span>Logout</span>
+          </div>
+        </div>
       ) : (
-        <button onClick={login}>login</button>
+        <div onClick={login} className='connectButton connectButton--login'>
+          Login
+        </div>
       )}
     </>
   )
