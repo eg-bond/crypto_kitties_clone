@@ -48,13 +48,13 @@
 .saleInput__button {
   padding: 1rem;
   border-radius: 0.5rem;
-  border: solid 2px #f64e16;
+  border: solid 2px var(--mainClr);
   transition: ease 300ms;
 }
 
 .saleInput__button:hover {
   cursor: pointer;
-  background-color: #f64e16;
+  background-color: var(--mainClr);
 }
 
 .selectedKitty__cattributes {

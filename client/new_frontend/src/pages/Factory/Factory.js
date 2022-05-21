@@ -88,7 +88,7 @@ function Factory({ haveFreeKitty }) {
           <Kitty dna={dna} />
           <div>
             <h2>Kitty DNA</h2>
-            <div>
+            <div className='factory__kitty__dna'>
               {Object.keys(dna).map((key, i) => (
                 <span key={`${i}_${key}`}>{dna[key]} </span>
               ))}
@@ -128,7 +128,9 @@ function Factory({ haveFreeKitty }) {
               rangeMax={99}
             />
 
-            <div>Decoration pattern color</div>
+            <div className='factory__settings__decorationColorsH'>
+              Decoration pattern color
+            </div>
             <div className='factory__settings__decorationColors'>
               <AttributeInput
                 title={'Middle color'}
@@ -180,16 +182,16 @@ function Factory({ haveFreeKitty }) {
               rangeMax={9}
             />
           </div>
-
-          <button className='button--blue ' onClick={getRandomKitty}>
-            RandomKitty
-          </button>
-
-          <button
-            className='button--blue ml_1rem'
-            onClick={() => setDna(defaultKittyDNA)}>
-            Default kitty
-          </button>
+          <div className='factory__buttons'>
+            <button className='button--blue ' onClick={getRandomKitty}>
+              RandomKitty
+            </button>
+            <button
+              className='button--blue ml_1rem'
+              onClick={() => setDna(defaultKittyDNA)}>
+              Default kitty
+            </button>
+          </div>
         </div>
       </div>
 

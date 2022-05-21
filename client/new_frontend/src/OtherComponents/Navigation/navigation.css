@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: var(--mainClr);
+  background-color: white;
   padding: 2rem;
   font-weight: 700;
 }
@@ -11,10 +11,10 @@
   transition: ease 400ms;
 }
 .navigation a:hover {
-  color: #f64e16;
+  color: var(--mainClr);
 }
 .navigation a.active {
-  color: #f64e16;
+  color: var(--mainClr);
 }
 
 .navigation__homeLink {
@@ -87,7 +87,7 @@
 
   .navigation__homeLink a,
   .navigation__menu a {
-    font-size: 4vw;
+    font-size: var(--mobileParagraphsFS);
   }
 
   .navigation__homeLink a::before {
@@ -102,5 +102,8 @@
   }
   .connectButton__content {
     font-size: 2.8vw;
+  }
+  .connectButton--logout:hover .connectButton__content {
+    transform: translateY(-4.3vw);
   }
 }

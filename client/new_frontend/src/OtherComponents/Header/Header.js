@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'web3uikit'
 import { Web3Context } from '../Web3/Web3Provider'
+import './header.css'
 
 function Header({
   title,

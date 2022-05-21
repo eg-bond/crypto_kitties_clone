@@ -22,6 +22,14 @@
   font-weight: bold;
 }
 
+/* mobile media general settings` */
+@media (max-width: 767.8px),
+  (max-height: 500px) and (-webkit-min-device-pixel-ratio: 2) {
+  h2 {
+    font-size: var(--mobileH2FS);
+  }
+}
+
 /* modal fix */
 .sc-kjEcyX {
   z-index: 20 !important;
@@ -55,6 +63,7 @@
 }
 
 .button--blue {
+  font-size: 1rem;
   background-color: #78a8ff;
   padding: 0.5rem;
   border: solid 2px black;
@@ -115,23 +124,6 @@
   }
 }
 
-.headerContainer {
-  display: flex;
-  justify-content: space-between;
-  /* margin: 1.5rem 0 2rem 0; */
-  padding: 0.8rem 2rem 0.8rem 2rem;
-  border-radius: 5px;
-  box-shadow: rgb(231 230 228) 3px 5px;
-  color: rgb(68, 68, 68);
-  background: url('./images/pattern-tile.svg') center top / 44rem repeat
-    rgb(243, 241, 238);
-  position: relative;
-}
-
-.headerContainer h1 {
-  font-size: 2.5rem;
-}
-
 /* main */
 .mainContainer {
   max-width: 1400px;
@@ -143,4 +135,13 @@
   padding-right: 16px;
   background-color: #cfcfcf;
   min-height: 100vh;
+}
+
+@media (max-width: 767.8px),
+  (max-height: 500px) and (-webkit-min-device-pixel-ratio: 2) {
+  .button--blue,
+  .button--white {
+    font-size: var(--mobileParagraphsFS);
+    padding: 2vw;
+  }
 }

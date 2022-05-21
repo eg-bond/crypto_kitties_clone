@@ -1,0 +1,26 @@
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 2rem 0.8rem 2rem;
+  border-radius: 5px;
+  box-shadow: rgb(231 230 228) 3px 5px;
+  color: rgb(68, 68, 68);
+  background: url('../../images/pattern-tile.svg') center top / 44rem repeat
+    rgb(243, 241, 238);
+  position: relative;
+}
+
+.headerContainer h1 {
+  font-size: 2.5rem;
+}
+
+@media (max-width: 767.8px),
+  (max-height: 500px) and (-webkit-min-device-pixel-ratio: 2) {
+  .headerContainer {
+    padding: 1vw 4vw;
+  }
+
+  .headerContainer h1 {
+    font-size: var(--mobileH1FS);
+  }
+}
