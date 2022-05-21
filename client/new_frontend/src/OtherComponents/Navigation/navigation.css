@@ -70,7 +70,7 @@
   background-color: #ffa1a1;
 }
 .connectButton--logout:hover .connectButton__content {
-  transform: translateY(-22px);
+  transform: translateY(-23px);
 }
 .connectButton--login {
   background-color: #b0f6b9;
