@@ -8,6 +8,8 @@ import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
 import { Kitty } from './Kitty'
 import './factory.css'
 import { getColor } from './colors'
+import { Button } from 'web3uikit'
+import Header from '../../OtherComponents/Header/Header'
 
 export const defaultKittyDNA = {
   head_bodyClr: '10',
@@ -23,7 +25,8 @@ export const defaultKittyDNA = {
 }
 
 function Factory({ haveFreeKitty }) {
-  const { kittyContract, connectedAccount, login } = useContext(Web3Context)
+  const { kittyContract, connectedAccount, login, currentChainName } =
+    useContext(Web3Context)
 
   const range9keys = ['eyesShape', 'decoration', 'animation', 'someProp']
 
@@ -78,9 +81,7 @@ function Factory({ haveFreeKitty }) {
 
   return (
     <div className='factory'>
-      <div className='headerContainer'>
-        <h1>Factory</h1>
-      </div>
+      <Header title={'Factory'} />
 
       <div className='factory__container'>
         <div className='factory__kitty'>
@@ -193,13 +194,15 @@ function Factory({ haveFreeKitty }) {
       </div>
 
       {connectedAccount !== 0 ? (
-        <button
-          style={{ marginTop: '1rem' }}
-          className='button--white'
-          disabled={haveFreeKitty}
-          onClick={createKitty}>
-          Create Kitty
-        </button>
+        currentChainName === 'ganache' && (
+          <button
+            style={{ marginTop: '1rem' }}
+            className='button--white'
+            disabled={haveFreeKitty}
+            onClick={createKitty}>
+            Create Kitty
+          </button>
+        )
       ) : (
         <button
           onClick={login}

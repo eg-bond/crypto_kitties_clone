@@ -11,10 +11,10 @@ import {
   getDecorationName,
   getEyesShapeName,
 } from '../Factory/helpers'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Header from '../../OtherComponents/Header/Header'
 
-function BreedItem({ role, myKitties, breed, openModal }) {
+function BreedItem({ role, myKitties, breed, openModal, currentChainName }) {
   const selectedKitty = myKitties[breed[role]]
 
   let dna = null
@@ -27,7 +27,14 @@ function BreedItem({ role, myKitties, breed, openModal }) {
       <h2>{capitalizeFirstLetter(role)}</h2>
       <p>This kitty will be the {role}</p>
 
-      {breed[role] === null ? (
+      {currentChainName !== 'ganache' ? (
+        <div className='breedContainer--disabled empty '>
+          <img src='../images/egg.png' alt='egg' />
+          <div className='bold'>
+            Select a cat as a {capitalizeFirstLetter(role)}
+          </div>
+        </div>
+      ) : breed[role] === null ? (
         <div onClick={() => openModal(role)} className='breedContainer empty'>
           <img src='../images/egg.png' alt='egg' />
           <div className='bold'>
@@ -71,10 +78,10 @@ function BreedItem({ role, myKitties, breed, openModal }) {
 }
 
 function Breed({ myKitties, dispatch, breed }) {
-  const navigate = useNavigate()
   const [visible, setVisible] = useState(false)
   const breedRole = useRef()
-  const { kittyContract, connectedAccount, login } = useContext(Web3Context)
+  const { kittyContract, connectedAccount, login, currentChainName } =
+    useContext(Web3Context)
 
   const bothKittiesIsSet = () => {
     if ((breed.dame !== null) & (breed.sire !== null)) {
@@ -134,12 +141,14 @@ function Breed({ myKitties, dispatch, breed }) {
           myKitties={myKitties}
           breed={breed}
           openModal={openModal}
+          currentChainName={currentChainName}
         />
         <BreedItem
           role={'sire'}
           myKitties={myKitties}
           breed={breed}
           openModal={openModal}
+          currentChainName={currentChainName}
         />
       </div>
       {visible && (
@@ -148,7 +157,7 @@ function Breed({ myKitties, dispatch, breed }) {
           onCloseButtonPressed={() => setVisible(false)}
           hasFooter={false}
           title='Chose kitty'>
-          <div className='kitties'>
+          <div className='catalogue'>
             {Object.keys(myKitties).map(id => (
               <KittieItem
                 key={Math.random() * 10}

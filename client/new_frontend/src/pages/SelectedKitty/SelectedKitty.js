@@ -19,11 +19,7 @@ function SelectedKitty({
   id,
   onSale,
 }) {
-  const { connectedAccount, login, currentChainName } = useContext(Web3Context)
-
-  if (currentChainName !== 'ganache') {
-    return <div> You need to switch the network</div>
-  }
+  const { connectedAccount, login } = useContext(Web3Context)
 
   return (
     <div className='selectedKitty'>
