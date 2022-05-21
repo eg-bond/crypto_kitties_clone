@@ -18,7 +18,8 @@ const Navigation = () => {
   return (
     <nav role='navigation' className='navigation'>
       <div className={'navigation__homeLink'}>
-        <NavItem url='/' title='CryptoKittiesClone' />
+        {/* this NavItem title in the 'content' area in CSS */}
+        <NavItem url='/' title='' />
       </div>
       <div className={'navigation__menu'}>
         <NavItem url='marketplace' title='Marketplace' />

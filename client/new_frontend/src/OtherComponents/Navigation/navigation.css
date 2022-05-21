@@ -1,4 +1,3 @@
-/* navigation */
 .navigation {
   display: flex;
   flex-direction: row;
@@ -19,15 +18,20 @@
 }
 
 .navigation__homeLink {
-  align-self: center;
+  display: flex;
+  align-items: center;
 }
 .navigation__homeLink a {
   font-size: 1.2rem;
   text-decoration: none;
 }
+.navigation__homeLink a::before {
+  content: 'CryptoKittiesClone';
+}
 
 .navigation__menu {
   display: flex;
+  align-items: center;
   gap: 1.2rem;
   flex-wrap: nowrap;
 }
@@ -43,6 +47,7 @@
   border-radius: 0.5rem;
   position: relative;
   width: 80px;
+  height: 27px;
   transition: ease 300ms;
 }
 .connectButton__content {
@@ -69,4 +74,33 @@
 }
 .connectButton--login {
   background-color: #b0f6b9;
+}
+
+@media (max-width: 767.8px),
+  (max-height: 500px) and (-webkit-min-device-pixel-ratio: 2) {
+  .navigation {
+    padding: 3vw 1vw;
+  }
+  .navigation__menu {
+    gap: 2vw;
+  }
+
+  .navigation__homeLink a,
+  .navigation__menu a {
+    font-size: 4vw;
+  }
+
+  .navigation__homeLink a::before {
+    content: 'CKC';
+  }
+
+  .connectButton {
+    border: solid 1px;
+    border-radius: 2vw;
+    width: 14vw;
+    height: 4.6vw;
+  }
+  .connectButton__content {
+    font-size: 2.8vw;
+  }
 }
