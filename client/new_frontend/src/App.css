@@ -25,8 +25,14 @@
 /* mobile media general settings` */
 @media (max-width: 767.8px),
   (max-height: 500px) and (-webkit-min-device-pixel-ratio: 2) {
+  h1 {
+    font-size: var(--mobileH1FS);
+  }
   h2 {
     font-size: var(--mobileH2FS);
+  }
+  p {
+    font-size: var(--mobileParagraphsFS);
   }
 }
 
@@ -131,8 +137,7 @@
   margin-left: auto;
   box-sizing: border-box;
   margin-right: auto;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 0 1rem 1rem 1rem;
   background-color: #cfcfcf;
   min-height: 100vh;
 }

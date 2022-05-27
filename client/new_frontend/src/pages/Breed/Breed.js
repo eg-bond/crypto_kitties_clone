@@ -25,7 +25,7 @@ function BreedItem({ role, myKitties, breed, openModal, currentChainName }) {
   return (
     <div className={role}>
       <h2>{capitalizeFirstLetter(role)}</h2>
-      <p>This kitty will be the {role}</p>
+      {/* <p>This kitty will be the {role}</p> */}
 
       {currentChainName !== 'ganache' ? (
         <div className='breedContainer--disabled empty '>

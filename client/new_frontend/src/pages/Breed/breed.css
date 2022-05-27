@@ -5,7 +5,7 @@
 .breedGrid {
   padding: 1rem 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 49%);
+  grid-template-columns: repeat(auto-fill, 49.5%);
   justify-content: space-between;
 }
 
@@ -60,7 +60,25 @@
 .breed__info {
   margin: 0 auto;
   display: flex;
-  gap: 0.7rem;
+  column-gap: 0.7rem;
+  row-gap: 0;
   flex-wrap: wrap;
   justify-content: space-evenly;
+}
+
+@media (max-width: 767.8px),
+  (max-height: 500px) and (-webkit-min-device-pixel-ratio: 2) {
+  .breedGrid {
+    gap: 1rem;
+    grid-template-columns: 100%;
+  }
+  .breedContainer {
+    height: 340px;
+  }
+  .breed__info {
+    font-size: var(--mobileParagraphsFS);
+  }
+  .breed .button--white {
+    width: 100%;
+  }
 }
