@@ -1,6 +1,6 @@
 .selectedKitty__kittyContainer {
   position: relative;
-  height: 360px;
+  height: 330px;
   display: flex;
   justify-content: center;
 }
@@ -12,7 +12,7 @@
   height: 100%;
 }
 .selected_kitty__kitty {
-  padding-top: 50px;
+  padding-top: 5px;
 }
 
 .selectedKitty__infoContainer {
@@ -46,7 +46,7 @@
 }
 
 .saleInput__button {
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   border-radius: 0.5rem;
   border: solid 2px var(--mainClr);
   transition: ease 300ms;
@@ -61,4 +61,16 @@
   display: flex;
   flex-wrap: wrap;
   column-gap: 2rem;
+}
+
+@media (max-width: 625px),
+  (max-height: 500px) and (-webkit-min-device-pixel-ratio: 2) {
+  .selectedKitty__section span,
+  .selectedKitty__section div {
+    font-size: var(--mobileParagraphsFS);
+  }
+  .saleInput__button {
+    font-size: var(--mobileParagraphsFS);
+    padding: 3vw 4.5vw;
+  }
 }

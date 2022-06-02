@@ -39,7 +39,7 @@ function SelectedKitty({
               <span>DNA: {selectedKitty.genes}</span>
               <span className='ml_1rem'>Gen: {selectedKitty.generation}</span>
             </div>
-            <span>Owner: 0x3E51fFbde3da5d74fb568f21c9F9E96032cccE08</span>
+            <span>Owner: 0x34...E08</span>
           </div>
         </div>
 

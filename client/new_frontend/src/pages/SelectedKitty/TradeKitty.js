@@ -70,10 +70,10 @@ function BuyKitty({ onSale, price, buyKitty }) {
   if (onSale) {
     return (
       <>
-        <span>
-          Buy this kitty for{' '}
+        <div className='saleInput__price'>
+          <span>Buy this kitty for</span>
           <span style={{ fontWeight: 'bold' }}>{price} ETH</span>{' '}
-        </span>
+        </div>
         <button className='saleInput__button' onClick={buyKitty}>
           Buy
         </button>

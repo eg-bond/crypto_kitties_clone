@@ -10,8 +10,17 @@
   position: relative;
 }
 
-.headerContainer h1 {
-  font-size: 2.5rem;
+.headerContainer > * {
+  align-self: center;
+}
+
+.headerContainer .button--white {
+  padding: 0.5rem 1rem;
+  font-size: 3.2vw;
+}
+
+.headerContainer h2 {
+  font-size: 2rem;
 }
 
 @media (max-width: 625px),
@@ -20,7 +29,11 @@
     padding: 1vw 4vw;
   }
 
-  .headerContainer h1 {
-    font-size: var(--mobileH1FS);
+  .headerContainer h2 {
+    font-size: var(--mobileH2FS);
+  }
+
+  .headerContainer .button--white {
+    padding: 1vw 2vw;
   }
 }

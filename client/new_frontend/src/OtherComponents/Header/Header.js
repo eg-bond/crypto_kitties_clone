@@ -14,7 +14,7 @@ function Header({
 
   return (
     <div className='headerContainer'>
-      <h1>{title}</h1>
+      <h2>{title}</h2>
       {currentChainName !== 'ganache' ? (
         <Button
           color='red'

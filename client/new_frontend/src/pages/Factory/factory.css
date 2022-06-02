@@ -76,9 +76,6 @@
   .factory__kitty:first-child {
     padding-top: 0;
   }
-  /* .factory__kitty .cat {
-    padding-bottom: 5rem;
-  } */
 
   .attribute__info,
   .factory__settings__decorationColorsH,
