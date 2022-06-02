@@ -153,6 +153,7 @@ function Breed({ myKitties, dispatch, breed }) {
       </div>
       {visible && (
         <Modal
+          className='breedModal'
           onCancel={() => setVisible(false)}
           onCloseButtonPressed={() => setVisible(false)}
           hasFooter={false}

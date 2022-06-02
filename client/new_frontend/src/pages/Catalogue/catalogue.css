@@ -126,7 +126,7 @@
   border: dashed 2px #f64e16;
 }
 
-@media (max-width: 767.8px),
+@media (max-width: 625px),
   (max-height: 500px) and (-webkit-min-device-pixel-ratio: 2) {
   .catalogue {
     row-gap: 1rem;

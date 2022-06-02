@@ -68,17 +68,17 @@
   display: flex;
 }
 
-@media (max-width: 767.8px),
+@media (max-width: 625px),
   (max-height: 500px) and (-webkit-min-device-pixel-ratio: 2) {
   .factory__container {
     flex-direction: column;
   }
   .factory__kitty:first-child {
-    padding-top: 2rem;
+    padding-top: 0;
   }
-  .factory__kitty .cat {
+  /* .factory__kitty .cat {
     padding-bottom: 5rem;
-  }
+  } */
 
   .attribute__info,
   .factory__settings__decorationColorsH,

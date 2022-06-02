@@ -66,7 +66,19 @@
   justify-content: space-evenly;
 }
 
-@media (max-width: 767.8px),
+/* modal header */
+.breedModal .cqTxTR {
+  padding: 16px;
+}
+/* modal content */
+.breedModal .iCQEgQ {
+  padding: 0px 16px 16px;
+}
+.breedModal .catalogue {
+  padding-top: 0;
+}
+
+@media (max-width: 625px),
   (max-height: 500px) and (-webkit-min-device-pixel-ratio: 2) {
   .breedGrid {
     gap: 1rem;
@@ -80,5 +92,17 @@
   }
   .breed .button--white {
     width: 100%;
+  }
+  /* modal itself */
+  .breedModal .dqDJyz {
+    max-width: 100%;
+  }
+  /* modal header */
+  .breedModal .cqTxTR {
+    padding: 3vw;
+  }
+  /* modal content */
+  .breedModal .iCQEgQ {
+    padding: 0px 8px 16px;
   }
 }
