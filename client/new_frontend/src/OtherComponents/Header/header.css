@@ -16,7 +16,6 @@
 
 .headerContainer .button--white {
   padding: 0.5rem 1rem;
-  font-size: 3.2vw;
 }
 
 .headerContainer h2 {
@@ -35,5 +34,6 @@
 
   .headerContainer .button--white {
     padding: 1vw 2vw;
+    font-size: 3.2vw;
   }
 }

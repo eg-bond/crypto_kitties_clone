@@ -1,6 +1,6 @@
-.factory {
+/* .factory {
   padding-top: 1rem;
-}
+} */
 
 .factory__container {
   padding-top: 1rem;
@@ -17,7 +17,7 @@
   align-items: center;
   justify-content: space-between;
   flex-basis: 50%;
-  background-color: white;
+  background-color: var(--emptyClr);
 }
 
 .factory__kitty:first-child {

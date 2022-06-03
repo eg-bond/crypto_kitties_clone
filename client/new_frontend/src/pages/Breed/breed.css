@@ -1,6 +1,6 @@
-.breed {
+/* .breed {
   padding-top: 1rem;
-}
+} */
 
 .breedGrid {
   padding: 1rem 0;
@@ -30,7 +30,7 @@
 }
 
 .empty {
-  border: solid 2px black;
+  background-color: var(--emptyClr);
 }
 
 .breedContainer:hover {

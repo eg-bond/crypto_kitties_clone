@@ -7,8 +7,8 @@
 
 .selectedKitty__background {
   position: absolute;
-  opacity: 0.3;
-  width: 98vw;
+  opacity: 0.5;
+  width: 100vw;
   height: 100%;
 }
 .selected_kitty__kitty {
@@ -46,6 +46,7 @@
 }
 
 .saleInput__button {
+  font-weight: 600;
   padding: 1rem 1.5rem;
   border-radius: 0.5rem;
   border: solid 2px var(--mainClr);

@@ -1,6 +1,6 @@
-.cataloguePage {
+/* .cataloguePage {
   padding-top: 1rem;
-}
+} */
 
 .catalogue {
   padding-top: 1.5rem;
@@ -41,7 +41,7 @@
   width: 100%;
   height: var(--kittyPart);
   border-radius: 1rem;
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 .kittyContainer:hover .containerBackground {

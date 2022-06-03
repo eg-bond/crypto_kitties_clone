@@ -49,7 +49,7 @@
   font-weight: 600;
   font-size: 1.2rem;
   /* width: 350px; */
-  background-color: #fff;
+  background-color: #f3f1ee;
   color: #f64e16;
   border-radius: 1.5rem;
   transition: ease 400ms;
@@ -60,6 +60,7 @@
 
 .button--white:disabled {
   cursor: default;
+
   background-color: rgb(180, 177, 177);
   color: black;
 }
@@ -93,6 +94,7 @@
 
 .App {
   text-align: center;
+  background-color: #cce6ff;
 }
 
 .App-logo {
@@ -138,8 +140,7 @@
   box-sizing: border-box;
   margin-right: auto;
   padding: 0 1rem 1rem 1rem;
-  background-color: #cfcfcf;
-  min-height: 100vh;
+  min-height: 88vh;
 }
 
 @media (max-width: 625px),
