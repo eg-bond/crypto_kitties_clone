@@ -53,6 +53,17 @@
   padding-top: 1rem;
 }
 
+@media (max-width: 1240px) {
+  .marketplacePreview .catalogue {
+    grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
+  }
+}
+@media (max-width: 900px) {
+  .marketplacePreview .catalogue {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
 @media (max-width: 625px),
   (max-height: 500px) and (-webkit-min-device-pixel-ratio: 2) {
   .landing {
