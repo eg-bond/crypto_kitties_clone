@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import { getColor } from '../Factory/colors'
 import { defaultKittyDNA } from '../Factory/Factory'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -30,30 +30,6 @@ export function Catalogue({ haveFreeKitty, kitties }) {
     </div>
   )
 }
-//   return (
-//     <div className='catalogue'>
-//       {/* {pathname === '/catalogue' && (
-//         <div className='headerContainer'>
-//           <h1>Your kitties</h1>
-//         </div>
-//       )} */}
-//       <div className='kitties'>
-//         {Object.keys(kitties).map(id => (
-//           <KittieItem
-//             key={Math.random() * 10}
-//             dnaString={kitties[id].genes}
-//             generation={kitties[id].generation}
-//             onClickHandler={selectKitty}
-//             id={id}
-//           />
-//         ))}
-//         {pathname === '/catalogue' && (
-//           <AdditionalItem haveFreeKitty={haveFreeKitty} kitties={kitties} />
-//         )}
-//       </div>
-//     </div>
-//   )
-// }
 
 function AdditionalItem({ haveFreeKitty, kitties }) {
   if (!haveFreeKitty) {

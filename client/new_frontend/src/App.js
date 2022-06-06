@@ -2,12 +2,11 @@ import './variables.css'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import IndexPage from './pages/Index/IndexPage'
-import Breed from './pages/Breed/Breed'
+import BreedPage from './pages/Breed/BreedPage'
 import Factory from './pages/Factory/Factory'
 import CatalogueContainer from './pages/Catalogue/CatalogueContainer'
 import React, { useContext, useEffect, useReducer } from 'react'
 import { Web3Context } from './OtherComponents/Web3/Web3Provider'
-import SelectedKitty from './pages/SelectedKitty/SelectedKitty'
 import { getOwnedKitties } from './helpers'
 import { initialState, reducer } from './storage/mainReduser'
 import Navigation from './OtherComponents/Navigation/Navigation'
@@ -94,7 +93,7 @@ function App({ web3, kittyContract, connectedAccount, currentChainName }) {
           <Route
             path='breed'
             element={
-              <Breed
+              <BreedPage
                 myKitties={kittiesState.myKitties}
                 dispatch={dispatch}
                 breed={kittiesState.breed}

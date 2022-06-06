@@ -69,10 +69,15 @@
 /* modal header */
 .breedModal .cqTxTR {
   padding: 16px;
+  background-color: var(--emptyClr);
+}
+.breedModal button {
+  background-color: var(--emptyClr) !important;
 }
 /* modal content */
 .breedModal .iCQEgQ {
   padding: 0px 16px 16px;
+  background-color: var(--emptyClr);
 }
 .breedModal .catalogue {
   padding-top: 0;

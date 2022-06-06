@@ -11,7 +11,6 @@ import {
   getDecorationName,
   getEyesShapeName,
 } from '../Factory/helpers'
-import { useNavigate } from 'react-router-dom'
 import Header from '../../OtherComponents/Header/Header'
 
 function BreedItem({ role, myKitties, breed, openModal, currentChainName }) {
@@ -77,14 +76,14 @@ function BreedItem({ role, myKitties, breed, openModal, currentChainName }) {
   )
 }
 
-function Breed({ myKitties, dispatch, breed }) {
+function BreedPage({ myKitties, dispatch, breed }) {
   const [visible, setVisible] = useState(false)
   const breedRole = useRef()
   const { kittyContract, connectedAccount, login, currentChainName } =
     useContext(Web3Context)
 
   const bothKittiesIsSet = () => {
-    if ((breed.dame !== null) & (breed.sire !== null)) {
+    if ((breed.mother !== null) & (breed.father !== null)) {
       return true
     }
     return false
@@ -97,7 +96,7 @@ function Breed({ myKitties, dispatch, breed }) {
 
   const breedCats = () => {
     kittyContract.methods
-      .breed(breed.dame, breed.sire)
+      .breed(breed.mother, breed.father)
       .send({ from: connectedAccount })
   }
 
@@ -137,14 +136,14 @@ function Breed({ myKitties, dispatch, breed }) {
       <Header title={'Cats breeding'} />
       <div className='breedGrid'>
         <BreedItem
-          role={'dame'}
+          role={'mother'}
           myKitties={myKitties}
           breed={breed}
           openModal={openModal}
           currentChainName={currentChainName}
         />
         <BreedItem
-          role={'sire'}
+          role={'father'}
           myKitties={myKitties}
           breed={breed}
           openModal={openModal}
@@ -165,6 +164,7 @@ function Breed({ myKitties, dispatch, breed }) {
                 dnaString={myKitties[id].genes}
                 generation={myKitties[id].generation}
                 onClickHandler={() => choseKittyForBreed(id)}
+                id={id}
               />
             ))}
           </div>
@@ -179,4 +179,4 @@ function Breed({ myKitties, dispatch, breed }) {
   )
 }
 
-export default Breed
+export default BreedPage

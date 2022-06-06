@@ -2,7 +2,7 @@ export const initialState = {
   myKitties: {},
   kittieIdsOnSale: [],
   kittiesOnSale: {},
-  breed: { dame: null, sire: null },
+  breed: { mother: null, father: null },
   haveFreeKitty: false,
 }
 
@@ -19,6 +19,7 @@ export const reducer = (state = initialState, action) => {
       if (Object.values(state.breed).includes(id)) {
         return { ...state, breed: { ...initialState.breed, [role]: id } }
       }
+      // default
       return { ...state, breed: { ...state.breed, [role]: id } }
     case 'ERASE_BREEDING':
       return { ...state, breed: { ...initialState.breed } }
