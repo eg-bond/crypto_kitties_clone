@@ -68,20 +68,6 @@ export default function TradeKitty({
   } else {
     return <BuyKitty onSale={onSale} price={price} buyKitty={handleBuyKitty} />
   }
-  // if (ownThisKitty) {
-  //   return (
-  //     <SellKitty
-  //       approved={approved}
-  //       approve={handleApprove}
-  //       price={price}
-  //       onSale={onSale}
-  //       removeOffer={handleRemoveOffer}
-  //       sellKitty={handleSellKitty}
-  //     />
-  //   )
-  // } else {
-  //   return <BuyKitty onSale={onSale} price={price} buyKitty={handleBuyKitty} />
-  // }
 }
 
 function BuyKitty({ onSale, price, buyKitty }) {
@@ -110,7 +96,7 @@ function SellKitty({
   removeOffer,
   sellKitty,
 }) {
-  const [inputVal, setInputVal] = useState('')
+  const [inputVal, setInputVal] = useState(1)
 
   // marketplace contract is not approved to be the operator
   if (!approved) {
@@ -146,7 +132,8 @@ function SellKitty({
         <div>Sell this kitty for </div>
         <div>
           <input
-            type='textarea'
+            min='0'
+            type='number'
             value={inputVal}
             onChange={e => setInputVal(e.target.value)}
           />

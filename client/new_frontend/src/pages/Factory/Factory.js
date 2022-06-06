@@ -10,6 +10,7 @@ import './factory.css'
 import { getColor } from './colors'
 import { Button } from 'web3uikit'
 import Header from '../../OtherComponents/Header/Header'
+import { getOwnedKitties } from '../../helpers'
 
 export const defaultKittyDNA = {
   head_bodyClr: '10',
@@ -24,7 +25,7 @@ export const defaultKittyDNA = {
   someProp: '1',
 }
 
-function Factory({ haveFreeKitty }) {
+function Factory({ haveFreeKitty, dispatch }) {
   const { kittyContract, connectedAccount, login, currentChainName } =
     useContext(Web3Context)
 
@@ -72,11 +73,12 @@ function Factory({ haveFreeKitty }) {
     setDna({ ...randomDNA })
   }
 
-  const createKitty = () => {
+  const createKitty = async () => {
     const genes = Number(Object.values(dna).join(''))
-    kittyContract.methods
+    await kittyContract.methods
       .createKittyGen0(genes)
       .send({ from: connectedAccount })
+    await getOwnedKitties(kittyContract, connectedAccount, dispatch)
   }
 
   return (

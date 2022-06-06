@@ -45,6 +45,16 @@
   justify-content: space-between;
 }
 
+.saleInput__price input {
+  width: 5rem;
+  font-weight: bold;
+  border: solid 2px black;
+  border-radius: 0.7rem;
+  padding: 0.3rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
 .saleInput__button {
   font-weight: 600;
   padding: 1rem 1.5rem;

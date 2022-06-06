@@ -30,7 +30,7 @@ function AppInit() {
 
 function App({ web3, kittyContract, connectedAccount, currentChainName }) {
   const [kittiesState, dispatch] = useReducer(reducer, initialState)
-
+  window.state = kittiesState
   // useEffect(() => {
   //   if (currentChainName !== 'ganache') {
   //     handleNetworkSwitch('ganache')
@@ -68,7 +68,12 @@ function App({ web3, kittyContract, connectedAccount, currentChainName }) {
           />
           <Route
             path='factory'
-            element={<Factory haveFreeKitty={kittiesState.haveFreeKitty} />}
+            element={
+              <Factory
+                haveFreeKitty={kittiesState.haveFreeKitty}
+                dispatch={dispatch}
+              />
+            }
           />
           <Route
             path='catalogue'
