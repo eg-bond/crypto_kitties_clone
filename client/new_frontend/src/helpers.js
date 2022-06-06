@@ -61,3 +61,7 @@ export const getKitties = async (kittyContract, idsArray, dispatch) => {
 export function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
+
+export const shortenAccount = (account, endChars) => {
+  return account.slice(0, 2) + '...' + account.slice('-' + endChars)
+}

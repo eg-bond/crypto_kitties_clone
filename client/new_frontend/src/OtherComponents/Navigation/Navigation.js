@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
+import { shortenAccount } from '../../helpers'
 
 import { Web3Context } from '../Web3/Web3Provider'
 import './navigation.css'
@@ -39,18 +40,15 @@ const Navigation = () => {
 function ConnectButton() {
   const { connectedAccount, login, logout } = useContext(Web3Context)
 
-  const shortAccount = () => {
-    if (connectedAccount) {
-      return connectedAccount.slice(0, 2) + '...' + connectedAccount.slice(-4)
-    }
-  }
-
   return (
     <>
       {connectedAccount ? (
         <div className='connectButton connectButton--logout'>
           <div onClick={logout} class='connectButton__content'>
-            <span>{shortAccount()}</span>
+            {connectedAccount && (
+              <span>{shortenAccount(connectedAccount, 4)}</span>
+            )}
+            {/* <span>{shortAccount()}</span> */}
             <span>Logout</span>
           </div>
         </div>

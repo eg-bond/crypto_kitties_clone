@@ -4,27 +4,31 @@ import { useMarketplace } from '../../OtherComponents/Web3/useMarketplace'
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
 
 export default function TradeKitty({
-  ownThisKitty,
   price,
   id,
   dispatch,
   onSale,
+  thisKittyOwner,
+  setThisKittyOwner,
 }) {
   const [approved, setApproved] = useState(false)
 
   const { kittyContract, marketplaceContract, connectedAccount } =
     useContext(Web3Context)
 
-  const { sellKitty, buyKitty, removeOffer, approve } = useMarketplace()
+  const { getKittyOwner, sellKitty, buyKitty, removeOffer, approve } =
+    useMarketplace()
 
   const handleSellKitty = async price => {
     await sellKitty(price, id)
+    await getKittyOwner(id).then(setThisKittyOwner)
     // maybe make another action for adding single id to 'kittieIdsOnSale' array ???
     fetchTokenIdsOnSale(marketplaceContract, dispatch)
   }
 
   const handleBuyKitty = async () => {
     await buyKitty(id)
+    await getKittyOwner(id).then(setThisKittyOwner)
     // maybe make another action for adding single id to 'kittieIdsOnSale' array ???
     fetchTokenIdsOnSale(marketplaceContract, dispatch)
     getOwnedKitties(kittyContract, connectedAccount, dispatch)
@@ -50,7 +54,7 @@ export default function TradeKitty({
     }
   }, [connectedAccount])
 
-  if (ownThisKitty) {
+  if (thisKittyOwner.toLowerCase() === connectedAccount.toLowerCase()) {
     return (
       <SellKitty
         approved={approved}
@@ -64,6 +68,20 @@ export default function TradeKitty({
   } else {
     return <BuyKitty onSale={onSale} price={price} buyKitty={handleBuyKitty} />
   }
+  // if (ownThisKitty) {
+  //   return (
+  //     <SellKitty
+  //       approved={approved}
+  //       approve={handleApprove}
+  //       price={price}
+  //       onSale={onSale}
+  //       removeOffer={handleRemoveOffer}
+  //       sellKitty={handleSellKitty}
+  //     />
+  //   )
+  // } else {
+  //   return <BuyKitty onSale={onSale} price={price} buyKitty={handleBuyKitty} />
+  // }
 }
 
 function BuyKitty({ onSale, price, buyKitty }) {

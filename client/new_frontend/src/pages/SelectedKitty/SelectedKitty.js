@@ -9,15 +9,17 @@ import {
 import { Kitty } from '../Factory/Kitty'
 import TradeKitty from './TradeKitty'
 import './selected_kitty.css'
+import { shortenAccount } from '../../helpers'
 
 function SelectedKitty({
   selectedKitty,
   dispatch,
   dna,
-  ownThisKitty,
   price,
   id,
   onSale,
+  thisKittyOwner,
+  setThisKittyOwner,
 }) {
   const { connectedAccount, login } = useContext(Web3Context)
 
@@ -37,9 +39,11 @@ function SelectedKitty({
           <div className='selectedKitty__info__details'>
             <div>
               <span>DNA: {selectedKitty.genes}</span>
-              <span className='ml_1rem'>Gen: {selectedKitty.generation}</span>
+              <span className='ml_1rem mr_1rem'>
+                Gen: {selectedKitty.generation}
+              </span>
             </div>
-            <span>Owner: 0x34...E08</span>
+            <span>Owner: {shortenAccount(thisKittyOwner, 6)}</span>
           </div>
         </div>
 
@@ -66,11 +70,12 @@ function SelectedKitty({
           <div className='selectedKitty__saleInput'>
             {connectedAccount !== 0 ? (
               <TradeKitty
-                ownThisKitty={ownThisKitty}
                 price={price}
                 id={id}
                 dispatch={dispatch}
                 onSale={onSale}
+                thisKittyOwner={thisKittyOwner}
+                setThisKittyOwner={setThisKittyOwner}
               />
             ) : (
               <button

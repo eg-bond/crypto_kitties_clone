@@ -78,7 +78,8 @@ function SelectedKittyContainer({ myKitties, kittieIdsOnSale, dispatch }) {
   const { kittyContract, marketplaceContract, connectedAccount } =
     useContext(Web3Context)
 
-  const [ownThisKitty, setOwnership] = useState(false)
+  window.kitty = kittyContract
+  const [thisKittyOwner, setThisKittyOwner] = useState('')
   const [fetched, setFetched] = useState(false)
   const [selectedKitty, setSelectedKitty] = useState(null)
   const [price, setPrice] = useState('')
@@ -86,36 +87,18 @@ function SelectedKittyContainer({ myKitties, kittieIdsOnSale, dispatch }) {
 
   const { id } = useParams()
 
-  const { getKitty, getKittyPrice } = useMarketplace()
+  const { getKitty, getKittyPrice, getKittyOwner } = useMarketplace()
 
-  // if we didnt fetch for kitties
+  // if we didn't fetch for kitties
   if (!fetched && connectedAccount !== 0) {
     getOwnedKitties(kittyContract, connectedAccount, dispatch).then(() =>
       setFetched(true)
     )
   }
 
-  const checkOwnership = () => {
-    if (myKitties[id]) {
-      setOwnership(true)
-      // get kitty from state
-      setSelectedKitty(myKitties[id])
-      return
-    }
-    setOwnership(false)
-  }
-
-  //get kitty from blockchain
-  const handleGetKitty = () => {
-    getKitty(id).then(setSelectedKitty)
-  }
-
-  const handleGetKittyPrice = () => {
-    getKittyPrice(id).then(setPrice)
-  }
-
   useEffect(() => {
     fetchTokenIdsOnSale(marketplaceContract, dispatch)
+    getKittyOwner(id).then(setThisKittyOwner)
   }, [])
 
   useEffect(() => {
@@ -127,20 +110,18 @@ function SelectedKittyContainer({ myKitties, kittieIdsOnSale, dispatch }) {
   }, [kittieIdsOnSale])
 
   useEffect(() => {
-    checkOwnership()
-  }, [myKitties])
-
-  useEffect(() => {
     if (onSale) {
-      handleGetKittyPrice()
+      getKittyPrice(id).then(setPrice)
     }
   }, [onSale])
 
   if (!selectedKitty) {
-    handleGetKitty()
+    getKitty(id).then(setSelectedKitty)
     // make preloader
     return null
   }
+
+  console.log(thisKittyOwner)
 
   const dna = parseGenes(selectedKitty.genes)
 
@@ -151,10 +132,11 @@ function SelectedKittyContainer({ myKitties, kittieIdsOnSale, dispatch }) {
       kittieIdsOnSale={kittieIdsOnSale}
       dna={dna}
       dispatch={dispatch}
-      ownThisKitty={ownThisKitty}
       price={price}
       id={id}
       onSale={onSale}
+      thisKittyOwner={thisKittyOwner}
+      setThisKittyOwner={setThisKittyOwner}
     />
   )
 }

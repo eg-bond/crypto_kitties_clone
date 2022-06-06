@@ -7,6 +7,8 @@ export const useMarketplace = () => {
 
   // put it in a separate 'useKittyContract' hook ???
   const getKitty = async id => kittyContract.methods.getKitty(id).call()
+  // put it in a separate 'useKittyContract' hook ???
+  const getKittyOwner = async id => kittyContract.methods.ownerOf(id).call()
 
   const getOffer = async id => marketplaceContract.methods.getOffer(id).call()
 
@@ -52,6 +54,7 @@ export const useMarketplace = () => {
     sellKitty,
     buyKitty,
     removeOffer,
+    getKittyOwner,
     approve,
     disapprove,
   }
