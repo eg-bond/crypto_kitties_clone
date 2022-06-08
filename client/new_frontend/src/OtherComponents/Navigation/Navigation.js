@@ -26,7 +26,7 @@ const Navigation = () => {
         <NavItem url='marketplace' title='Marketplace' />
         {connectedAccount !== 0 && (
           <>
-            <NavItem url='catalogue' title='Your kitties' />
+            <NavItem url='my_kitties' title='My kitties' />
             <NavItem url='breed' title='Breed' />
           </>
         )}

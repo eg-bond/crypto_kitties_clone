@@ -5,13 +5,13 @@ import Catalogue from './Catalogue'
 
 import './catalogue.css'
 
-function CatalogueContainer({ myKitties, haveFreeKitty }) {
+function MyKittiesPage({ myKitties, haveFreeKitty }) {
   const { connectedAccount, login } = useContext(Web3Context)
 
   if (connectedAccount === 0) {
     return (
-      <div className='cataloguePage'>
-        <Heading title={'Your kitties'} />
+      <div className='MyKittiesPage'>
+        <Heading title={'My kitties'} />
         <button
           onClick={login}
           style={{ marginTop: '1rem' }}
@@ -23,11 +23,11 @@ function CatalogueContainer({ myKitties, haveFreeKitty }) {
   }
 
   return (
-    <div className='cataloguePage'>
-      <Heading title={'Your kitties'} />
+    <div className='MyKittiesPage'>
+      <Heading title={'My kitties'} />
       <Catalogue kitties={myKitties} haveFreeKitty={haveFreeKitty} />
     </div>
   )
 }
 
-export default CatalogueContainer
+export default MyKittiesPage

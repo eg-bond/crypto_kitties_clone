@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import IndexPage from './pages/Index/IndexPage'
 import BreedPage from './pages/Breed/BreedPage'
 import Factory from './pages/Factory/Factory'
-import CatalogueContainer from './pages/Catalogue/CatalogueContainer'
+
 import React, { useContext, useEffect, useReducer } from 'react'
 import { Web3Context } from './OtherComponents/Web3/Web3Provider'
 import { getOwnedKitties } from './helpers'
@@ -13,6 +13,7 @@ import Navigation from './OtherComponents/Navigation/Navigation'
 import Footer from './OtherComponents/Footer/Footer'
 import MarketplacePage from './pages/Marketplace/MarketplacePage'
 import SelectedKittyContainer from './pages/SelectedKitty/SelectedKittyContainer'
+import MyKittiesPage from './pages/Catalogue/MyKittiesPage'
 
 function AppInit() {
   const { web3, kittyContract, connectedAccount, currentChainName } =
@@ -76,9 +77,9 @@ function App({ web3, kittyContract, connectedAccount, currentChainName }) {
             }
           />
           <Route
-            path='catalogue'
+            path='my_kitties'
             element={
-              <CatalogueContainer
+              <MyKittiesPage
                 myKitties={kittiesState.myKitties}
                 haveFreeKitty={kittiesState.haveFreeKitty}
                 dispatch={dispatch}

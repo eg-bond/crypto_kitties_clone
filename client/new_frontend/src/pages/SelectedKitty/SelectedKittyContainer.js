@@ -4,7 +4,8 @@ import { Button, Skeleton } from 'web3uikit'
 import { fetchTokenIdsOnSale, getOwnedKitties } from '../../helpers'
 import { useMarketplace } from '../../OtherComponents/Web3/useMarketplace'
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
-import { parseGenes } from '../Catalogue/Catalogue'
+import { parseGenes } from '../Catalogue/CatalogueParts'
+
 import SelectedKitty from './SelectedKitty'
 
 export default function UpperContainer({

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import './breed.css'
 import { Modal } from 'web3uikit'
 import { Kitty } from '../Factory/Kitty'
-import { KittieItem, parseGenes } from '../Catalogue/Catalogue'
 import { getColor } from '../Factory/colors'
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
 import { capitalizeFirstLetter } from '../../helpers'
@@ -12,6 +11,7 @@ import {
   getEyesShapeName,
 } from '../Factory/helpers'
 import Heading from '../../OtherComponents/Heading/Heading'
+import { KittieItem, parseGenes } from '../Catalogue/CatalogueParts'
 
 function BreedItem({ role, myKitties, breed, openModal, currentChainName }) {
   const selectedKitty = myKitties[breed[role]]

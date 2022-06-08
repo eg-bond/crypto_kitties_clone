@@ -141,7 +141,9 @@ function SellKitty({
         </div>
       </div>
 
-      <button className='saleInput__button' onClick={() => sellKitty(inputVal)}>
+      <button
+        className='saleInput__button'
+        onClick={() => sellKitty(inputVal.toString())}>
         Sell me
       </button>
     </>
