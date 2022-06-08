@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Header from '../../OtherComponents/Header/Header'
+import Heading from '../../OtherComponents/Heading/Heading'
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
 import Catalogue from './Catalogue'
 
@@ -11,7 +11,7 @@ function CatalogueContainer({ myKitties, haveFreeKitty }) {
   if (connectedAccount === 0) {
     return (
       <div className='cataloguePage'>
-        <Header title={'Your kitties'} />
+        <Heading title={'Your kitties'} />
         <button
           onClick={login}
           style={{ marginTop: '1rem' }}
@@ -24,7 +24,7 @@ function CatalogueContainer({ myKitties, haveFreeKitty }) {
 
   return (
     <div className='cataloguePage'>
-      <Header title={'Your kitties'} />
+      <Heading title={'Your kitties'} />
       <Catalogue kitties={myKitties} haveFreeKitty={haveFreeKitty} />
     </div>
   )

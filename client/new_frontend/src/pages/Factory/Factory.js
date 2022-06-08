@@ -9,7 +9,7 @@ import { Kitty } from './Kitty'
 import './factory.css'
 import { getColor } from './colors'
 import { Button } from 'web3uikit'
-import Header from '../../OtherComponents/Header/Header'
+import Heading from '../../OtherComponents/Heading/Heading'
 import { getOwnedKitties } from '../../helpers'
 
 export const defaultKittyDNA = {
@@ -83,7 +83,7 @@ function Factory({ haveFreeKitty, dispatch }) {
 
   return (
     <div className='factory'>
-      <Header title={'Factory'} />
+      <Heading title={'Factory'} />
 
       <div className='factory__container'>
         <div className='factory__kitty'>

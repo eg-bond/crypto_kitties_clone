@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'web3uikit'
 import { Web3Context } from '../Web3/Web3Provider'
-import './header.css'
+import './heading.css'
 
-function Header({
+function Heading({
   title,
   linkTitle = null,
   goTo = null,
@@ -39,4 +39,4 @@ function Header({
   )
 }
 
-export default Header
+export default Heading

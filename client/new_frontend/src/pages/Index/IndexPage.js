@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Header from '../../OtherComponents/Header/Header'
+import Heading from '../../OtherComponents/Heading/Heading'
 import MarketplaceContainer from '../Marketplace/Marketplace'
 import './index_page.css'
 
@@ -24,7 +24,7 @@ function IndexPage({
         <GetYourKittyLink haveFreeKitty={haveFreeKitty} kitties={kitties} />
       </div>
       <div className='marketplacePreview'>
-        <Header
+        <Heading
           title={'Kitties for sale'}
           linkTitle={'See all available kitties'}
           goTo={'/marketplace'}

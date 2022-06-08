@@ -11,7 +11,7 @@ import {
   getDecorationName,
   getEyesShapeName,
 } from '../Factory/helpers'
-import Header from '../../OtherComponents/Header/Header'
+import Heading from '../../OtherComponents/Heading/Heading'
 
 function BreedItem({ role, myKitties, breed, openModal, currentChainName }) {
   const selectedKitty = myKitties[breed[role]]
@@ -119,7 +119,7 @@ function BreedPage({ myKitties, dispatch, breed }) {
   if (connectedAccount === 0) {
     return (
       <div className='breed'>
-        <Header title={'Cats breeding'} />
+        <Heading title={'Cats breeding'} />
 
         <button
           onClick={login}
@@ -133,7 +133,7 @@ function BreedPage({ myKitties, dispatch, breed }) {
 
   return (
     <div className='breed'>
-      <Header title={'Cats breeding'} />
+      <Heading title={'Cats breeding'} />
       <div className='breedGrid'>
         <BreedItem
           role={'mother'}
