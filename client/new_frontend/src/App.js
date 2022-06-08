@@ -14,6 +14,7 @@ import Footer from './OtherComponents/Footer/Footer'
 import MarketplacePage from './pages/Marketplace/MarketplacePage'
 import SelectedKittyContainer from './pages/SelectedKitty/SelectedKittyContainer'
 import MyKittiesPage from './pages/Catalogue/MyKittiesPage'
+import { options } from './options'
 
 function AppInit() {
   const { web3, kittyContract, connectedAccount, currentChainName } =
@@ -33,13 +34,13 @@ function App({ web3, kittyContract, connectedAccount, currentChainName }) {
   const [kittiesState, dispatch] = useReducer(reducer, initialState)
   window.state = kittiesState
   // useEffect(() => {
-  //   if (currentChainName !== 'ganache') {
-  //     handleNetworkSwitch('ganache')
+  //   if (currentChainName !== options.baseChain) {
+  //     handleNetworkSwitch(options.baseChain)
   //   }
   // }, [currentChainName])
 
   useEffect(() => {
-    if (connectedAccount && currentChainName === 'ganache') {
+    if (connectedAccount && currentChainName === options.baseChain) {
       getOwnedKitties(kittyContract, connectedAccount, dispatch)
       //checks, if user got his free kitty or not
       kittyContract.methods

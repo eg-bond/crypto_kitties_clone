@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Button, Skeleton } from 'web3uikit'
 import { fetchTokenIdsOnSale, getOwnedKitties } from '../../helpers'
+import { options } from '../../options'
 import { useMarketplace } from '../../OtherComponents/Web3/useMarketplace'
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
 import { parseGenes } from '../Catalogue/CatalogueParts'
@@ -15,7 +16,7 @@ export default function UpperContainer({
 }) {
   const { currentChainName } = useContext(Web3Context)
 
-  if (currentChainName !== 'ganache') {
+  if (currentChainName !== options.baseChain) {
     return (
       <div
         style={{

@@ -11,6 +11,7 @@ import { getColor } from './colors'
 import { Button } from 'web3uikit'
 import Heading from '../../OtherComponents/Heading/Heading'
 import { getOwnedKitties } from '../../helpers'
+import { options } from '../../options'
 
 export const defaultKittyDNA = {
   head_bodyClr: '10',
@@ -198,7 +199,7 @@ function Factory({ haveFreeKitty, dispatch }) {
       </div>
 
       {connectedAccount !== 0 ? (
-        currentChainName === 'ganache' && (
+        currentChainName === options.baseChain && (
           <button
             style={{ marginTop: '1rem' }}
             className='button--white'

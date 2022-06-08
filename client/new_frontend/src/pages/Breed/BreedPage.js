@@ -12,6 +12,7 @@ import {
 } from '../Factory/helpers'
 import Heading from '../../OtherComponents/Heading/Heading'
 import { KittieItem, parseGenes } from '../Catalogue/CatalogueParts'
+import { options } from '../../options'
 
 function BreedItem({ role, myKitties, breed, openModal, currentChainName }) {
   const selectedKitty = myKitties[breed[role]]
@@ -22,7 +23,7 @@ function BreedItem({ role, myKitties, breed, openModal, currentChainName }) {
   }
 
   const breedContainerClass = () =>
-    currentChainName !== 'ganache'
+    currentChainName !== options.baseChain
       ? 'breedContainer--disabled'
       : 'breedContainer'
 
