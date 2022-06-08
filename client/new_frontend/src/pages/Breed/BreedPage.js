@@ -21,22 +21,22 @@ function BreedItem({ role, myKitties, breed, openModal, currentChainName }) {
     dna = parseGenes(selectedKitty.genes)
   }
 
+  const breedContainerClass = () =>
+    currentChainName !== 'ganache'
+      ? 'breedContainer--disabled'
+      : 'breedContainer'
+
   return (
     <div className={role}>
       <h2>{capitalizeFirstLetter(role)}</h2>
       {/* <p>This kitty will be the {role}</p> */}
 
-      {currentChainName !== 'ganache' ? (
-        <div className='breedContainer--disabled empty '>
-          <img src='../images/egg.png' alt='egg' />
-          <div className='bold'>
-            Select a cat as a {capitalizeFirstLetter(role)}
-          </div>
-        </div>
-      ) : breed[role] === null ? (
-        <div onClick={() => openModal(role)} className='breedContainer empty'>
-          <img src='../images/egg.png' alt='egg' />
-          <div className='bold'>
+      {breed[role] === null ? (
+        <div
+          onClick={() => openModal(role)}
+          className={`${breedContainerClass()} empty`}>
+          <img className='transition400' src='../images/egg.png' alt='egg' />
+          <div className='bold transition400'>
             Select a cat as a {capitalizeFirstLetter(role)}
           </div>
         </div>

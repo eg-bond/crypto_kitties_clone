@@ -20,9 +20,11 @@
 .mr_1rem {
   margin-right: 1rem;
 }
-
 .bold {
   font-weight: bold;
+}
+.transition400 {
+  transition: ease 400ms;
 }
 
 /* mobile media general settings` */

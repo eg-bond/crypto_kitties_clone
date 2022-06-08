@@ -24,11 +24,6 @@
   height: 100%;
 }
 
-.breedContainer,
-.breedContainer * {
-  transition: ease 400ms;
-}
-
 .empty {
   background-color: var(--emptyClr);
 }
