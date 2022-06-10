@@ -7,13 +7,16 @@
   font-weight: 700;
 }
 
-.navigation a {
+.navigation .navItem {
   transition: ease 400ms;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 1.2rem;
 }
-.navigation a:hover {
+.navigation .navItem:hover {
   color: var(--mainClr);
 }
-.navigation a.active {
+.navigation .navItem.active {
   color: var(--mainClr);
 }
 
@@ -36,12 +39,6 @@
   flex-wrap: nowrap;
 }
 
-.navigation__menu a {
-  border-radius: 30px;
-  text-decoration: none;
-  font-size: 1.2rem;
-}
-
 .connectButton {
   border: solid 2px;
   border-radius: 0.5rem;
@@ -49,6 +46,7 @@
   width: 80px;
   height: 27px;
   transition: ease 300ms;
+  text-decoration: none;
 }
 .connectButton__content {
   width: 100%;
@@ -90,21 +88,16 @@
   .navigation__menu {
     gap: 2vw;
   }
-
-  .navigation__homeLink a,
-  .navigation__menu a {
+  .navigation .navItem {
     font-size: var(--mobileParagraphsFS);
   }
-
-  /* .navigation__homeLink a::before {
-    content: 'CKC';
-  } */
 
   .connectButton {
     border: solid 1px;
     border-radius: 2vw;
     width: 14vw;
     height: 4.6vw;
+    font-size: 2.8vw;
   }
   .connectButton__content {
     font-size: 2.8vw;

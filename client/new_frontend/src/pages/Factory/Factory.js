@@ -198,22 +198,13 @@ function Factory({ haveFreeKitty, dispatch }) {
         </div>
       </div>
 
-      {connectedAccount !== 0 ? (
-        currentChainName === options.baseChain && (
-          <button
-            style={{ marginTop: '1rem' }}
-            className='button--white'
-            disabled={haveFreeKitty}
-            onClick={createKitty}>
-            Create Kitty
-          </button>
-        )
-      ) : (
+      {currentChainName === options.baseChain && (
         <button
-          onClick={login}
           style={{ marginTop: '1rem' }}
-          className='button--white'>
-          Connect wallet
+          className='button--white'
+          disabled={haveFreeKitty}
+          onClick={createKitty}>
+          Create Kitty
         </button>
       )}
 

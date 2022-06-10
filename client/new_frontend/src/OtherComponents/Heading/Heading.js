@@ -16,19 +16,9 @@ function Heading({
   return (
     <div className='headerContainer'>
       <h2>{title}</h2>
+
       {currentChainName !== options.baseChain ? (
-        <Button
-          color='red'
-          icon='exclamation'
-          iconLayout='leading'
-          id='test-button-primary'
-          // switch network onclick
-          onClick={function noRefCheck() {}}
-          size='large'
-          text='Please switch the network'
-          theme='colored'
-          type='button'
-        />
+        <WarnButton currentChainName={currentChainName} />
       ) : (
         goTo !== null && (
           <Link className='button--white' to={goTo}>
@@ -37,6 +27,40 @@ function Heading({
         )
       )}
     </div>
+  )
+}
+
+function WarnButton({ currentChainName }) {
+  // There is no crypto wallet installed
+  if (currentChainName === undefined) {
+    return (
+      <Button
+        color='red'
+        icon='exclamation'
+        iconLayout='leading'
+        id='test-button-primary'
+        onClick={() => (window.location = 'https://metamask.io/download/')}
+        size='large'
+        text='Please install Metamask'
+        theme='colored'
+        type='button'
+      />
+    )
+  }
+
+  return (
+    <Button
+      color='red'
+      icon='exclamation'
+      iconLayout='leading'
+      id='test-button-primary'
+      // switch network onclick
+      onClick={function noRefCheck() {}}
+      size='large'
+      text='Please switch the network'
+      theme='colored'
+      type='button'
+    />
   )
 }
 

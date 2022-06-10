@@ -25,7 +25,7 @@
 @media (max-width: 625px),
   (max-height: 500px) and (-webkit-min-device-pixel-ratio: 2) {
   .headerContainer {
-    padding: 1vw 4vw;
+    padding: 2vw 4vw;
   }
 
   .headerContainer h2 {
@@ -35,5 +35,10 @@
   .headerContainer .button--white {
     padding: 1vw 2vw;
     font-size: 3.2vw;
+  }
+
+  .headerContainer .cHshCS {
+    font-size: 3.5vw;
+    padding: 0.7vw 2vw;
   }
 }

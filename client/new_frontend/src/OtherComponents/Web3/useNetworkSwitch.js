@@ -35,11 +35,15 @@ export const useNetworkSwitch = web3 => {
   }
 
   useEffect(() => {
-    web3.eth.getChainId().then(id => changeChainName(chains[id]))
-    window.ethereum.on('chainChanged', onNetworkChanged)
+    if (!window.ethereum) {
+      changeChainName(undefined)
+    } else {
+      web3.eth.getChainId().then(id => changeChainName(chains[id]))
+      window.ethereum.on('chainChanged', onNetworkChanged)
 
-    return () => {
-      window.ethereum.removeListener('chainChanged', onNetworkChanged)
+      return () => {
+        window.ethereum.removeListener('chainChanged', onNetworkChanged)
+      }
     }
   }, [])
 

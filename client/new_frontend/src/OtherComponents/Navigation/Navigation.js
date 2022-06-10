@@ -8,7 +8,7 @@ import './navigation.css'
 const NavItem = ({ url, title }) => (
   <NavLink
     to={url}
-    className={({ isActive }) => 'fill_button' + (isActive ? ' active' : '')}>
+    className={({ isActive }) => 'navItem' + (isActive ? ' active' : '')}>
     {title}
   </NavLink>
 )
@@ -38,7 +38,19 @@ const Navigation = () => {
 }
 
 function ConnectButton() {
-  const { connectedAccount, login, logout } = useContext(Web3Context)
+  const { connectedAccount, login, logout, currentChainName } =
+    useContext(Web3Context)
+
+  // There is no crypto wallet installed
+  if (currentChainName === undefined) {
+    return (
+      <div
+        onClick={() => (window.location = 'https://metamask.io/download/')}
+        className='connectButton connectButton--login'>
+        Login
+      </div>
+    )
+  }
 
   return (
     <>
