@@ -44,7 +44,7 @@ function ConnectButton() {
     <>
       {connectedAccount ? (
         <div className='connectButton connectButton--logout'>
-          <div onClick={logout} class='connectButton__content'>
+          <div onClick={logout} className='connectButton__content'>
             {connectedAccount && (
               <span>{shortenAccount(connectedAccount, 4)}</span>
             )}

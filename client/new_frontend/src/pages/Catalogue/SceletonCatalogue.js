@@ -7,8 +7,8 @@ export default function SceletonCatalogue({ howMuchToDisplay }) {
 
   return (
     <div className='catalogue'>
-      {sceletonsArr.map(() => (
-        <div className='sceletonContainer'>
+      {sceletonsArr.map((item, i) => (
+        <div key={`catScel_${i}`} className='sceletonContainer'>
           <Skeleton
             borderRadius='1rem'
             height='85%'

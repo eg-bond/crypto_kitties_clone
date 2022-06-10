@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { fetchTokenIdsOnSale, getKitties } from '../../helpers'
+import { options } from '../../options'
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
 import Catalogue from '../Catalogue/Catalogue'
 
@@ -29,11 +30,15 @@ function Marketplace({
     useContext(Web3Context)
 
   useEffect(() => {
-    fetchTokenIdsOnSale(marketplaceContract, dispatch)
+    if (currentChainName === options.baseChain) {
+      fetchTokenIdsOnSale(marketplaceContract, dispatch)
+    }
   }, [currentChainName])
 
   useEffect(() => {
-    getKitties(kittyContract, kittieIdsOnSale, dispatch)
+    if (currentChainName === options.baseChain) {
+      getKitties(kittyContract, kittieIdsOnSale, dispatch)
+    }
   }, [kittieIdsOnSale])
 
   const kittiesToDisplay = () => {

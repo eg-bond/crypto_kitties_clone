@@ -17,12 +17,16 @@ import MyKittiesPage from './pages/Catalogue/MyKittiesPage'
 import { options } from './options'
 
 function AppInit() {
-  const { web3, kittyContract, connectedAccount, currentChainName } =
+  const { kittyContract, connectedAccount, currentChainName } =
     useContext(Web3Context)
 
+  if (connectedAccount === 'notSet' || currentChainName === 'notSet') {
+    return <div>Preloader</div>
+  }
+
+  console.log(currentChainName)
   return (
     <App
-      web3={web3}
       kittyContract={kittyContract}
       connectedAccount={connectedAccount}
       currentChainName={currentChainName}
@@ -30,7 +34,7 @@ function AppInit() {
   )
 }
 
-function App({ web3, kittyContract, connectedAccount, currentChainName }) {
+function App({ kittyContract, connectedAccount, currentChainName }) {
   const [kittiesState, dispatch] = useReducer(reducer, initialState)
   window.state = kittiesState
   // useEffect(() => {

@@ -3,7 +3,6 @@ import { networks } from './networks'
 import { chains } from './web3Cliend'
 
 const changeNetwork = async networkName => {
-  console.log(networkName)
   try {
     if (!window.ethereum) throw new Error('No crypto wallet found')
 
@@ -24,7 +23,7 @@ const changeNetwork = async networkName => {
 }
 
 export const useNetworkSwitch = web3 => {
-  const [currentChainName, changeChainName] = useState('')
+  const [currentChainName, changeChainName] = useState('notSet')
 
   const handleNetworkSwitch = async networkName => {
     await changeNetwork(networkName).then(() => changeChainName(networkName))

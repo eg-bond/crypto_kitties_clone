@@ -15,7 +15,8 @@
   background-color: #f64e16;
 }
 
-.landing img {
+.landing__img {
+  height: 296px;
   margin: 1rem 0;
   z-index: 2;
 }

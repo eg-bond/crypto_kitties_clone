@@ -123,8 +123,6 @@ function SelectedKittyContainer({ myKitties, kittieIdsOnSale, dispatch }) {
     return null
   }
 
-  console.log(thisKittyOwner)
-
   const dna = parseGenes(selectedKitty.genes)
 
   return (

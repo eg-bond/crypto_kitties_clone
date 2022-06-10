@@ -58,13 +58,14 @@ export const useCurrentAccount = () => {
 }
 
 export const useAuth = () => {
-  let [connectedAccount, setAccount] = useState(0)
+  let [connectedAccount, setAccount] = useState('notSet')
 
   const login = () => {
     window.ethereum
       .request({ method: 'eth_requestAccounts' })
       .then(accounts => {
         setAccount(accounts[0] || 0)
+        localStorage.isLogged = 'true'
       })
       .catch(err => {
         console.log(err)
@@ -81,12 +82,17 @@ export const useAuth = () => {
     setAccount(0)
     // unsubscribe from accountChanged event
     window.ethereum._events.accountsChanged = []
+    localStorage.isLogged = 'false'
   }
-
-  useEffect(() => {
-    login()
-  }, [])
   console.log(connectedAccount)
+  useEffect(() => {
+    if (localStorage.isLogged === 'true') {
+      login()
+    } else {
+      setAccount(0)
+    }
+  }, [])
+
   return { connectedAccount, login, logout }
 }
 

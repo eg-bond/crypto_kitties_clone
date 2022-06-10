@@ -19,7 +19,7 @@ function IndexPage({
           <h1>CryptoKittiesClone</h1>
           <h3>Collect and breed furrever friends!</h3>
         </div>
-        <img src='./images/group.png' alt='group' />
+        <img className='landing__img' src='./images/group.png' alt='group' />
 
         <GetYourKittyLink haveFreeKitty={haveFreeKitty} kitties={kitties} />
       </div>
