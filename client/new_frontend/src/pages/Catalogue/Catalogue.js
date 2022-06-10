@@ -6,7 +6,7 @@ import { AdditionalItem, KittieItem } from './CatalogueParts'
 import './catalogue.css'
 
 export function Catalogue({
-  haveFreeKitty,
+  haveFreeKitty = false,
   howMuchToDisplay = 'all',
   kitties,
 }) {

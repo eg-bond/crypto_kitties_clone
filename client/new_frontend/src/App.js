@@ -4,7 +4,6 @@ import { Route, Routes } from 'react-router-dom'
 import IndexPage from './pages/Index/IndexPage'
 import BreedPage from './pages/Breed/BreedPage'
 import Factory from './pages/Factory/Factory'
-
 import React, { useContext, useEffect, useReducer } from 'react'
 import { Web3Context } from './OtherComponents/Web3/Web3Provider'
 import { getOwnedKitties } from './helpers'
@@ -15,16 +14,16 @@ import MarketplacePage from './pages/Marketplace/MarketplacePage'
 import SelectedKittyContainer from './pages/SelectedKitty/SelectedKittyContainer'
 import MyKittiesPage from './pages/Catalogue/MyKittiesPage'
 import { options } from './options'
+import EclipseSpinner from './OtherComponents/Spinners/Eclipse/EclipseSpinner'
 
 function AppInit() {
   const { kittyContract, connectedAccount, currentChainName } =
     useContext(Web3Context)
 
   if (connectedAccount === 'notSet' || currentChainName === 'notSet') {
-    return <div>Preloader</div>
+    return <EclipseSpinner />
   }
 
-  console.log(currentChainName)
   return (
     <App
       kittyContract={kittyContract}

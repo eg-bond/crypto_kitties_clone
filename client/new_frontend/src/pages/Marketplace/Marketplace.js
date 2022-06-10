@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { fetchTokenIdsOnSale, getKitties } from '../../helpers'
 import { options } from '../../options'
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'

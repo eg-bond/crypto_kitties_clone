@@ -28,13 +28,14 @@ export const getOwnedKitties = async (
   }
 }
 
-export const fetchTokenIdsOnSale = (marketplaceContract, dispatch) => {
+export const fetchTokenIdsOnSale = async (marketplaceContract, dispatch) => {
   marketplaceContract.methods
     .getAllTokenOnSale()
     .call()
-    .then(idsArray =>
+    .then(idsArray => {
+      console.log('fetched')
       dispatch({ type: 'SET_ALL_TOKEN_IDS_ON_SALE', payload: idsArray })
-    )
+    })
 }
 
 export const getKitties = async (kittyContract, idsArray, dispatch) => {

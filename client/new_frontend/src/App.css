@@ -158,4 +158,9 @@
     font-size: var(--mobileParagraphsFS);
     padding: 2vw;
   }
+  .eclipseSpinner {
+    width: 17vw;
+    height: 17vw;
+    /* transform-origin: 86px 88.5px; */
+  }
 }
