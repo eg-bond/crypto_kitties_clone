@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import IndexPage from './pages/Index/IndexPage'
 import BreedPage from './pages/Breed/BreedPage'
 import Factory from './pages/Factory/Factory'
-import React, { useContext, useEffect, useReducer } from 'react'
+import React, { useContext, useEffect, useReducer, useState } from 'react'
 import { Web3Context } from './OtherComponents/Web3/Web3Provider'
 import { getOwnedKitties } from './helpers'
 import { initialState, reducer } from './storage/mainReduser'
@@ -35,6 +35,7 @@ function AppInit() {
 
 function App({ kittyContract, connectedAccount, currentChainName }) {
   const [kittiesState, dispatch] = useReducer(reducer, initialState)
+
   window.state = kittiesState
   // useEffect(() => {
   //   if (currentChainName !== options.baseChain) {
@@ -54,7 +55,7 @@ function App({ kittyContract, connectedAccount, currentChainName }) {
   }, [connectedAccount, currentChainName])
 
   return (
-    <div className='App'>
+    <div onLoad={() => console.log('loaded')} className='App'>
       <Navigation />
       {/* <div className='separator'></div> */}
       <div className='mainContainer flex-wrapper'>

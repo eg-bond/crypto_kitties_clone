@@ -66,6 +66,11 @@
 
 .factory__buttons {
   display: flex;
+  justify-content: space-between;
+}
+
+.factory__buttons button {
+  flex-basis: 32%;
 }
 
 @media (max-width: 625px),

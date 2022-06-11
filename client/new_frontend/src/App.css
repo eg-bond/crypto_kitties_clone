@@ -74,9 +74,8 @@
   color: black;
 }
 
-.button--blue {
-  font-size: 1rem;
-  background-color: #78a8ff;
+.squareButton {
+  font-size: 0.9rem;
   padding: 0.5rem;
   border: solid 2px black;
   border-radius: 0.2rem;
@@ -84,9 +83,21 @@
   border-bottom: 4px solid;
 }
 
-.button--blue:hover {
+.squareButton:hover {
   transform: translateY(2px);
   border-bottom: 2px solid;
+}
+
+.squareButton:disabled {
+  background-color: #ababab !important;
+}
+
+.squareButton--blue {
+  background-color: #78a8ff;
+}
+
+.squareButton--green {
+  background-color: #3de781;
 }
 
 .separator {

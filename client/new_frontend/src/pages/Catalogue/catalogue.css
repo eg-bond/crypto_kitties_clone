@@ -22,6 +22,16 @@
   border-radius: 1rem;
 }
 
+.sceletonContainer .sc-kngDgl {
+  background: var(--emptyClr) no-repeat;
+  background-image: linear-gradient(
+    90deg,
+    rgba(221, 221, 221, 0),
+    rgba(232, 232, 232, 0.6),
+    rgba(221, 221, 221, 0)
+  );
+}
+
 .kittyContainer {
   position: relative;
   width: 100%;

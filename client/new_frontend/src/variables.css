@@ -1,6 +1,7 @@
 html {
   --mainClr: #f64e16;
-  --emptyClr: #e9efff;
+  --emptyClr: #f2f5ff;
+  /* --emptyClr: #e9efff; */
 
   --mobileH1FS: 7.5vw;
   --mobileH2FS: 5.5vw;

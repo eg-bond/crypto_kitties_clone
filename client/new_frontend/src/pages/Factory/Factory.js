@@ -186,19 +186,29 @@ function Factory({ haveFreeKitty, dispatch }) {
             />
           </div>
           <div className='factory__buttons'>
-            <button className='button--blue ' onClick={getRandomKitty}>
+            <button
+              className='squareButton squareButton--blue'
+              onClick={getRandomKitty}>
               RandomKitty
             </button>
             <button
-              className='button--blue ml_1rem'
+              className='squareButton squareButton--blue'
               onClick={() => setDna(defaultKittyDNA)}>
               Default kitty
+            </button>
+
+            <button
+              style={{ backgroundColor: '#3de781' }}
+              disabled={haveFreeKitty || currentChainName !== options.baseChain}
+              className='squareButton squareButton--green'
+              onClick={createKitty}>
+              Create kitty
             </button>
           </div>
         </div>
       </div>
 
-      {currentChainName === options.baseChain && (
+      {/* {currentChainName === options.baseChain && (
         <button
           style={{ marginTop: '1rem' }}
           className='button--white'
@@ -206,7 +216,7 @@ function Factory({ haveFreeKitty, dispatch }) {
           onClick={createKitty}>
           Create Kitty
         </button>
-      )}
+      )} */}
 
       {haveFreeKitty && <div>You have already gotten your free kitty</div>}
     </div>
