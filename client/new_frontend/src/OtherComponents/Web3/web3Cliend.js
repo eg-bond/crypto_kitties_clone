@@ -72,7 +72,7 @@ export const useAuth = () => {
         localStorage.isLogged = 'true'
       })
       .catch(err => {
-        console.log(err)
+        setAccount(0)
         return
       })
 

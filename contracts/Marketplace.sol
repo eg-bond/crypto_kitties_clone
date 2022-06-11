@@ -1,6 +1,5 @@
 pragma solidity ^0.8.0;
 
-
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 import "./IKittyMarketplace.sol";
 import "./Kittycontract.sol";
