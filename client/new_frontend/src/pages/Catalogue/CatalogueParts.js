@@ -59,6 +59,7 @@ export function AdditionalItem({ haveFreeKitty, kitties }) {
 }
 
 export function parseGenes(dnaString) {
+  console.log(dnaString)
   const lengths = Object.values(defaultKittyDNA).map(num => num.length)
   const dnaObj = {}
   // temporary measure for 0 dna

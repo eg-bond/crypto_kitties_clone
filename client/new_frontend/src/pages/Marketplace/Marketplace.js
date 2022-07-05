@@ -41,24 +41,53 @@ function Marketplace({
     }
   }, [kittieIdsOnSale])
 
+  const [kittieToShow, change] = useState(kittiesOnSale)
+
+  useEffect(() => {
+    change(kittiesOnSale)
+  }, [kittiesOnSale])
+
+  const doubleKitties = () => {
+    change({
+      ...kittieToShow,
+      15: ['6457442978789379', '1652779318', '0', '0', '0'],
+      17: ['6457442978789379', '1652779318', '0', '0', '0'],
+      20: ['6457442978789379', '1652779318', '0', '0', '0'],
+    })
+  }
+  console.log(kittieToShow)
   const kittiesToDisplay = () => {
     if (howMuchToDisplay !== 'all') {
       // for MarketPlace preview
-      const slicedEntries = Object.entries(kittiesOnSale).slice(
+      const slicedEntries = Object.entries(kittieToShow).slice(
         0,
         howMuchToDisplay
       )
       return Object.fromEntries(slicedEntries)
     } else {
       // for MarketPlacePage
-      return kittiesOnSale
+      return kittieToShow
     }
   }
+  // const kittiesToDisplay = () => {
+  //   if (howMuchToDisplay !== 'all') {
+  //     // for MarketPlace preview
+  //     const slicedEntries = Object.entries(kittiesOnSale).slice(
+  //       0,
+  //       howMuchToDisplay
+  //     )
+  //     return Object.fromEntries(slicedEntries)
+  //   } else {
+  //     // for MarketPlacePage
+  //     return kittiesOnSale
+  //   }
+  // }
 
   return (
     <Catalogue
       kitties={kittiesToDisplay()}
       howMuchToDisplay={howMuchToDisplay}
+      doubleKitties={doubleKitties}
     />
   )
 }

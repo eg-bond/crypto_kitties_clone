@@ -124,6 +124,7 @@ function SelectedKittyContainer({ myKitties, kittieIdsOnSale, dispatch }) {
   }
 
   const dna = parseGenes(selectedKitty.genes)
+  // const dna = parseGenes(selectedKitty.genes)
 
   return (
     <SelectedKitty
