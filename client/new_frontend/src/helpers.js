@@ -45,7 +45,10 @@ export const fetchTokenIdsOnSale = async (marketplaceContract, dispatch) => {
     .getAllTokenOnSale()
     .call()
     .then(idsArray => {
-      dispatch({ type: 'SET_ALL_TOKEN_IDS_ON_SALE', payload: idsArray })
+      dispatch({
+        type: 'SET_ALL_TOKEN_IDS_ON_SALE',
+        payload: [...new Set(idsArray)],
+      })
     })
 }
 

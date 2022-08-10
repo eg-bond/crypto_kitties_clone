@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   getKittiesByPage,
   getOwnedKittiesIds,
@@ -11,7 +12,7 @@ import Catalogue from './Catalogue'
 
 import './catalogue.css'
 
-export const pageCapacity = 12
+export const pageCapacity = 5
 
 function MyKittiesPage({
   kittieIdsOwned,
@@ -22,13 +23,6 @@ function MyKittiesPage({
 }) {
   const { connectedAccount, login, kittyContract, currentChainName } =
     useContext(Web3Context)
-
-  const { loading, hasMore } = useGetKittiesByPage(
-    page,
-    kittieIdsOwned,
-    kittyContract,
-    dispatch
-  )
 
   useEffect(() => {
     if (connectedAccount && currentChainName === options.baseChain) {
@@ -44,6 +38,18 @@ function MyKittiesPage({
     }
   }, [connectedAccount, currentChainName])
 
+  const { loading, hasMore } = useGetKittiesByPage(
+    page,
+    kittieIdsOwned,
+    kittyContract,
+    dispatch
+  )
+
+  let navigate = useNavigate()
+  const selectKitty = id => {
+    navigate(`/selected_kitty/${id}`)
+  }
+
   if (connectedAccount === 0) {
     return (
       <div className='MyKittiesPage'>
@@ -58,27 +64,19 @@ function MyKittiesPage({
     )
   }
 
-  const getKittiesByPageAC = page => {
-    getKittiesByPage(page, kittyContract, kittieIdsOwned).then(payload => {
-      dispatch({ type: 'ADD_KITTIES', payload })
-    })
-  }
-
-  const increasePageAC = () => dispatch({ type: 'SET_PAGE', payload: page + 1 })
-  console.log('hasMore', hasMore)
   return (
     <div className='MyKittiesPage'>
       <Heading title={'My kitties'} />
       <Catalogue
         kitties={myKitties}
         haveFreeKitty={haveFreeKitty}
-        getKittiesByPageAC={getKittiesByPageAC}
         page={page}
         loading={loading}
-        increasePageAC={increasePageAC}
         hasMore={hasMore}
+        dispatch={dispatch}
+        onClickHandler={selectKitty}
+        mode={'MyKitties'}
       />
-      {/* <Catalogue kitties={myKitties} haveFreeKitty={haveFreeKitty} /> */}
     </div>
   )
 }

@@ -1,87 +1,35 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import './breed.css'
 import { Modal } from 'web3uikit'
-import { Kitty } from '../Factory/Kitty'
-import { getColor } from '../Factory/colors'
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
-import { capitalizeFirstLetter } from '../../helpers'
-import {
-  getAnimationName,
-  getDecorationName,
-  getEyesShapeName,
-} from '../Factory/helpers'
+import { getOwnedKittiesIds, useGetKittiesByPage } from '../../helpers'
 import Heading from '../../OtherComponents/Heading/Heading'
-import { KittieItem, parseGenes } from '../Catalogue/CatalogueParts'
+import { KittieItem } from '../Catalogue/CatalogueParts'
 import { options } from '../../options'
+import BreedItem from './BreedItem'
+import Catalogue from '../Catalogue/Catalogue'
 
-function BreedItem({ role, myKitties, breed, openModal, currentChainName }) {
-  const selectedKitty = myKitties[breed[role]]
-
-  let dna = null
-  if (selectedKitty) {
-    dna = parseGenes(selectedKitty.genes)
-  }
-
-  const breedContainerClass = () =>
-    currentChainName !== options.baseChain
-      ? 'breedContainer--disabled'
-      : 'breedContainer'
-
-  return (
-    <div className={role}>
-      <h2>{capitalizeFirstLetter(role)}</h2>
-      {/* <p>This kitty will be the {role}</p> */}
-
-      {breed[role] === null ? (
-        <div
-          onClick={() => openModal(role)}
-          className={`${breedContainerClass()} empty`}>
-          <img className='transition400' src='../images/egg.png' alt='egg' />
-          <div className='bold transition400'>
-            Select a cat as a {capitalizeFirstLetter(role)}
-          </div>
-        </div>
-      ) : (
-        <>
-          <div onClick={() => openModal(role)} className='breedContainer'>
-            <div
-              className='containerBackground containerBackground--breed'
-              style={{ backgroundColor: getColor(dna.eyesClr) }}></div>
-            <Kitty dna={dna} />
-          </div>
-          <div className='breed__info'>
-            <div>
-              <span className='bold'>Genes: </span>
-              {selectedKitty.genes}
-            </div>
-            <div>
-              <span className='bold'>Gen: </span>
-              {selectedKitty.generation}
-            </div>
-            <div>
-              <span className='bold'>Eyes: </span>
-              {getEyesShapeName(dna.eyesShape)}
-            </div>
-            <div>
-              <span className='bold'>Animation: </span>
-              {getAnimationName(dna.animation)}
-            </div>
-            <div>
-              <span className='bold'>Decoration: </span>
-              {getDecorationName(dna.decoration)}
-            </div>
-          </div>
-        </>
-      )}
-    </div>
-  )
-}
-
-function BreedPage({ myKitties, dispatch, breed }) {
+function BreedPage({ myKitties, dispatch, breed, page, kittieIdsOwned }) {
   const [visible, setVisible] = useState(false)
   const breedRole = useRef()
   const { kittyContract, connectedAccount, login, currentChainName } =
     useContext(Web3Context)
+
+  useEffect(() => {
+    if (connectedAccount && currentChainName === options.baseChain) {
+      //new
+      getOwnedKittiesIds(kittyContract, connectedAccount).then(payload =>
+        dispatch({ type: 'SET_KITTIES_IDS_OWNED', payload })
+      )
+    }
+  }, [connectedAccount, currentChainName])
+
+  const { loading, hasMore } = useGetKittiesByPage(
+    page,
+    kittieIdsOwned,
+    kittyContract,
+    dispatch
+  )
 
   const bothKittiesIsSet = () => {
     if ((breed.mother !== null) & (breed.father !== null)) {
@@ -117,16 +65,6 @@ function BreedPage({ myKitties, dispatch, breed }) {
     }
   }, [])
 
-  //someItemsState
-  const [state, setState] = useState({ insideField: {} })
-  function handleInc(params) {
-    const increment = Object.keys(state.insideField).length + 1
-    setState({
-      ...state,
-      insideField: { ...state.insideField, [increment]: 'somethin' },
-    })
-  }
-
   if (connectedAccount === 0) {
     return (
       <div className='breed'>
@@ -161,14 +99,6 @@ function BreedPage({ myKitties, dispatch, breed }) {
           currentChainName={currentChainName}
         />
       </div>
-      {/* someItems */}
-      <div className='someItems'>
-        <button onClick={handleInc}>Button</button>
-        {Object.keys(state.insideField).map((item, i) => (
-          <div key={'smt' + i}>item</div>
-        ))}
-      </div>
-      {/* ___________ */}
       {visible && (
         <Modal
           className='breedModal'
@@ -176,17 +106,15 @@ function BreedPage({ myKitties, dispatch, breed }) {
           onCloseButtonPressed={() => setVisible(false)}
           hasFooter={false}
           title='Chose kitty'>
-          <div className='catalogue'>
-            {Object.keys(myKitties).map(id => (
-              <KittieItem
-                key={Math.random() * 10}
-                dnaString={myKitties[id].genes}
-                generation={myKitties[id].generation}
-                onClickHandler={() => choseKittyForBreed(id)}
-                id={id}
-              />
-            ))}
-          </div>
+          <Catalogue
+            kitties={myKitties}
+            page={page}
+            loading={loading}
+            hasMore={hasMore}
+            dispatch={dispatch}
+            onClickHandler={choseKittyForBreed}
+            mode={'Breed'}
+          />
         </Modal>
       )}
       {bothKittiesIsSet() && (

@@ -41,8 +41,10 @@ function App({ kittyContract, connectedAccount, currentChainName }) {
   //   }
   // }, [currentChainName])
 
+  console.log('state.page', kittiesState.page)
+
   return (
-    <div onLoad={() => console.log('loaded')} className='App'>
+    <div className='App'>
       <Navigation />
       {/* <div className='separator'></div> */}
       <div className='mainContainer flex-wrapper'>
@@ -84,7 +86,9 @@ function App({ kittyContract, connectedAccount, currentChainName }) {
             path='marketplace'
             element={
               <MarketplacePage
-                kittiesOnSale={kittiesState.kittiesOnSale}
+                kittiesOnSale={kittiesState.myKitties}
+                page={kittiesState.page}
+                // kittiesOnSale={kittiesState.kittiesOnSale}
                 kittieIdsOnSale={kittiesState.kittieIdsOnSale}
                 dispatch={dispatch}
               />
@@ -94,7 +98,9 @@ function App({ kittyContract, connectedAccount, currentChainName }) {
             path='breed'
             element={
               <BreedPage
+                kittieIdsOwned={kittiesState.kittieIdsOwned}
                 myKitties={kittiesState.myKitties}
+                page={kittiesState.page}
                 dispatch={dispatch}
                 breed={kittiesState.breed}
               />

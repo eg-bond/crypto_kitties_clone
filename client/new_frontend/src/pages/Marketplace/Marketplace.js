@@ -1,28 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { fetchTokenIdsOnSale, getKitties } from '../../helpers'
+import { useNavigate } from 'react-router-dom'
+import {
+  fetchTokenIdsOnSale,
+  getKitties,
+  useGetKittiesByPage,
+} from '../../helpers'
 import { options } from '../../options'
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
 import Catalogue from '../Catalogue/Catalogue'
 
-function MarketplaceContainer({
-  kittiesOnSale,
-  kittieIdsOnSale,
-  dispatch,
-  howMuchToDisplay = 'all',
-}) {
-  return (
-    <Marketplace
-      kittiesOnSale={kittiesOnSale}
-      kittieIdsOnSale={kittieIdsOnSale}
-      dispatch={dispatch}
-      howMuchToDisplay={howMuchToDisplay}
-    />
-  )
-}
-
 function Marketplace({
   kittiesOnSale,
   kittieIdsOnSale,
+  page,
   dispatch,
   howMuchToDisplay,
 }) {
@@ -37,12 +27,18 @@ function Marketplace({
 
   useEffect(() => {
     if (currentChainName === options.baseChain) {
-      // getKitties(kittyContract, kittieIdsOnSale, dispatch)
       getKitties(kittyContract, kittieIdsOnSale).then(payload => {
         dispatch({ type: 'SET_ALL_KITTIES_ON_SALE', payload })
       })
     }
   }, [kittieIdsOnSale])
+
+  const { loading, hasMore } = useGetKittiesByPage(
+    page,
+    kittieIdsOnSale,
+    kittyContract,
+    dispatch
+  )
 
   const [kittieToShow, change] = useState(kittiesOnSale)
 
@@ -50,15 +46,11 @@ function Marketplace({
     change(kittiesOnSale)
   }, [kittiesOnSale])
 
-  const doubleKitties = () => {
-    change({
-      ...kittieToShow,
-      15: ['6457442978789379', '1652779318', '0', '0', '0'],
-      17: ['6457442978789379', '1652779318', '0', '0', '0'],
-      20: ['6457442978789379', '1652779318', '0', '0', '0'],
-    })
+  let navigate = useNavigate()
+  const selectKitty = id => {
+    navigate(`/selected_kitty/${id}`)
   }
-  // console.log(kittieToShow)
+
   const kittiesToDisplay = () => {
     if (howMuchToDisplay !== 'all') {
       // for MarketPlace preview
@@ -72,27 +64,18 @@ function Marketplace({
       return kittieToShow
     }
   }
-  // const kittiesToDisplay = () => {
-  //   if (howMuchToDisplay !== 'all') {
-  //     // for MarketPlace preview
-  //     const slicedEntries = Object.entries(kittiesOnSale).slice(
-  //       0,
-  //       howMuchToDisplay
-  //     )
-  //     return Object.fromEntries(slicedEntries)
-  //   } else {
-  //     // for MarketPlacePage
-  //     return kittiesOnSale
-  //   }
-  // }
 
   return (
     <Catalogue
       kitties={kittiesToDisplay()}
       howMuchToDisplay={howMuchToDisplay}
-      doubleKitties={doubleKitties}
+      loading={loading}
+      hasMore={hasMore}
+      page={page}
+      dispatch={dispatch}
+      onClickHandler={selectKitty}
     />
   )
 }
 
-export default MarketplaceContainer
+export default Marketplace
