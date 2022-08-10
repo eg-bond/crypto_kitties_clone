@@ -9,7 +9,9 @@ export function Catalogue({
   haveFreeKitty = false,
   howMuchToDisplay = 'all',
   kitties,
-  doubleKitties,
+  loading,
+  increasePageAC,
+  hasMore,
 }) {
   const { currentChainName } = useContext(Web3Context)
   let navigate = useNavigate()
@@ -21,22 +23,25 @@ export function Catalogue({
   }
 
   const observer = useRef()
-  const lastKittieRef = useCallback(node => {
-    observer.current = new IntersectionObserver(
-      entries => {
-        if (entries[0].isIntersecting) {
-          console.log(entries)
-          doubleKitties()
-          // console.log('')
+  const lastKittieRef = useCallback(
+    node => {
+      if (loading) return
+      if (observer.current) observer.current.disconnect()
+      observer.current = new IntersectionObserver(
+        entries => {
+          if (entries[0].isIntersecting && hasMore) {
+            increasePageAC()
+          }
+        },
+        {
+          threshold: 1,
         }
-      },
-      {
-        threshold: 1,
-        // rootMargin: '150px',
-      }
-    )
-    if (node) observer.current.observe(node)
-  })
+      )
+
+      if (node) observer.current.observe(node)
+    },
+    [loading, hasMore]
+  )
 
   if (currentChainName !== 'ganache') {
     return <SceletonCatalogue howMuchToDisplay={howMuchToDisplay} />
@@ -47,7 +52,7 @@ export function Catalogue({
       {kittiesArr.map((id, index) => {
         if (kittiesArr.length === index + 1) {
           return (
-            <div ref={lastKittieRef} className='last' key={Math.random() * 10}>
+            <div ref={lastKittieRef} className='last' key={'kittie_item' + id}>
               <KittieItem
                 dnaString={kitties[id][0]}
                 // dnaString={kitties[id].genes}
@@ -60,7 +65,7 @@ export function Catalogue({
         } else {
           return (
             <KittieItem
-              key={Math.random() * 10}
+              key={'kittie_item' + id}
               dnaString={kitties[id][0]}
               // dnaString={kitties[id].genes}
               generation={kitties[id].generation}

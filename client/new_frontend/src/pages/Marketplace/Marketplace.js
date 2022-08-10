@@ -37,7 +37,10 @@ function Marketplace({
 
   useEffect(() => {
     if (currentChainName === options.baseChain) {
-      getKitties(kittyContract, kittieIdsOnSale, dispatch)
+      // getKitties(kittyContract, kittieIdsOnSale, dispatch)
+      getKitties(kittyContract, kittieIdsOnSale).then(payload => {
+        dispatch({ type: 'SET_ALL_KITTIES_ON_SALE', payload })
+      })
     }
   }, [kittieIdsOnSale])
 
@@ -55,7 +58,7 @@ function Marketplace({
       20: ['6457442978789379', '1652779318', '0', '0', '0'],
     })
   }
-  console.log(kittieToShow)
+  // console.log(kittieToShow)
   const kittiesToDisplay = () => {
     if (howMuchToDisplay !== 'all') {
       // for MarketPlace preview

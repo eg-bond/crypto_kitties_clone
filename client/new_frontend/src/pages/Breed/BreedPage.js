@@ -117,6 +117,16 @@ function BreedPage({ myKitties, dispatch, breed }) {
     }
   }, [])
 
+  //someItemsState
+  const [state, setState] = useState({ insideField: {} })
+  function handleInc(params) {
+    const increment = Object.keys(state.insideField).length + 1
+    setState({
+      ...state,
+      insideField: { ...state.insideField, [increment]: 'somethin' },
+    })
+  }
+
   if (connectedAccount === 0) {
     return (
       <div className='breed'>
@@ -151,6 +161,14 @@ function BreedPage({ myKitties, dispatch, breed }) {
           currentChainName={currentChainName}
         />
       </div>
+      {/* someItems */}
+      <div className='someItems'>
+        <button onClick={handleInc}>Button</button>
+        {Object.keys(state.insideField).map((item, i) => (
+          <div key={'smt' + i}>item</div>
+        ))}
+      </div>
+      {/* ___________ */}
       {visible && (
         <Modal
           className='breedModal'

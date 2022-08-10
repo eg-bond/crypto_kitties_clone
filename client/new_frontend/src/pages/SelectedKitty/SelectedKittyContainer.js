@@ -92,11 +92,11 @@ function SelectedKittyContainer({ myKitties, kittieIdsOnSale, dispatch }) {
   const { getKitty, getKittyPrice, getKittyOwner } = useMarketplace()
 
   // if we didn't fetch for kitties
-  if (!fetched && connectedAccount !== 0) {
-    getOwnedKitties(kittyContract, connectedAccount, dispatch).then(() =>
-      setFetched(true)
-    )
-  }
+  // if (!fetched && connectedAccount !== 0) {
+  //   getOwnedKitties(kittyContract, connectedAccount, dispatch).then(() =>
+  //     setFetched(true)
+  //   )
+  // }
 
   useEffect(() => {
     fetchTokenIdsOnSale(marketplaceContract, dispatch)
