@@ -8,6 +8,7 @@ export function Catalogue({
   haveFreeKitty = false,
   howMuchToDisplay = 'all',
   kitties,
+  kittiePrices = [],
   loading,
   page,
   hasMore,
@@ -52,11 +53,12 @@ export function Catalogue({
           return (
             <div ref={lastKittieRef} className='last' key={'kittie_item' + id}>
               <KittieItem
-                dnaString={kitties[id][0]}
-                // dnaString={kitties[id].genes}
+                // dnaString={kitties[id][0]}
+                dnaString={kitties[id].genes}
                 generation={kitties[id].generation}
                 onClickHandler={onClickHandler}
                 id={id}
+                price={kittiePrices[id] || null}
               />
             </div>
           )
@@ -64,11 +66,12 @@ export function Catalogue({
           return (
             <KittieItem
               key={'kittie_item' + id}
-              dnaString={kitties[id][0]}
-              // dnaString={kitties[id].genes}
+              // dnaString={kitties[id][0]}
+              dnaString={kitties[id].genes}
               generation={kitties[id].generation}
               onClickHandler={onClickHandler}
               id={id}
+              price={kittiePrices[id] || null}
             />
           )
         }

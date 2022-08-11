@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useMarketplace } from './OtherComponents/Web3/useMarketplace'
 import { pageCapacity } from './pages/Catalogue/MyKittiesPage'
 
 export const getOwnedKitties = async (
@@ -95,6 +96,8 @@ export const useGetKittiesByPage = (
     Math.ceil(idsArray.length / pageCapacity) || 1
   )
 
+  const { getKittyPrices } = useMarketplace()
+
   useEffect(() => {
     dispatch({ type: 'SET_PAGE', payload: 1 })
     dispatch({ type: 'CLEAR_KITTIES' })
@@ -111,9 +114,13 @@ export const useGetKittiesByPage = (
 
   useEffect(() => {
     setLoading(true)
-    getKittiesByPage(pageNumber, kittyContract, idsArray)
+    getKittiesByPage(pageNumber, kittyContract, idsArray).then(payload => {
+      dispatch({ type: 'ADD_KITTIES', payload })
+    })
+
+    getKittyPrices(idsArray)
       .then(payload => {
-        dispatch({ type: 'ADD_KITTIES', payload })
+        dispatch({ type: 'SET_KITTIE_PRICES', payload })
       })
       .then(() => setLoading(false))
   }, [pageNumber, idsArray])

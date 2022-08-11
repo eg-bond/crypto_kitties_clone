@@ -6,7 +6,7 @@ import BreedPage from './pages/Breed/BreedPage'
 import Factory from './pages/Factory/Factory'
 import React, { useContext, useReducer } from 'react'
 import { Web3Context } from './OtherComponents/Web3/Web3Provider'
-import { initialState, reducer } from './storage/mainReduser'
+import { initialState, reducer } from './storage/mainReducer'
 import Navigation from './OtherComponents/Navigation/Navigation'
 import Footer from './OtherComponents/Footer/Footer'
 import MarketplacePage from './pages/Marketplace/MarketplacePage'
@@ -55,7 +55,8 @@ function App({ kittyContract, connectedAccount, currentChainName }) {
               <IndexPage
                 haveFreeKitty={kittiesState.haveFreeKitty}
                 kitties={kittiesState.myKitties}
-                kittiesOnSale={kittiesState.kittiesOnSale}
+                kittiePrices={kittiesState.kittiePrices}
+                kittiesOnSale={kittiesState.myKitties}
                 kittieIdsOnSale={kittiesState.kittieIdsOnSale}
                 dispatch={dispatch}
               />
@@ -77,6 +78,7 @@ function App({ kittyContract, connectedAccount, currentChainName }) {
                 kittieIdsOwned={kittiesState.kittieIdsOwned}
                 page={kittiesState.page}
                 myKitties={kittiesState.myKitties}
+                kittiePrices={kittiesState.kittiePrices}
                 haveFreeKitty={kittiesState.haveFreeKitty}
                 dispatch={dispatch}
               />
@@ -87,6 +89,7 @@ function App({ kittyContract, connectedAccount, currentChainName }) {
             element={
               <MarketplacePage
                 kittiesOnSale={kittiesState.myKitties}
+                kittiePrices={kittiesState.kittiePrices}
                 page={kittiesState.page}
                 // kittiesOnSale={kittiesState.kittiesOnSale}
                 kittieIdsOnSale={kittiesState.kittieIdsOnSale}

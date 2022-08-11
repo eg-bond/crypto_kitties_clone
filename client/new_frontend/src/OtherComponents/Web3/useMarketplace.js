@@ -17,6 +17,28 @@ export const useMarketplace = () => {
     return web3.utils.fromWei(offer.price, 'ether')
   }
 
+  const getKittyPrices = async idsArray => {
+    const promises = []
+    idsArray.forEach(id =>
+      promises.push(
+        getKittyPrice(id).then(price => {
+          // if kitty is for sale
+          if (price !== '0') {
+            return { [id]: price }
+          }
+        })
+      )
+    )
+
+    let payload = {}
+    await Promise.all(promises).then(pricesArray => {
+      pricesArray.forEach(
+        indexedPriceObj => (payload = { ...payload, ...indexedPriceObj })
+      )
+    })
+    return payload
+  }
+
   const sellKitty = async (price, id) => {
     let weiPrice = web3.utils.toWei(price, 'ether')
 
@@ -51,6 +73,7 @@ export const useMarketplace = () => {
   return {
     getKitty,
     getKittyPrice,
+    getKittyPrices,
     sellKitty,
     buyKitty,
     removeOffer,

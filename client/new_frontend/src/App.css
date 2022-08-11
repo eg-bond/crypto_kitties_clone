@@ -100,6 +100,10 @@
   background-color: #3de781;
 }
 
+.squareButton--red {
+  background-color: #f84040;
+}
+
 .separator {
   position: absolute;
   left: 0;

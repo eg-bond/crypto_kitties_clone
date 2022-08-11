@@ -12,10 +12,11 @@ import Catalogue from './Catalogue'
 
 import './catalogue.css'
 
-export const pageCapacity = 5
+export const pageCapacity = 12
 
 function MyKittiesPage({
   kittieIdsOwned,
+  kittiePrices,
   page,
   myKitties,
   haveFreeKitty,
@@ -69,6 +70,7 @@ function MyKittiesPage({
       <Heading title={'My kitties'} />
       <Catalogue
         kitties={myKitties}
+        kittiePrices={kittiePrices}
         haveFreeKitty={haveFreeKitty}
         page={page}
         loading={loading}

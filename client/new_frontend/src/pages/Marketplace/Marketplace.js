@@ -12,6 +12,7 @@ import Catalogue from '../Catalogue/Catalogue'
 function Marketplace({
   kittiesOnSale,
   kittieIdsOnSale,
+  kittiePrices,
   page,
   dispatch,
   howMuchToDisplay,
@@ -68,6 +69,7 @@ function Marketplace({
   return (
     <Catalogue
       kitties={kittiesToDisplay()}
+      kittiePrices={kittiePrices}
       howMuchToDisplay={howMuchToDisplay}
       loading={loading}
       hasMore={hasMore}

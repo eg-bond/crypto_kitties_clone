@@ -1,11 +1,12 @@
 export const initialState = {
   kittieIdsOwned: [],
-  page: 1,
-  myKitties: {},
   kittieIdsOnSale: [],
-  kittiesOnSale: {},
-  breed: { mother: null, father: null },
+  kittiePrices: {},
   haveFreeKitty: false,
+  breed: { mother: null, father: null },
+  myKitties: {},
+  page: 1,
+  kittiesOnSale: {},
 }
 
 export const reducer = (state = initialState, action) => {
@@ -30,13 +31,16 @@ export const reducer = (state = initialState, action) => {
       return { ...state, kittieIdsOnSale: [...action.payload] }
     case 'SET_ALL_KITTIES_ON_SALE':
       return { ...state, kittiesOnSale: { ...action.payload } }
+    case 'SET_KITTIE_PRICES':
+      return { ...state, kittiePrices: { ...action.payload } }
 
     case 'SET_KITTIES_IDS_OWNED':
       return { ...state, kittieIdsOwned: [...action.payload] }
     case 'ADD_KITTIES':
       return { ...state, myKitties: { ...state.myKitties, ...action.payload } }
     case 'CLEAR_KITTIES':
-      return { ...state, myKitties: {} }
+      // may be create a sepatate action for clearing kittiePrices
+      return { ...state, myKitties: {}, kittiePrices: {} }
     case 'SET_PAGE':
       return { ...state, page: action.payload }
 

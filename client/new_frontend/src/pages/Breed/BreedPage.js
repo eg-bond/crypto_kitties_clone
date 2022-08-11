@@ -49,10 +49,10 @@ function BreedPage({ myKitties, dispatch, breed, page, kittieIdsOwned }) {
       .send({ from: connectedAccount })
   }
 
-  const choseKittyForBreed = id => {
+  const choseKittyForBreed = (id, role = breedRole.current) => {
     dispatch({
       type: 'CHOSE_KITTY_FOR_BREED',
-      payload: { id, role: breedRole.current },
+      payload: { id, role },
     })
     setVisible(false)
   }
@@ -90,6 +90,7 @@ function BreedPage({ myKitties, dispatch, breed, page, kittieIdsOwned }) {
           breed={breed}
           openModal={openModal}
           currentChainName={currentChainName}
+          choseKittyForBreed={choseKittyForBreed}
         />
         <BreedItem
           role={'father'}
@@ -97,6 +98,7 @@ function BreedPage({ myKitties, dispatch, breed, page, kittieIdsOwned }) {
           breed={breed}
           openModal={openModal}
           currentChainName={currentChainName}
+          choseKittyForBreed={choseKittyForBreed}
         />
       </div>
       {visible && (

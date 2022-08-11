@@ -9,7 +9,14 @@ import {
 } from '../Factory/helpers'
 import { Kitty } from '../Factory/Kitty'
 
-function BreedItem({ role, myKitties, breed, openModal, currentChainName }) {
+function BreedItem({
+  role,
+  myKitties,
+  breed,
+  openModal,
+  currentChainName,
+  choseKittyForBreed,
+}) {
   const selectedKitty = myKitties[breed[role]]
 
   let dna = null
@@ -66,6 +73,11 @@ function BreedItem({ role, myKitties, breed, openModal, currentChainName }) {
               {getDecorationName(dna.decoration)}
             </div>
           </div>
+          <button
+            className='squareButton squareButton--red'
+            onClick={() => choseKittyForBreed(null, role)}>
+            Clear
+          </button>
         </>
       )}
     </div>

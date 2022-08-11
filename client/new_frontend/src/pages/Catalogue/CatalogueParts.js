@@ -3,7 +3,13 @@ import { getColor } from '../Factory/colors'
 import { defaultKittyDNA } from '../Factory/Factory'
 import { Kitty } from '../Factory/Kitty'
 
-export function KittieItem({ dnaString, onClickHandler, generation, id }) {
+export function KittieItem({
+  dnaString,
+  onClickHandler,
+  generation,
+  id,
+  price,
+}) {
   const dna = parseGenes(dnaString)
 
   return (
@@ -21,6 +27,7 @@ export function KittieItem({ dnaString, onClickHandler, generation, id }) {
             <span>DNA: {dnaString}</span>
             <span>Gen: {generation}</span>
           </div>
+          {price && <div>{price}</div>}
         </div>
       </div>
     </div>
