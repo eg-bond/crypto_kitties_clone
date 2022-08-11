@@ -60,7 +60,9 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
     // There can only be one active offer for a token at a time.
     require(!tokenIdToOffer[_tokenId].active, 'Active offer for this token is already exists');
     // Marketplace contract (this) needs to be an approved operator when the offer is created.
-    require(_kittyContract.isApprovedForAll(msg.sender, address(this)), 'Contract needs to be approved first');
+    require(_kittyContract.isApprovedForAll(msg.sender, address(this)), 'Contract needs to be approved first');    
+    // The order price has to be more than zero
+    require(_price != 0, 'Contract needs to be approved first');
 
     Offer memory newOffer = Offer(payable(msg.sender), _price, offers.length, _tokenId, true);
 

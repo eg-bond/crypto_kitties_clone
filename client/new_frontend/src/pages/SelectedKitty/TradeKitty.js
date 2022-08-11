@@ -139,9 +139,13 @@ function SellKitty({
           />
           <span> ETH</span>
         </div>
+        {inputVal.toString() === '0' && (
+          <span>The price has to be more than 0</span>
+        )}
       </div>
 
       <button
+        disabled={inputVal.toString() === '0'}
         className='saleInput__button'
         onClick={() => sellKitty(inputVal.toString())}>
         Sell me

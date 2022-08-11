@@ -41,7 +41,7 @@ export const useMarketplace = () => {
 
   const sellKitty = async (price, id) => {
     let weiPrice = web3.utils.toWei(price, 'ether')
-
+    console.log('weiPrice', weiPrice)
     return marketplaceContract.methods
       .setOffer(weiPrice, id)
       .send({ from: connectedAccount })

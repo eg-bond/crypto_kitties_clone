@@ -48,37 +48,25 @@ export function Catalogue({
 
   return (
     <div className='catalogue'>
-      {kittiesArr.map((id, index) => {
-        if (kittiesArr.length === index + 1) {
-          return (
-            <div ref={lastKittieRef} className='last' key={'kittie_item' + id}>
-              <KittieItem
-                // dnaString={kitties[id][0]}
-                dnaString={kitties[id].genes}
-                generation={kitties[id].generation}
-                onClickHandler={onClickHandler}
-                id={id}
-                price={kittiePrices[id] || null}
-              />
-            </div>
-          )
-        } else {
-          return (
-            <KittieItem
-              key={'kittie_item' + id}
-              // dnaString={kitties[id][0]}
-              dnaString={kitties[id].genes}
-              generation={kitties[id].generation}
-              onClickHandler={onClickHandler}
-              id={id}
-              price={kittiePrices[id] || null}
-            />
-          )
-        }
-      })}
+      {kittiesArr.map(id => (
+        <KittieItem
+          key={'kittie_item' + id}
+          // dnaString={kitties[id][0]}
+          dnaString={kitties[id].genes}
+          generation={kitties[id].generation}
+          onClickHandler={onClickHandler}
+          id={id}
+          price={kittiePrices[id] || null}
+        />
+      ))}
       {mode === 'MyKitties' && (
         <AdditionalItem haveFreeKitty={haveFreeKitty} kitties={kitties} />
       )}
+      <div
+        ref={lastKittieRef}
+        className='last'
+        // style={{ display: 'none' }}
+      ></div>
     </div>
   )
 }
