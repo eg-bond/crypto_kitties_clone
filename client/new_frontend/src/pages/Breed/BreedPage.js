@@ -17,12 +17,11 @@ function BreedPage({ myKitties, dispatch, breed, page, kittieIdsOwned }) {
 
   useEffect(() => {
     if (connectedAccount && currentChainName === options.baseChain) {
-      //new
       getOwnedKittiesIds(kittyContract, connectedAccount).then(payload =>
         dispatch({ type: 'SET_KITTIES_IDS_OWNED', payload })
       )
     }
-  }, [connectedAccount, currentChainName])
+  }, [])
 
   const { loading, hasMore } = useGetKittiesByPage(
     page,

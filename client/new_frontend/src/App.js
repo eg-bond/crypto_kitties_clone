@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import IndexPage from './pages/Index/IndexPage'
 import BreedPage from './pages/Breed/BreedPage'
 import Factory from './pages/Factory/Factory'
-import React, { useContext, useReducer } from 'react'
+import React, { useContext, useEffect, useReducer } from 'react'
 import { Web3Context } from './OtherComponents/Web3/Web3Provider'
 import { initialState, reducer } from './storage/mainReducer'
 import Navigation from './OtherComponents/Navigation/Navigation'
@@ -13,6 +13,8 @@ import MarketplacePage from './pages/Marketplace/MarketplacePage'
 import SelectedKittyContainer from './pages/SelectedKitty/SelectedKittyContainer'
 import MyKittiesPage from './pages/Catalogue/MyKittiesPage'
 import EclipseSpinner from './OtherComponents/Spinners/Eclipse/EclipseSpinner'
+import { getOwnedKittiesIds } from './helpers'
+import { options } from './options'
 
 function AppInit() {
   const { kittyContract, connectedAccount, currentChainName } =
@@ -41,7 +43,20 @@ function App({ kittyContract, connectedAccount, currentChainName }) {
   //   }
   // }, [currentChainName])
 
-  console.log('state.page', kittiesState.page)
+  // fetches for user owned kitties every time wallet is changed
+  useEffect(() => {
+    if (connectedAccount && currentChainName === options.baseChain) {
+      //new
+      getOwnedKittiesIds(kittyContract, connectedAccount).then(payload =>
+        dispatch({ type: 'SET_KITTIES_IDS_OWNED', payload })
+      )
+      //checks, if user got his free kitty or not
+      kittyContract.methods
+        .alreadyGotFreeKitty(connectedAccount)
+        .call()
+        .then(payload => dispatch({ type: 'SET_HAVE_FREE_KITTY', payload }))
+    }
+  }, [connectedAccount, currentChainName])
 
   return (
     <div className='App'>
@@ -53,12 +68,13 @@ function App({ kittyContract, connectedAccount, currentChainName }) {
             path='/'
             element={
               <IndexPage
+                // kitties={kittiesState.myKitties}
+                dispatch={dispatch}
                 haveFreeKitty={kittiesState.haveFreeKitty}
-                kitties={kittiesState.myKitties}
+                kittieIdsOnSale={kittiesState.kittieIdsOnSale}
                 kittiePrices={kittiesState.kittiePrices}
                 kittiesOnSale={kittiesState.myKitties}
-                kittieIdsOnSale={kittiesState.kittieIdsOnSale}
-                dispatch={dispatch}
+                kittieIdsOwned={kittiesState.kittieIdsOwned}
               />
             }
           />
@@ -88,12 +104,12 @@ function App({ kittyContract, connectedAccount, currentChainName }) {
             path='marketplace'
             element={
               <MarketplacePage
-                kittiesOnSale={kittiesState.myKitties}
-                kittiePrices={kittiesState.kittiePrices}
-                page={kittiesState.page}
                 // kittiesOnSale={kittiesState.kittiesOnSale}
-                kittieIdsOnSale={kittiesState.kittieIdsOnSale}
                 dispatch={dispatch}
+                kittieIdsOnSale={kittiesState.kittieIdsOnSale}
+                kittiePrices={kittiesState.kittiePrices}
+                kittiesOnSale={kittiesState.myKitties}
+                page={kittiesState.page}
               />
             }
           />

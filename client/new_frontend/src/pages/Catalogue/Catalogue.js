@@ -48,7 +48,7 @@ export function Catalogue({
 
   return (
     <div className='catalogue'>
-      {kittiesArr.map(id => (
+      {kittiesArr.map((id, i) => (
         <KittieItem
           key={'kittie_item' + id}
           // dnaString={kitties[id][0]}
@@ -56,6 +56,7 @@ export function Catalogue({
           generation={kitties[id].generation}
           onClickHandler={onClickHandler}
           id={id}
+          index={i}
           price={kittiePrices[id] || null}
         />
       ))}

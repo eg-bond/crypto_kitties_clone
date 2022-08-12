@@ -5,11 +5,13 @@ import Marketplace from '../Marketplace/Marketplace'
 import './index_page.css'
 
 function IndexPage({
-  haveFreeKitty,
-  kitties,
-  kittiesOnSale,
-  kittieIdsOnSale,
+  // kitties,
   dispatch,
+  haveFreeKitty,
+  kittieIdsOnSale,
+  kittiePrices,
+  kittiesOnSale,
+  kittieIdsOwned,
 }) {
   return (
     <div className='index'>
@@ -21,7 +23,10 @@ function IndexPage({
         </div>
         <img className='landing__img' src='./images/group.png' alt='group' />
 
-        <GetYourKittyLink haveFreeKitty={haveFreeKitty} kitties={kitties} />
+        <GetYourKittyLink
+          haveFreeKitty={haveFreeKitty}
+          kittieIdsOwned={kittieIdsOwned}
+        />
       </div>
       <div className='marketplacePreview'>
         <Heading
@@ -30,17 +35,19 @@ function IndexPage({
           goTo={'/marketplace'}
         />
         <Marketplace
-          kittiesOnSale={kittiesOnSale}
-          kittieIdsOnSale={kittieIdsOnSale}
           dispatch={dispatch}
           howMuchToDisplay={4}
+          kittieIdsOnSale={kittieIdsOnSale}
+          kittiePrices={kittiePrices}
+          kittiesOnSale={kittiesOnSale}
+          page={1}
         />
       </div>
     </div>
   )
 }
 
-function GetYourKittyLink({ haveFreeKitty, kitties }) {
+function GetYourKittyLink({ haveFreeKitty, kittieIdsOwned }) {
   if (!haveFreeKitty) {
     return (
       <Link className='button--white' to={'/factory'}>
@@ -48,7 +55,8 @@ function GetYourKittyLink({ haveFreeKitty, kitties }) {
       </Link>
     )
   }
-  if (Object.keys(kitties).length === 0) {
+  // if user got his free kitty, but sold it
+  if (Object.keys(kittieIdsOwned).length === 0) {
     return (
       <Link className='button--white' to={'/marketplace'}>
         Get your own kitty

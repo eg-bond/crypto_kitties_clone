@@ -27,17 +27,11 @@ function MyKittiesPage({
 
   useEffect(() => {
     if (connectedAccount && currentChainName === options.baseChain) {
-      //new
       getOwnedKittiesIds(kittyContract, connectedAccount).then(payload =>
         dispatch({ type: 'SET_KITTIES_IDS_OWNED', payload })
       )
-      //checks, if user got his free kitty or not
-      kittyContract.methods
-        .alreadyGotFreeKitty(connectedAccount)
-        .call()
-        .then(payload => dispatch({ type: 'SET_HAVE_FREE_KITTY', payload }))
     }
-  }, [connectedAccount, currentChainName])
+  }, [])
 
   const { loading, hasMore } = useGetKittiesByPage(
     page,

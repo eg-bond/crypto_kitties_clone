@@ -2,18 +2,24 @@ import { Link } from 'react-router-dom'
 import { getColor } from '../Factory/colors'
 import { defaultKittyDNA } from '../Factory/Factory'
 import { Kitty } from '../Factory/Kitty'
+import { pageCapacity } from './MyKittiesPage'
 
 export function KittieItem({
   dnaString,
   onClickHandler,
   generation,
   id,
+  index,
   price,
 }) {
   const dna = parseGenes(dnaString)
 
+  const delay = 0.05 * (index % pageCapacity)
+
   return (
-    <div className='kittyContainer'>
+    <div
+      className={'kittyContainer'}
+      style={{ animationDelay: delay.toString() + 's' }}>
       <div
         className='containerBackground'
         style={{ backgroundColor: getColor(dna.eyesClr) }}></div>

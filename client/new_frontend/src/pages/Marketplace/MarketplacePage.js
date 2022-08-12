@@ -14,12 +14,12 @@ function MarketplacePage({
     <div className='marketplacePage'>
       <Heading title={'Marketplace'} />
       <Marketplace
-        kittiesOnSale={kittiesOnSale}
-        kittiePrices={kittiePrices}
-        kittieIdsOnSale={kittieIdsOnSale}
-        howMuchToDisplay={'all'}
-        page={page}
         dispatch={dispatch}
+        howMuchToDisplay={'all'}
+        kittieIdsOnSale={kittieIdsOnSale}
+        kittiePrices={kittiePrices}
+        kittiesOnSale={kittiesOnSale}
+        page={page}
       />
     </div>
   )

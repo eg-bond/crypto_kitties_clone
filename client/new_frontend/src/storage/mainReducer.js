@@ -12,7 +12,6 @@ export const initialState = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_KITTIES':
-      console.log('action.payload', action.payload)
       return { ...state, myKitties: { ...action.payload } }
     case 'SET_HAVE_FREE_KITTY':
       return { ...state, haveFreeKitty: action.payload }
@@ -35,6 +34,7 @@ export const reducer = (state = initialState, action) => {
       return { ...state, kittiePrices: { ...action.payload } }
 
     case 'SET_KITTIES_IDS_OWNED':
+      console.log('fetched for owned')
       return { ...state, kittieIdsOwned: [...action.payload] }
     case 'ADD_KITTIES':
       return { ...state, myKitties: { ...state.myKitties, ...action.payload } }

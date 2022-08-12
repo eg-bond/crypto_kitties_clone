@@ -36,8 +36,35 @@
   position: relative;
   width: 100%;
   height: var(--containerHeight);
-  animation-name: fadeIn;
-  animation-duration: 0.8s;
+  opacity: 0;
+  -webkit-transform: translate3d(0, -20%, 0);
+  transform: translate3d(0, -20%, 0);
+  animation-name: fadeInDown;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -20%, 0);
+    transform: translate3d(0, -20%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .kittyContainer:hover {
@@ -132,26 +159,6 @@
   height: 70%;
   width: 2%;
   border: dashed 2px #f64e16;
-}
-
-/* animations */
-/* @-webkit-keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-} */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
 }
 
 @media (max-width: 625px),
