@@ -20,10 +20,19 @@ export const reducer = (state = initialState, action) => {
 
       // if kitty is already chosen for breed as other parent
       if (Object.values(state.breed).includes(id)) {
-        return { ...state, breed: { ...initialState.breed, [role]: id } }
+        return {
+          ...state,
+          breed: {
+            ...initialState.breed,
+            [role]: { ...state.myKitties[id], id },
+          },
+        }
       }
       // default
-      return { ...state, breed: { ...state.breed, [role]: id } }
+      return {
+        ...state,
+        breed: { ...state.breed, [role]: { ...state.myKitties[id], id } },
+      }
     case 'ERASE_BREEDING':
       return { ...state, breed: { ...initialState.breed } }
     case 'SET_ALL_TOKEN_IDS_ON_SALE':

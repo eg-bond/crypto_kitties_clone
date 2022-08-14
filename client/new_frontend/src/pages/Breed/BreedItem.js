@@ -11,13 +11,12 @@ import { Kitty } from '../Factory/Kitty'
 
 function BreedItem({
   role,
-  myKitties,
   breed,
   openModal,
   currentChainName,
   choseKittyForBreed,
 }) {
-  const selectedKitty = myKitties[breed[role]]
+  const selectedKitty = breed[role]
 
   let dna = null
   if (selectedKitty) {

@@ -9,8 +9,8 @@ export function KittieItem({
   onClickHandler,
   generation,
   id,
-  index,
-  price,
+  index = 0,
+  price = null,
 }) {
   const dna = parseGenes(dnaString)
 

@@ -8,12 +8,16 @@ import { KittieItem } from '../Catalogue/CatalogueParts'
 import { options } from '../../options'
 import BreedItem from './BreedItem'
 import Catalogue from '../Catalogue/Catalogue'
+import { useMarketplace } from '../../OtherComponents/Web3/useMarketplace'
 
 function BreedPage({ myKitties, dispatch, breed, page, kittieIdsOwned }) {
   const [visible, setVisible] = useState(false)
+  const [breededKitty, setBreededKitty] = useState({})
+  console.log('breededKitty', breededKitty)
   const breedRole = useRef()
   const { kittyContract, connectedAccount, login, currentChainName } =
     useContext(Web3Context)
+  const { getKitty } = useMarketplace()
 
   useEffect(() => {
     if (connectedAccount && currentChainName === options.baseChain) {
@@ -46,6 +50,20 @@ function BreedPage({ myKitties, dispatch, breed, page, kittieIdsOwned }) {
     kittyContract.methods
       .breed(breed.mother, breed.father)
       .send({ from: connectedAccount })
+  }
+
+  const handleBreeding = () => {
+    setBreededKitty({})
+    kittyContract.methods
+      .breed(breed.mother.id, breed.father.id)
+      .send({ from: connectedAccount })
+      .then(() => getOwnedKittiesIds(kittyContract, connectedAccount))
+      .then(payload => {
+        getKitty(payload[payload.length - 1]).then(kitty =>
+          setBreededKitty(kitty)
+        )
+        dispatch({ type: 'SET_KITTIES_IDS_OWNED', payload })
+      })
   }
 
   const choseKittyForBreed = (id, role = breedRole.current) => {
@@ -118,11 +136,20 @@ function BreedPage({ myKitties, dispatch, breed, page, kittieIdsOwned }) {
           />
         </Modal>
       )}
+
       {bothKittiesIsSet() && (
-        <button className='button--white' onClick={breedCats}>
+        <button className='button--white' onClick={handleBreeding}>
           Ok, give them some privacy
         </button>
       )}
+      <KittieItem
+        dnaString={breededKitty.genes || '1013761011131311'}
+        generation={breededKitty.generation || 0}
+        onClickHandler={() => {}}
+        id={10}
+        // index={0}
+        // price={kittiePrices[id] || null}
+      />
     </div>
   )
 }
