@@ -12,6 +12,7 @@ import './animations.css'
 import './decoration.css'
 
 export function Kitty({ dna }) {
+  console.log('dna', dna)
   return (
     <>
       <div className='cat'>

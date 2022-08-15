@@ -18,8 +18,14 @@ export const reducer = (state = initialState, action) => {
     case 'CHOSE_KITTY_FOR_BREED':
       const { id, role } = action.payload
 
-      // if kitty is already chosen for breed as other parent
-      if (Object.values(state.breed).includes(id)) {
+      const kittyAlreadyChosen = () => {
+        if (state.breed.mother?.id === id || state.breed.father?.id === id) {
+          return true
+        }
+        return false
+      }
+
+      if (kittyAlreadyChosen()) {
         return {
           ...state,
           breed: {

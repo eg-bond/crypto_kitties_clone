@@ -1,3 +1,10 @@
+body {
+  /* variables */
+  --containerHeight: 355px;
+  --kittyPart: 90%;
+  --infoPart: 10%;
+}
+
 .catalogue {
   padding-top: 1.5rem;
   display: grid;
@@ -5,10 +12,6 @@
   row-gap: 2rem;
   column-gap: 1rem;
   justify-content: space-evenly;
-  /* variables */
-  --containerHeight: 355px;
-  --kittyPart: 90%;
-  --infoPart: 10%;
 }
 
 .catalogue * {

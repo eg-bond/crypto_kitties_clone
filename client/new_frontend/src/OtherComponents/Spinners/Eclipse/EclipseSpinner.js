@@ -1,5 +1,5 @@
 import './eclipseSpinner.css'
-
+// preloader
 export default function EclipseSpinner() {
   return (
     <div className='absoluteContainer'>

@@ -4,16 +4,25 @@ import { Modal } from 'web3uikit'
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
 import { getOwnedKittiesIds, useGetKittiesByPage } from '../../helpers'
 import Heading from '../../OtherComponents/Heading/Heading'
-import { KittieItem } from '../Catalogue/CatalogueParts'
+import { KittieItem, parseGenes } from '../Catalogue/CatalogueParts'
 import { options } from '../../options'
 import BreedItem from './BreedItem'
 import Catalogue from '../Catalogue/Catalogue'
 import { useMarketplace } from '../../OtherComponents/Web3/useMarketplace'
+import EclipseSpinner from '../../OtherComponents/Spinners/Eclipse/EclipseSpinner'
+import { Kitty } from '../Factory/Kitty'
+import {
+  getAnimationName,
+  getDecorationName,
+  getEyesShapeName,
+} from '../Factory/helpers'
 
 function BreedPage({ myKitties, dispatch, breed, page, kittieIdsOwned }) {
   const [visible, setVisible] = useState(false)
+  const [breedingVisible, setBreedingVisible] = useState(false)
   const [breededKitty, setBreededKitty] = useState({})
   console.log('breededKitty', breededKitty)
+
   const breedRole = useRef()
   const { kittyContract, connectedAccount, login, currentChainName } =
     useContext(Web3Context)
@@ -46,24 +55,26 @@ function BreedPage({ myKitties, dispatch, breed, page, kittieIdsOwned }) {
     setVisible(true)
   }
 
-  const breedCats = () => {
-    kittyContract.methods
-      .breed(breed.mother, breed.father)
-      .send({ from: connectedAccount })
+  const closeBreedingModal = () => {
+    setBreedingVisible(false)
+    setBreededKitty({})
   }
 
   const handleBreeding = () => {
-    setBreededKitty({})
+    setBreedingVisible(true)
     kittyContract.methods
       .breed(breed.mother.id, breed.father.id)
       .send({ from: connectedAccount })
-      .then(() => getOwnedKittiesIds(kittyContract, connectedAccount))
-      .then(payload => {
-        getKitty(payload[payload.length - 1]).then(kitty =>
-          setBreededKitty(kitty)
-        )
-        dispatch({ type: 'SET_KITTIES_IDS_OWNED', payload })
-      })
+      .on('transactionHash', () =>
+        getOwnedKittiesIds(kittyContract, connectedAccount).then(payload => {
+          getKitty(payload[payload.length - 1]).then(kitty =>
+            setBreededKitty(kitty)
+          )
+          dispatch({ type: 'SET_KITTIES_IDS_OWNED', payload })
+          dispatch({ type: 'ERASE_BREEDING' })
+        })
+      )
+      .on('error', () => closeBreedingModal())
   }
 
   const choseKittyForBreed = (id, role = breedRole.current) => {
@@ -118,6 +129,7 @@ function BreedPage({ myKitties, dispatch, breed, page, kittieIdsOwned }) {
           choseKittyForBreed={choseKittyForBreed}
         />
       </div>
+      {/* modal with myKitties */}
       {visible && (
         <Modal
           className='breedModal'
@@ -136,20 +148,71 @@ function BreedPage({ myKitties, dispatch, breed, page, kittieIdsOwned }) {
           />
         </Modal>
       )}
+      {/* modal with new breeded kitty */}
+      {breedingVisible && (
+        <Modal
+          className='breedModal'
+          onCancel={closeBreedingModal}
+          onCloseButtonPressed={closeBreedingModal}
+          hasFooter={false}>
+          {breededKitty.genes ? (
+            <BreededKitty
+              genes={breededKitty.genes || '1013761011131311'}
+              generation={breededKitty.generation || '0'}
+            />
+          ) : (
+            <div style={{ height: '70vh', position: 'relative' }}>
+              <EclipseSpinner />
+            </div>
+          )}
+        </Modal>
+      )}
 
       {bothKittiesIsSet() && (
         <button className='button--white' onClick={handleBreeding}>
           Ok, give them some privacy
         </button>
       )}
-      <KittieItem
-        dnaString={breededKitty.genes || '1013761011131311'}
-        generation={breededKitty.generation || 0}
-        onClickHandler={() => {}}
-        id={10}
-        // index={0}
-        // price={kittiePrices[id] || null}
-      />
+    </div>
+  )
+}
+
+function BreededKitty({ genes, generation }) {
+  const dna = parseGenes(genes)
+  return (
+    <div
+      style={{
+        height: '70vh',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}>
+      <div>New member in your kitty family!</div>
+      <Kitty dna={dna} />
+      <div className='breed__info'>
+        <div>
+          <span className='bold'>Genes: </span>
+          {genes}
+        </div>
+        <div>
+          <span className='bold'>Gen: </span>
+          {generation}
+        </div>
+        <div>
+          <span className='bold'>Eyes: </span>
+          {getEyesShapeName(dna.eyesShape)}
+        </div>
+        <div>
+          <span className='bold'>Animation: </span>
+          {getAnimationName(dna.animation)}
+        </div>
+        <div>
+          <span className='bold'>Decoration: </span>
+          {getDecorationName(dna.decoration)}
+        </div>
+      </div>
     </div>
   )
 }
