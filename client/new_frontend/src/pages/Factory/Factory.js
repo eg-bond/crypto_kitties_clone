@@ -7,8 +7,6 @@ import {
 import { Web3Context } from '../../OtherComponents/Web3/Web3Provider'
 import { Kitty } from './Kitty'
 import './factory.css'
-import { getColor } from './colors'
-import { Button } from 'web3uikit'
 import Heading from '../../OtherComponents/Heading/Heading'
 import { getOwnedKitties } from '../../helpers'
 import { options } from '../../options'
@@ -75,7 +73,10 @@ function Factory({ haveFreeKitty, dispatch }) {
   }
 
   const createKitty = async () => {
-    const genes = Number(Object.values(dna).join(''))
+    const genes = Object.values(dna).join('')
+    // const genes = Number(Object.values(dna).join(''))
+    console.log('genes', typeof genes)
+
     await kittyContract.methods
       .createKittyGen0(genes)
       .send({ from: connectedAccount })

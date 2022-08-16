@@ -150,28 +150,28 @@
     "absolutePath": "project:/contracts/IKittyMarketplace.sol",
     "exportedSymbols": {
       "Address": [
-        2291
+        2298
       ],
       "Context": [
-        2313
+        2320
       ],
       "ERC165": [
-        2540
+        2547
       ],
       "ERC721": [
-        1835
+        1842
       ],
       "IERC165": [
-        2552
+        2559
       ],
       "IERC721": [
-        1951
+        1958
       ],
       "IERC721Metadata": [
-        1996
+        2003
       ],
       "IERC721Receiver": [
-        1969
+        1976
       ],
       "IKittyMarketPlace": [
         60
@@ -180,10 +180,10 @@
         472
       ],
       "Ownable": [
-        969
+        976
       ],
       "Strings": [
-        2516
+        2523
       ]
     },
     "id": 61,
@@ -879,28 +879,28 @@
     "absolutePath": "project:/contracts/IKittyMarketplace.sol",
     "exportedSymbols": {
       "Address": [
-        2291
+        2298
       ],
       "Context": [
-        2313
+        2320
       ],
       "ERC165": [
-        2540
+        2547
       ],
       "ERC721": [
-        1835
+        1842
       ],
       "IERC165": [
-        2552
+        2559
       ],
       "IERC721": [
-        1951
+        1958
       ],
       "IERC721Metadata": [
-        1996
+        2003
       ],
       "IERC721Receiver": [
-        1969
+        1976
       ],
       "IKittyMarketPlace": [
         60
@@ -909,10 +909,10 @@
         472
       ],
       "Ownable": [
-        969
+        976
       ],
       "Strings": [
-        2516
+        2523
       ]
     },
     "id": 61,
@@ -1610,7 +1610,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.5",
-  "updatedAt": "2022-05-13T17:33:07.234Z",
+  "updatedAt": "2022-08-16T13:04:14.674Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

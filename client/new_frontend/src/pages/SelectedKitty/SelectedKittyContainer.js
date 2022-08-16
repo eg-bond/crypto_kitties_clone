@@ -38,31 +38,8 @@ export default function UpperContainer({
           theme='colored'
           type='button'
         />
-        <Skeleton
-          borderRadius='1rem'
-          height='300px'
-          theme='image'
-          width='250px'
-        />
-        {new Array(3).fill(0).map(() => (
-          <div className='selectedKitty__section'>
-            <Skeleton
-              style={{
-                marginBottom: '0.3rem',
-              }}
-              borderRadius='1rem'
-              height='40px'
-              theme='image'
-              width='20%'
-            />
-            <Skeleton
-              borderRadius='1rem'
-              height='25px'
-              theme='image'
-              width='100%'
-            />
-          </div>
-        ))}
+
+        <SelectedKittySceleton />
       </div>
     )
   }
@@ -80,13 +57,12 @@ function SelectedKittyContainer({ myKitties, kittieIdsOnSale, dispatch }) {
   const { kittyContract, marketplaceContract, connectedAccount } =
     useContext(Web3Context)
 
-  window.kitty = kittyContract
   const [thisKittyOwner, setThisKittyOwner] = useState('')
-  const [fetched, setFetched] = useState(false)
+  // const [fetched, setFetched] = useState(false)
   const [selectedKitty, setSelectedKitty] = useState(null)
   const [price, setPrice] = useState('')
-  const [onSale, setOnSale] = useState(false)
-
+  const [onSale, setOnSale] = useState(undefined)
+  window.stateSK = { thisKittyOwner, selectedKitty, price, onSale }
   const { id } = useParams()
 
   const { getKitty, getKittyPrice, getKittyPrices, getKittyOwner } =
@@ -102,7 +78,8 @@ function SelectedKittyContainer({ myKitties, kittieIdsOnSale, dispatch }) {
   useEffect(() => {
     fetchTokenIdsOnSale(marketplaceContract, dispatch)
     getKittyOwner(id).then(setThisKittyOwner)
-    getKittyPrices(['0', '2', '4', '6', '2', '9', '12']).then(console.log)
+    getKitty(id).then(setSelectedKitty)
+    // getKittyPrice(4).then(payload => console.log(typeof payload))
   }, [])
 
   useEffect(() => {
@@ -114,15 +91,18 @@ function SelectedKittyContainer({ myKitties, kittieIdsOnSale, dispatch }) {
   }, [kittieIdsOnSale])
 
   useEffect(() => {
-    if (onSale) {
-      getKittyPrice(id).then(setPrice)
-    }
+    getKittyPrice(id).then(setPrice)
   }, [onSale])
 
-  if (!selectedKitty) {
-    getKitty(id).then(setSelectedKitty)
+  //if page is not initialized
+  if (
+    !selectedKitty ||
+    !thisKittyOwner ||
+    onSale === undefined ||
+    price === ''
+  ) {
     // make preloader
-    return null
+    return <SelectedKittySceleton />
   }
 
   const dna = parseGenes(selectedKitty.genes)
@@ -141,5 +121,37 @@ function SelectedKittyContainer({ myKitties, kittieIdsOnSale, dispatch }) {
       thisKittyOwner={thisKittyOwner}
       setThisKittyOwner={setThisKittyOwner}
     />
+  )
+}
+
+function SelectedKittySceleton() {
+  return (
+    <>
+      <Skeleton
+        borderRadius='1rem'
+        height='300px'
+        theme='image'
+        width='250px'
+      />
+      {new Array(3).fill(0).map((_, i) => (
+        <div key={'kittySceleton' + i} className='selectedKitty__section'>
+          <Skeleton
+            style={{
+              marginBottom: '0.3rem',
+            }}
+            borderRadius='1rem'
+            height='40px'
+            theme='image'
+            width='20%'
+          />
+          <Skeleton
+            borderRadius='1rem'
+            height='25px'
+            theme='image'
+            width='100%'
+          />
+        </div>
+      ))}
+    </>
   )
 }
