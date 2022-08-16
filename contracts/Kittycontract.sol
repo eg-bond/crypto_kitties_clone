@@ -7,6 +7,7 @@ contract Kittycontract is ERC721("CryptoKittiesClone", "CKC"), Ownable {
   struct Kitty {
     uint256 genes;
     uint64 birthTime;
+    uint64 breedingReadyTime;
     uint32 mumId;
     uint32 dadId;
     uint16 generation;
@@ -14,6 +15,7 @@ contract Kittycontract is ERC721("CryptoKittiesClone", "CKC"), Ownable {
   
   Kitty[] kitties;
   mapping (address => bool) gotFreeKitty;
+  uint breedingCooldown = 1 days;
 
   function alreadyGotFreeKitty(address user) view public returns (bool) {
     if (gotFreeKitty[user] == true) {
@@ -59,6 +61,14 @@ contract Kittycontract is ERC721("CryptoKittiesClone", "CKC"), Ownable {
     _createKitty(0, 0, 0, 0, msg.sender);
   }
 
+  function _triggerCooldown(Kitty storage _kitty) internal {
+    _kitty.breedingReadyTime = uint64(block.timestamp + breedingCooldown);
+  }
+
+  function _isReady(Kitty storage _kitty) internal view returns (bool) {
+    return (_kitty.breedingReadyTime <= block.timestamp);
+  }
+
   function createKittyGen0(uint256 _genes) public {
       if (msg.sender == owner()) {          
           require(gen0Counter < CREATION_LIMIT_GEN0, 'Amount of first generation kitties is exceeded');
@@ -81,6 +91,8 @@ contract Kittycontract is ERC721("CryptoKittiesClone", "CKC"), Ownable {
     Kitty memory _kitty = Kitty({
       genes: _genes,
       birthTime: uint64(block.timestamp),
+      breedingReadyTime: uint64(block.timestamp),
+      // breedingReadyTime: uint64(block.timestamp + breedingCooldown),
       mumId: uint32(_mumId),
       dadId: uint32(_dadId),
       generation: uint16(_generation)
@@ -100,9 +112,18 @@ contract Kittycontract is ERC721("CryptoKittiesClone", "CKC"), Ownable {
     require(ownerOf(_dadId) == _msgSender() && ownerOf(_mumId) == _msgSender(),
      "You are not the owner of thees kitties"
      );
+
     //get parents data
-    Kitty memory dad = getKitty(_dadId);
-    Kitty memory mum = getKitty(_mumId);
+    Kitty storage dad = kitties[_dadId];
+    Kitty storage mum = kitties[_mumId];
+
+    require(_isReady(dad) && _isReady(mum),
+     "Kitties are not ready for breeding"
+    );    
+
+    // increase cooldowns for parents
+    _triggerCooldown(dad);
+    _triggerCooldown(mum);
 
     uint newDna = _mixDna(dad.genes, mum.genes);
     //figure out the generation
